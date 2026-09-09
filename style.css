@@ -1,0 +1,85 @@
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#0b100d;color:#e9f4ec;font-family:Arial,"Tahoma",sans-serif}
+body{min-height:100vh;padding-bottom:78px}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.topbar{position:sticky;top:0;z-index:20;background:#151a17;border-bottom:1px solid #29352e;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.topbar h1{margin:0;color:#91d8a5;font-size:23px}
+.topbar p{margin:5px 0 0;color:#aab7ae;font-size:14px}
+.icon-btn{background:#1c2821;color:#91d8a5;border:1px solid #36503e;border-radius:12px;width:45px;height:42px;font-size:24px}
+main{max-width:900px;margin:auto;padding:18px 14px}
+.page{display:none}
+.page.active{display:block}
+.hero{text-align:center;padding:28px 16px;background:linear-gradient(180deg,#16241b,#101611);border:1px solid #2c3d32;border-radius:22px;margin-bottom:18px}
+.hero-icon{font-size:54px}
+.hero h2{color:#91d8a5;margin:10px 0}
+.hero p{color:#b6c3ba;line-height:1.8}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.menu-grid button{min-height:105px;background:#141c17;color:#8ed6a1;border:1px solid #314339;border-radius:18px;font-size:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.menu-grid button span{font-size:16px;color:#d8e4dc}
+.page-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.page-head h2{margin:0;color:#91d8a5;flex:1;text-align:center}
+.back-button,.primary-btn,.danger-btn,.product-button,.secondary-btn{border:0;border-radius:12px;padding:11px 15px}
+.back-button{background:#202c25;color:#bce9c8;border:1px solid #3b5143}
+.primary-btn{background:#0b8f46;color:white}
+.secondary-btn{background:#26332b;color:#d6e4da}
+.danger-btn{background:#6d2930;color:#fff}
+.info-card,.admin-box{background:#111713;border:1px solid #2e3d34;border-radius:20px;padding:18px;margin:14px 0;line-height:1.9}
+.info-card h3,.admin-box h3{color:#91d8a5;margin-top:0}
+.toolbar{margin-bottom:12px}
+.full-input,.toolbar input,.form-input,.form-textarea,.form-select{width:100%;padding:13px;background:#171d19;color:#eef7f0;border:1px solid #39473e;border-radius:12px;outline:none}
+.form-textarea{min-height:120px;resize:vertical}
+.form-label{display:block;color:#a9dfb6;margin:12px 0 7px;font-weight:bold}
+.categories{display:flex;gap:8px;overflow-x:auto;padding:5px 0 12px}
+.category-btn{white-space:nowrap;background:#172119;color:#a9dcb4;border:1px solid #35483b;border-radius:20px;padding:8px 13px}
+.category-btn.active{background:#0b8f46;color:#fff}
+.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.product-card{background:#151b17;border:1px solid #35423a;border-radius:18px;overflow:hidden}
+.product-image{width:100%;height:150px;object-fit:cover;display:block}
+.product-body{padding:14px}
+.product-icon{font-size:36px}
+.product-card h3{color:#91d8a5;margin:8px 0}
+.product-card p{color:#b9c6bd;line-height:1.6;margin:6px 0}
+.product-button{background:#0b8f46;color:#fff;margin:5px 3px 0}
+.pagination{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.page-number{min-width:38px;height:38px;background:#18211b;color:#bce8c6;border:1px solid #35473b;border-radius:10px}
+.page-number.active{background:#0b8f46;color:#fff}
+.page-arrow{background:#26342c;color:#fff;border:1px solid #3b5143;border-radius:10px;padding:9px 13px}
+.page-info{width:100%;text-align:center;color:#aebbb2;margin-bottom:5px}
+.article-card,.link-card{background:#151b17;border:1px solid #35423a;border-radius:18px;padding:15px;margin:12px 0}
+.article-card h3,.link-card h3{color:#91d8a5;margin-top:0}
+.article-image{width:100%;max-height:260px;object-fit:cover;border-radius:13px;margin-bottom:12px}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gallery img{width:100%;height:180px;object-fit:cover;border-radius:14px;border:1px solid #35423a}
+.admin-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-title h3{margin:0}
+.small-note{color:#aebbb2;font-size:13px}
+.admin-pages{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}
+.admin-page-btn{background:#18211b;color:#cfe8d5;border:1px solid #35473b;border-radius:10px;padding:8px 4px;font-size:13px}
+.admin-page-btn.current{background:#0b8f46;color:#fff}
+.admin-page-btn small{display:block;color:#9eb3a5;margin-top:3px}
+.admin-item{background:#171e19;border:1px solid #334139;border-radius:14px;padding:12px;margin:8px 0}
+.admin-item strong{color:#91d8a5}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.edit-btn{background:#0d6f3a;color:#fff}
+.delete-btn{background:#64272d;color:#fff}
+.image-preview{display:none;width:100%;max-height:220px;object-fit:cover;border-radius:14px;margin:10px 0}
+.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.form-actions button{flex:1;min-width:120px}
+.empty{text-align:center;padding:25px;color:#9eaca2}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:20px 10px;overflow:auto}
+.overlay.show{display:flex}
+.form-card{width:min(700px,100%);background:#101511;border:1px solid #3b4c40;border-radius:20px;padding:17px;margin-top:20px;box-shadow:0 20px 60px #000}
+.form-head{display:flex;align-items:center;gap:10px;border-bottom:1px solid #2c3930;padding-bottom:10px;margin-bottom:10px}
+.form-head h2{margin:0;color:#91d8a5;flex:1}
+.close-btn{background:#5b252c;color:#fff;border:0;border-radius:10px;width:40px;height:40px}
+.upload-box{border:1px dashed #486151;border-radius:12px;padding:10px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#111612;border-top:1px solid #2d3a31;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 5px calc(7px + env(safe-area-inset-bottom))}
+.bottom-nav button{background:none;border:0;color:#b9c7bd;font-size:21px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottom-nav span{font-size:11px}
+@media(max-width:560px){
+  .products-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr}
+  .admin-pages{grid-template-columns:repeat(5,1fr)}
+  .topbar h1{font-size:20px}
+}
