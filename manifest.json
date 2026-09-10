@@ -1,0 +1,11 @@
+{
+  "background_color": "#ffffff",
+  "dir": "rtl",
+  "display": "standalone",
+  "name": "صحتك في غذائك",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "صحتك في غذائك",
+  "start_url": "/",
+  "theme_color": "#0b7a3b"
+}
