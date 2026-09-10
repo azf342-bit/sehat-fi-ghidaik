@@ -2,151 +2,294 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0b120e">
-  <title>DXN - صحتك في غذائك</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b7a3b">
+  <link rel="manifest" href="manifest.json">
+  <title>صحتك في غذائك</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
+      background: #f3faf5;
+      color: #174d2d;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, #08783b, #18a957);
+      color: white;
+      padding: 20px 15px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    .topbar p {
+      margin: 8px 0 0;
+      font-size: 16px;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+      margin: 15px auto;
+      background: white;
+      padding: 5px;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 20px 15px 10px;
+    }
+
+    .welcome h2 {
+      color: #08783b;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      padding: 15px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border: none;
+      border-radius: 18px;
+      padding: 22px 10px;
+      font-size: 17px;
+      color: #08783b;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .page {
+      display: none;
+      background: white;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+      line-height: 1.8;
+    }
+
+    .page h2 {
+      color: #08783b;
+    }
+
+    .back {
+      background: #08783b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .notice {
+      background: #e8f6ed;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media (max-width: 400px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="topbar">
-  <div>
-    <h1>DXN - صحتك في غذائك</h1>
+
+  <header class="topbar">
+
+    <img
+      class="logo"
+      src="صور/file_0000000059c481f4877db29f74f57086.png"
+      alt="صحتك في غذائك">
+
+    <h1>صحتك في غذائك</h1>
     <p>جسدك أمانة... فاعتنِ به</p>
-  </div>
-  <button class="icon-btn" onclick="showPage('home')" title="الرئيسية">⌂</button>
-</header>
 
-<main id="app">
+  </header>
 
-  <section id="home" class="page active">
-    <div class="hero">
-      <div class="hero-icon">🌿</div>
-      <h2>صحتك تبدأ من غذائك</h2>
-      <p>معلومات توعوية عن الصحة والتغذية والمكملات الغذائية.</p>
+  <section id="home">
+
+    <div class="welcome">
+      <h2>مرحبًا بك 🌿</h2>
+      <p>
+        اكتشف معلومات مفيدة حول الصحة والتغذية والمكملات الغذائية.
+      </p>
     </div>
 
-    <div class="menu-grid">
-      <button onclick="showPage('health')">❤️<span>صحتك</span></button>
-      <button onclick="showPage('products')">💊<span>المنتجات</span></button>
-      <button onclick="showPage('benefits')">🌿<span>فوائد المكملات</span></button>
-      <button onclick="showPage('articles')">📚<span>المقالات</span></button>
-      <button onclick="showPage('images')">🖼️<span>الصور</span></button>
-      <button onclick="showPage('links')">🔗<span>الروابط</span></button>
-      <button onclick="showPage('more')">ℹ️<span>معلومات أخرى</span></button>
-      <button onclick="showPage('admin')">⚙️<span>لوحة الإدارة</span></button>
+    <div class="menu">
+
+      <button class="card" onclick="openPage('health')">
+        ❤️ صحتك
+      </button>
+
+      <button class="card" onclick="openPage('supplements')">
+        🌿 المكملات الغذائية
+      </button>
+
+      <button class="card" onclick="openPage('benefits')">
+        💚 فوائد صحية
+      </button>
+
+      <button class="card" onclick="openPage('articles')">
+        📚 مقالات
+      </button>
+
+      <button class="card" onclick="openPage('photos')">
+        🖼️ صور
+      </button>
+
+      <button class="card" onclick="openPage('links')">
+        🔗 روابط
+      </button>
+
+      <button class="card" onclick="openPage('info')">
+        ℹ️ معلومات أخرى
+      </button>
+
     </div>
+
   </section>
 
   <section id="health" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>❤️ صحتك</h2></div>
-    <div class="info-card">
-      <h3>🌿 صحتك تبدأ من غذائك</h3>
-      <p>الغذاء المتوازن والنوم الكافي والنشاط البدني من العادات المهمة لنمط حياة صحي.</p>
-      <p>احرص على تنويع الغذاء وشرب الماء وممارسة الحركة بما يناسبك.</p>
-    </div>
+    <h2>❤️ صحتك</h2>
+    <p>
+      الصحة أساس الحياة، والغذاء المتوازن يساعد على المحافظة على جسم صحي.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
-  <section id="products" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>💊 منتجات DXN</h2></div>
-    <div class="toolbar">
-      <input id="productSearch" type="search" placeholder="🔍 ابحث عن منتج..." oninput="searchProducts()">
-    </div>
-    <div id="productCategories" class="categories"></div>
-    <div id="productsList" class="products-grid"></div>
-    <div id="productPagination" class="pagination"></div>
+  <section id="supplements" class="page">
+    <h2>🌿 المكملات الغذائية</h2>
+    <p>
+      تعرف على المعلومات العامة حول المكملات الغذائية واستخداماتها.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
   <section id="benefits" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>🌿 فوائد المكملات</h2></div>
-    <div class="info-card">
-      <h3>🥗 الغذاء أولاً</h3>
-      <p>المكملات الغذائية ليست بديلاً عن الغذاء المتوازن. استخدم أي منتج وفق ملصق المنتج والإرشادات المناسبة.</p>
-    </div>
-    <div class="info-card">
-      <h3>⚠️ تنبيه</h3>
-      <p>المعلومات في التطبيق للتثقيف فقط وليست تشخيصاً أو وصفة علاجية.</p>
-    </div>
+    <h2>💚 فوائد صحية</h2>
+    <p>
+      معلومات تثقيفية حول العادات الغذائية والعناية بالصحة.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
   <section id="articles" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>📚 المقالات</h2></div>
-    <input id="articleSearch" class="full-input" type="search" placeholder="🔍 ابحث في المقالات..." oninput="renderArticles()">
-    <div id="articlesList"></div>
+    <h2>📚 مقالات</h2>
+    <p>
+      مقالات ومعلومات مفيدة حول التغذية والصحة والمكملات الغذائية.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
-  <section id="images" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>🖼️ الصور</h2></div>
-    <div id="galleryList" class="gallery"></div>
+  <section id="photos" class="page">
+    <h2>🖼️ صور</h2>
+    <p>
+      معرض الصور الخاص بتطبيق صحتك في غذائك.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
   <section id="links" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>🔗 الروابط</h2></div>
-    <div id="linksList"></div>
+    <h2>🔗 روابط</h2>
+    <p>
+      روابط ومصادر مفيدة حول الصحة والتغذية.
+    </p>
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
-  <section id="more" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>ℹ️ معلومات أخرى</h2></div>
-    <div class="info-card">
-      <h3>📱 صحتك في غذائك</h3>
-      <p>تطبيق توعوي يهتم بالصحة والتغذية والمكملات الغذائية.</p>
-      <p>⚠️ المعلومات للتثقيف والتعليم فقط، ولا تعتبر وصفة طبية أو بديلاً عن استشارة الطبيب أو المختص.</p>
+  <section id="info" class="page">
+    <h2>ℹ️ معلومات أخرى</h2>
+    <p>
+      تطبيق توعوي يهتم بالصحة والتغذية والمعلومات الغذائية.
+    </p>
+
+    <div class="notice">
+      ⚠️ المعلومات الصحية الموجودة في التطبيق للتثقيف والمعرفة
+      وليست وصفة علاجية أو بديلاً عن الطبيب.
     </div>
+
+    <br>
+
+    <button class="back" onclick="goHome()">العودة للرئيسية</button>
   </section>
 
-  <section id="admin" class="page">
-    <div class="page-head"><button class="back-button" onclick="showPage('home')">↩️ رجوع</button><h2>⚙️ لوحة الإدارة</h2></div>
+  <footer>
+    صحتك في غذائك 🌿<br>
+    جسدك أمانة... فاعتنِ به
+  </footer>
 
-    <div class="admin-box">
-      <div class="admin-title">
-        <h3>📦 إدارة المنتجات</h3>
-        <button class="primary-btn" onclick="openProductForm()">➕ إضافة منتج</button>
-      </div>
-      <p class="small-note">40 صفحة ديناميكية، وكل صفحة تستوعب 10 منتجات = حتى 400 منتج.</p>
-      <div id="adminProductPages" class="admin-pages"></div>
-      <div id="adminProducts" class="admin-list"></div>
-    </div>
+  <script>
+    function openPage(pageId) {
+      document.getElementById("home").style.display = "none";
 
-    <div class="admin-box">
-      <div class="admin-title">
-        <h3>📚 إدارة المقالات</h3>
-        <button class="primary-btn" onclick="openArticleForm()">➕ مقال جديد</button>
-      </div>
-      <div id="adminArticles" class="admin-list"></div>
-    </div>
+      document.querySelectorAll(".page").forEach(function(page) {
+        page.style.display = "none";
+      });
 
-    <div class="admin-box">
-      <div class="admin-title">
-        <h3>🔗 إدارة الروابط</h3>
-        <button class="primary-btn" onclick="openLinkForm()">➕ إضافة رابط</button>
-      </div>
-      <div id="adminLinks" class="admin-list"></div>
-    </div>
+      document.getElementById(pageId).style.display = "block";
 
-    <div class="admin-box danger-box">
-      <h3>🧹 البيانات</h3>
-      <button class="danger-btn" onclick="resetAllData()">إعادة المنتجات والمقالات والروابط للوضع الافتراضي</button>
-    </div>
-  </section>
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
 
-</main>
+    function goHome() {
+      document.querySelectorAll(".page").forEach(function(page) {
+        page.style.display = "none";
+      });
 
-<nav class="bottom-nav">
-  <button onclick="showPage('home')">⌂<span>الرئيسية</span></button>
-  <button onclick="showPage('products')">💊<span>المنتجات</span></button>
-  <button onclick="showPage('articles')">📚<span>المقالات</span></button>
-  <button onclick="showPage('more')">☰<span>المزيد</span></button>
-</nav>
+      document.getElementById("home").style.display = "block";
 
-<div id="formOverlay" class="overlay" onclick="overlayClose(event)">
-  <div class="form-card" onclick="event.stopPropagation()">
-    <div class="form-head">
-      <h2 id="formTitle">إضافة</h2>
-      <button class="close-btn" type="button" onclick="closeForm()">✕</button>
-    </div>
-    <div id="formContent"></div>
-  </div>
-</div>
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  </script>
 
-<script src="script.js"></script>
 </body>
 </html>
