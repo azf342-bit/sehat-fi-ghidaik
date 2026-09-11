@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b8f46">
-  <meta name="description" content="صحتك في غذائك - معلومات حول الصحة والتغذية والمكملات الغذائية">
-  <link rel="manifest" href="manifest.json">
+
+  <title>صحتك في غذائك</title>
+
   <link rel="stylesheet" href="style.css">
-  <title>صحتك في غذائك - DXN</title>
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="theme-color" content="#0b7a3b">
 </head>
 
 <body>
 
+  <!-- الشريط العلوي -->
   <header class="topbar">
     <div>
       <h1>صحتك في غذائك</h1>
       <p>جسدك أمانة... فاعتنِ به</p>
     </div>
+  </header>
 
-  <header class="topbar">
-  <div>
-    <h1>صحتك في غذائك</h1>
-    <p>جسدك أمانة... فاعتنِ به</p>
-  </div>
-</header>
 
+  <!-- محتوى التطبيق -->
   <main id="app">
 
     <!-- الصفحة الرئيسية -->
@@ -32,25 +32,26 @@
 
       <div class="hero">
 
-        <img
-          src="صور/file_0000000059c481f4877db29f74f57086.png"
-          alt="أيقونة صحتك في غذائك"
-          style="width:130px;height:130px;object-fit:cover;border-radius:22px;margin-bottom:12px;"
-        >
+        <!-- صورة التطبيق -->
+        <div class="hero-icon">
+          <img
+            src="file_0000000059c481f4877db29f74f57086.png"
+            alt="صحتك في غذائك"
+            style="width:110px;height:110px;object-fit:contain;border-radius:20px;"
+          >
+        </div>
 
-        <div class="hero-icon">🌿</div>
-
-        <h2>مرحبًا بك في صحتك في غذائك</h2>
+        <h2>مرحبًا بك 🌿</h2>
 
         <p>
-          اكتشف معلومات مفيدة حول الصحة والتغذية والمكملات الغذائية.
+          اكتشف معلومات مفيدة حول الصحة والتغذية
+          والمكملات الغذائية.
         </p>
 
-        <p class="small-note">
-          معلومات تثقيفية تساعدك على الاهتمام بصحتك ونمط حياتك.
-        </p>
       </div>
 
+
+      <!-- أزرار الأقسام الرئيسية -->
       <div class="menu-grid">
 
         <button onclick="showPage('health')">
@@ -92,36 +93,43 @@
 
     </section>
 
-    <!-- صفحة الصحة -->
+
+    <!-- صفحة صحتك -->
     <section id="health" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>❤️ صحتك</h2>
       </div>
 
       <div class="info-card">
-        <h3>العناية بالصحة</h3>
+        <h3>نصائح صحية</h3>
+
         <p>
-          الاهتمام بالصحة يبدأ بالغذاء المتوازن، وشرب الماء، والنوم الكافي،
-          والحركة المنتظمة، والابتعاد عن العادات الضارة.
+          اهتم بشرب الماء، وتناول غذاء متوازن،
+          وممارسة النشاط البدني بانتظام.
         </p>
+
         <p>
-          احرص على استشارة الطبيب أو المختص عند وجود أي مشكلة صحية.
+          احرص على النوم الكافي، وقلل من تناول
+          الأطعمة الغنية بالسكر والدهون.
         </p>
       </div>
 
     </section>
 
-    <!-- صفحة المكملات -->
+
+    <!-- صفحة المكملات الغذائية -->
     <section id="products" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>🌿 المكملات الغذائية</h2>
       </div>
 
@@ -130,8 +138,7 @@
           id="productSearch"
           class="full-input"
           type="search"
-          placeholder="🔍 ابحث عن منتج..."
-          oninput="searchProducts()"
+          placeholder="ابحث عن مكمل غذائي..."
         >
       </div>
 
@@ -143,48 +150,43 @@
 
     </section>
 
-    <!-- صفحة الفوائد -->
+
+    <!-- صفحة الفوائد الصحية -->
     <section id="benefits" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>💚 فوائد صحية</h2>
       </div>
 
       <div class="info-card">
-        <h3>🥗 الغذاء المتوازن</h3>
-        <p>
-          يساعد التنوع الغذائي والاعتدال في الحصول على العناصر الغذائية
-          الضرورية للجسم.
-        </p>
-      </div>
+        <h3>فوائد الغذاء الصحي</h3>
 
-      <div class="info-card">
-        <h3>💧 شرب الماء</h3>
         <p>
-          الماء مهم للعديد من وظائف الجسم، وتختلف الحاجة إليه حسب الطقس
-          والنشاط والحالة الصحية.
+          يساعد الغذاء المتوازن على دعم الجسم
+          والمحافظة على النشاط والحيوية.
         </p>
-      </div>
 
-      <div class="info-card">
-        <h3>🏃 الحركة</h3>
         <p>
-          المشي والحركة اليومية من العادات المفيدة للحفاظ على نمط حياة صحي.
+          تناول الخضروات والفواكه والحبوب الكاملة،
+          واشرب الماء بانتظام.
         </p>
       </div>
 
     </section>
+
 
     <!-- صفحة المقالات -->
     <section id="articles" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>📚 المقالات</h2>
       </div>
 
@@ -193,8 +195,7 @@
           id="articleSearch"
           class="full-input"
           type="search"
-          placeholder="🔍 ابحث في المقالات..."
-          oninput="renderArticles()"
+          placeholder="ابحث في المقالات..."
         >
       </div>
 
@@ -202,27 +203,31 @@
 
     </section>
 
+
     <!-- صفحة الصور -->
     <section id="images" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
-        <h2>🖼️ معرض الصور</h2>
+
+        <h2>🖼️ الصور</h2>
       </div>
 
       <div id="galleryList" class="gallery"></div>
 
     </section>
 
+
     <!-- صفحة الروابط -->
     <section id="links" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>🔗 روابط مفيدة</h2>
       </div>
 
@@ -230,118 +235,65 @@
 
     </section>
 
-    <!-- صفحة المعلومات -->
+
+    <!-- صفحة المعلومات الأخرى -->
     <section id="info" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
+
         <h2>ℹ️ معلومات أخرى</h2>
       </div>
 
       <div class="info-card">
-        <h3>عن التطبيق</h3>
-        <p>
-          تطبيق «صحتك في غذائك» يقدم معلومات تثقيفية حول الصحة والتغذية
-          والمكملات الغذائية ومنتجات DXN.
-        </p>
+        <h3>تنبيه مهم</h3>
 
         <p>
-          الهدف هو نشر الوعي بالعادات الصحية والغذاء المتوازن.
-        </p>
-
-        <p>
-          ⚠️ المعلومات الموجودة في التطبيق للتثقيف فقط، وليست وصفة علاجية
-          ولا تغني عن استشارة الطبيب أو المختص.
+          المعلومات الموجودة في التطبيق للتثقيف والتوعية فقط،
+          وليست وصفة علاجية ولا تغني عن استشارة الطبيب المختص.
         </p>
       </div>
 
     </section>
 
-    <!-- لوحة الإدارة -->
+
+    <!-- صفحة الإدارة -->
     <section id="admin" class="page">
 
       <div class="page-head">
         <button class="back-button" onclick="showPage('home')">
-          ↩️ رجوع
+          رجوع
         </button>
-        <h2>⚙️ لوحة الإدارة</h2>
+
+        <h2>⚙️ إدارة التطبيق</h2>
       </div>
 
       <div class="admin-box">
+
         <div class="admin-title">
-          <h3>📦 المنتجات</h3>
-          <button class="primary-btn" onclick="openProductForm()">
-            ➕ إضافة
-          </button>
+          <h3>إدارة المحتوى</h3>
         </div>
 
         <p class="small-note">
-          يمكنك إضافة المنتجات وتعديلها وحذفها.
+          من هنا يمكنك إدارة المنتجات والمقالات والروابط.
         </p>
 
-        <div id="adminProductPages" class="admin-pages"></div>
-        <div id="adminProducts"></div>
-      </div>
+        <div id="adminProductPages"></div>
 
-      <div class="admin-box">
-        <div class="admin-title">
-          <h3>📚 المقالات</h3>
-          <button class="primary-btn" onclick="openArticleForm()">
-            ➕ إضافة
-          </button>
-        </div>
+        <div id="adminProducts"></div>
 
         <div id="adminArticles"></div>
-      </div>
-
-      <div class="admin-box">
-        <div class="admin-title">
-          <h3>🔗 الروابط</h3>
-          <button class="primary-btn" onclick="openLinkForm()">
-            ➕ إضافة
-          </button>
-        </div>
 
         <div id="adminLinks"></div>
-      </div>
 
-      <div class="admin-box">
-        <h3>♻️ إعادة البيانات</h3>
-        <p class="small-note">
-          يعيد المنتجات والمقالات والروابط إلى البيانات الافتراضية.
-        </p>
-
-        <button class="danger-btn" onclick="resetAllData()">
-          إعادة البيانات الافتراضية
-        </button>
       </div>
 
     </section>
 
   </main>
 
-  <!-- نافذة النماذج -->
-  <div
-    id="formOverlay"
-    class="overlay"
-    onclick="overlayClose(event)"
-  >
-    <div class="form-card">
-
-      <div class="form-head">
-        <h2 id="formTitle">النموذج</h2>
-
-        <button class="close-btn" onclick="closeForm()" aria-label="إغلاق">
-          ✕
-        </button>
-      </div>
-
-      <div id="formContent"></div>
-
-    </div>
-  </div>
 
   <!-- شريط التنقل السفلي -->
   <nav class="bottom-nav">
@@ -353,7 +305,7 @@
 
     <button onclick="showPage('products')">
       🌿
-      <span>المنتجات</span>
+      <span>المكملات</span>
     </button>
 
     <button onclick="showPage('articles')">
@@ -361,13 +313,40 @@
       <span>المقالات</span>
     </button>
 
-    <button onclick="showPage('links')">
-      🔗
-      <span>الروابط</span>
+    <button onclick="showPage('health')">
+      ❤️
+      <span>الصحة</span>
     </button>
 
   </nav>
 
+
+  <!-- نافذة النماذج الخاصة بالإدارة -->
+  <div id="formOverlay" class="overlay">
+
+    <div class="form-card">
+
+      <div class="form-head">
+
+        <h2 id="formTitle">إضافة محتوى</h2>
+
+        <button
+          class="close-btn"
+          onclick="closeForm()"
+        >
+          ✕
+        </button>
+
+      </div>
+
+      <div id="formContent"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ملف وظائف التطبيق -->
   <script src="script.js"></script>
 
 </body>
