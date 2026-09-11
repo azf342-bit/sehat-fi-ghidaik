@@ -17,10 +17,22 @@
 
   <!-- الشريط العلوي -->
   <header class="topbar">
+
     <div>
       <h1>صحتك في غذائك</h1>
       <p>جسدك أمانة... فاعتنِ به</p>
     </div>
+
+    <!-- زر الإعدادات -->
+    <button
+      class="icon-btn"
+      onclick="showPage('admin')"
+      aria-label="الإعدادات"
+      title="الإعدادات"
+    >
+      ⚙️
+    </button>
+
   </header>
 
 
@@ -36,7 +48,7 @@
         <div class="hero-icon">
           <img
             src="file_0000000059c481f4877db29f74f57086.png"
-            alt="صحتك في غذائك"
+            alt="شعار صحتك في غذائك"
             style="width:110px;height:110px;object-fit:contain;border-radius:20px;"
           >
         </div>
@@ -51,7 +63,7 @@
       </div>
 
 
-      <!-- أزرار الأقسام الرئيسية -->
+      <!-- الأقسام الرئيسية -->
       <div class="menu-grid">
 
         <button onclick="showPage('health')">
@@ -98,14 +110,17 @@
     <section id="health" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>❤️ صحتك</h2>
+
       </div>
 
       <div class="info-card">
+
         <h3>نصائح صحية</h3>
 
         <p>
@@ -117,6 +132,7 @@
           احرص على النوم الكافي، وقلل من تناول
           الأطعمة الغنية بالسكر والدهون.
         </p>
+
       </div>
 
     </section>
@@ -126,20 +142,24 @@
     <section id="products" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>🌿 المكملات الغذائية</h2>
+
       </div>
 
       <div class="toolbar">
+
         <input
           id="productSearch"
           class="full-input"
           type="search"
           placeholder="ابحث عن مكمل غذائي..."
         >
+
       </div>
 
       <div id="productCategories" class="categories"></div>
@@ -155,14 +175,17 @@
     <section id="benefits" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>💚 فوائد صحية</h2>
+
       </div>
 
       <div class="info-card">
+
         <h3>فوائد الغذاء الصحي</h3>
 
         <p>
@@ -174,6 +197,7 @@
           تناول الخضروات والفواكه والحبوب الكاملة،
           واشرب الماء بانتظام.
         </p>
+
       </div>
 
     </section>
@@ -183,20 +207,24 @@
     <section id="articles" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>📚 المقالات</h2>
+
       </div>
 
       <div class="toolbar">
+
         <input
           id="articleSearch"
           class="full-input"
           type="search"
           placeholder="ابحث في المقالات..."
         >
+
       </div>
 
       <div id="articlesList"></div>
@@ -208,11 +236,13 @@
     <section id="images" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>🖼️ الصور</h2>
+
       </div>
 
       <div id="galleryList" class="gallery"></div>
@@ -224,11 +254,13 @@
     <section id="links" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>🔗 روابط مفيدة</h2>
+
       </div>
 
       <div id="linksList"></div>
@@ -240,34 +272,40 @@
     <section id="info" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>ℹ️ معلومات أخرى</h2>
+
       </div>
 
       <div class="info-card">
+
         <h3>تنبيه مهم</h3>
 
         <p>
           المعلومات الموجودة في التطبيق للتثقيف والتوعية فقط،
           وليست وصفة علاجية ولا تغني عن استشارة الطبيب المختص.
         </p>
+
       </div>
 
     </section>
 
 
-    <!-- صفحة الإدارة -->
+    <!-- صفحة الإدارة والإعدادات -->
     <section id="admin" class="page">
 
       <div class="page-head">
+
         <button class="back-button" onclick="showPage('home')">
           رجوع
         </button>
 
         <h2>⚙️ إدارة التطبيق</h2>
+
       </div>
 
       <div class="admin-box">
@@ -280,12 +318,16 @@
           من هنا يمكنك إدارة المنتجات والمقالات والروابط.
         </p>
 
+        <!-- إدارة صفحات المنتجات -->
         <div id="adminProductPages"></div>
 
+        <!-- إدارة المنتجات -->
         <div id="adminProducts"></div>
 
+        <!-- إدارة المقالات -->
         <div id="adminArticles"></div>
 
+        <!-- إدارة الروابط -->
         <div id="adminLinks"></div>
 
       </div>
@@ -321,7 +363,7 @@
   </nav>
 
 
-  <!-- نافذة النماذج الخاصة بالإدارة -->
+  <!-- نافذة النماذج -->
   <div id="formOverlay" class="overlay">
 
     <div class="form-card">
