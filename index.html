@@ -1,24 +1,26 @@
+‎
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b120e">
+  <title>DXN - صحتك في غذائك</title>
+  <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b7a3b">
   <link rel="manifest" href="manifest.json">
   <title>صحتك في غذائك</title>
-
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       font-family: Arial, Tahoma, sans-serif;
       background: #f3faf5;
       color: #174d2d;
     }
-
     .topbar {
       background: linear-gradient(135deg, #08783b, #18a957);
       color: white;
@@ -26,17 +28,14 @@
       text-align: center;
       border-radius: 0 0 25px 25px;
     }
-
     .topbar h1 {
       margin: 0;
       font-size: 27px;
     }
-
     .topbar p {
       margin: 8px 0 0;
       font-size: 16px;
     }
-
     .logo {
       width: 120px;
       height: 120px;
@@ -47,22 +46,18 @@
       background: white;
       padding: 5px;
     }
-
     .welcome {
       text-align: center;
       padding: 20px 15px 10px;
     }
-
     .welcome h2 {
       color: #08783b;
       margin-bottom: 8px;
     }
-
     .welcome p {
       color: #555;
       line-height: 1.7;
     }
-
     .menu {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -71,7 +66,6 @@
       max-width: 600px;
       margin: auto;
     }
-
     .card {
       background: white;
       border: none;
@@ -83,11 +77,9 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       cursor: pointer;
     }
-
     .card:hover {
       transform: scale(1.02);
     }
-
     .page {
       display: none;
       background: white;
@@ -97,11 +89,9 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.07);
       line-height: 1.8;
     }
-
     .page h2 {
       color: #08783b;
     }
-
     .back {
       background: #08783b;
       color: white;
@@ -111,7 +101,6 @@
       cursor: pointer;
       font-size: 16px;
     }
-
     .notice {
       background: #e8f6ed;
       padding: 12px;
@@ -119,14 +108,12 @@
       margin-top: 15px;
       font-size: 14px;
     }
-
     footer {
       text-align: center;
       padding: 25px 10px;
       color: #777;
       font-size: 13px;
     }
-
     @media (max-width: 400px) {
       .menu {
         grid-template-columns: 1fr;
@@ -134,162 +121,21 @@
     }
   </style>
 </head>
-
 <body>
-
+<header class="topbar">
+  <div>
+    <h1>DXN - صحتك في غذائك</h1>
   <header class="topbar">
-
     <img
       class="logo"
       src="صور/file_0000000059c481f4877db29f74f57086.png"
       alt="صحتك في غذائك">
-
     <h1>صحتك في غذائك</h1>
     <p>جسدك أمانة... فاعتنِ به</p>
+  </div>
+  <button class="icon-btn" onclick="showPage('home')" title="الرئيسية">⌂</button>
+</header>
 
+<main id="app">
   </header>
-
   <section id="home">
-
-    <div class="welcome">
-      <h2>مرحبًا بك 🌿</h2>
-      <p>
-        اكتشف معلومات مفيدة حول الصحة والتغذية والمكملات الغذائية.
-      </p>
-    </div>
-
-    <div class="menu">
-
-      <button class="card" onclick="openPage('health')">
-        ❤️ صحتك
-      </button>
-
-      <button class="card" onclick="openPage('supplements')">
-        🌿 المكملات الغذائية
-      </button>
-
-      <button class="card" onclick="openPage('benefits')">
-        💚 فوائد صحية
-      </button>
-
-      <button class="card" onclick="openPage('articles')">
-        📚 مقالات
-      </button>
-
-      <button class="card" onclick="openPage('photos')">
-        🖼️ صور
-      </button>
-
-      <button class="card" onclick="openPage('links')">
-        🔗 روابط
-      </button>
-
-      <button class="card" onclick="openPage('info')">
-        ℹ️ معلومات أخرى
-      </button>
-
-    </div>
-
-  </section>
-
-  <section id="health" class="page">
-    <h2>❤️ صحتك</h2>
-    <p>
-      الصحة أساس الحياة، والغذاء المتوازن يساعد على المحافظة على جسم صحي.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="supplements" class="page">
-    <h2>🌿 المكملات الغذائية</h2>
-    <p>
-      تعرف على المعلومات العامة حول المكملات الغذائية واستخداماتها.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="benefits" class="page">
-    <h2>💚 فوائد صحية</h2>
-    <p>
-      معلومات تثقيفية حول العادات الغذائية والعناية بالصحة.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="articles" class="page">
-    <h2>📚 مقالات</h2>
-    <p>
-      مقالات ومعلومات مفيدة حول التغذية والصحة والمكملات الغذائية.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="photos" class="page">
-    <h2>🖼️ صور</h2>
-    <p>
-      معرض الصور الخاص بتطبيق صحتك في غذائك.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="links" class="page">
-    <h2>🔗 روابط</h2>
-    <p>
-      روابط ومصادر مفيدة حول الصحة والتغذية.
-    </p>
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <section id="info" class="page">
-    <h2>ℹ️ معلومات أخرى</h2>
-    <p>
-      تطبيق توعوي يهتم بالصحة والتغذية والمعلومات الغذائية.
-    </p>
-
-    <div class="notice">
-      ⚠️ المعلومات الصحية الموجودة في التطبيق للتثقيف والمعرفة
-      وليست وصفة علاجية أو بديلاً عن الطبيب.
-    </div>
-
-    <br>
-
-    <button class="back" onclick="goHome()">العودة للرئيسية</button>
-  </section>
-
-  <footer>
-    صحتك في غذائك 🌿<br>
-    جسدك أمانة... فاعتنِ به
-  </footer>
-
-  <script>
-    function openPage(pageId) {
-      document.getElementById("home").style.display = "none";
-
-      document.querySelectorAll(".page").forEach(function(page) {
-        page.style.display = "none";
-      });
-
-      document.getElementById(pageId).style.display = "block";
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
-    function goHome() {
-      document.querySelectorAll(".page").forEach(function(page) {
-        page.style.display = "none";
-      });
-
-      document.getElementById("home").style.display = "block";
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-  </script>
-
-</body>
-</html>
