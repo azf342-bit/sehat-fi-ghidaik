@@ -1,570 +1,1533 @@
-/* =========================================================
-   صحتك في غذائك - DXN
-   نسخة مستقرة: منتجات + 40 صفحة + مقالات + روابط + صور
-   لا تحتاج إلى أي مكتبات خارجية.
-   ========================================================= */
+/* =========================================
+   تطبيق صحتك في غذائك
+   ملف وظائف التطبيق
+========================================= */
 
-"use strict";
 
-const PRODUCT_PAGES = 40;
-const PRODUCTS_PER_PAGE = 10;
+/* =========================================
+   بيانات المنتجات
+========================================= */
+
+const defaultProducts = [
+  {
+    id: 1,
+    name: "DXN Spirulina",
+    category: "مكملات غذائية",
+    icon: "🌿",
+    image: "",
+    description:
+      "سبيرولينا DXN هي مكمل غذائي يعتمد على الطحالب الخضراء المزرقة، وتُستخدم ضمن النظام الغذائي اليومي.",
+    benefits:
+      "تحتوي على عناصر غذائية متنوعة، ويجب استعمالها وفق تعليمات المنتج واستشارة المختص عند الحاجة.",
+    details:
+      "سبيرولينا هي نوع من الطحالب الخضراء المزرقة. تُستخدم كمكمل غذائي، ولا تُعد علاجًا لأي مرض."
+  },
+  {
+    id: 2,
+    name: "DXN Reishi Gano (RG)",
+    category: "مكملات غذائية",
+    icon: "🍄",
+    image: "",
+    description:
+      "منتج يعتمد على فطر الجانوديرما المعروف باسم الريشي، ويُستخدم كمكمل غذائي.",
+    benefits:
+      "يُستخدم ضمن نمط حياة متوازن، مع الالتزام بتعليمات الاستخدام الموجودة على العبوة.",
+    details:
+      "يُرجى قراءة مكونات المنتج وطريقة استعماله، واستشارة الطبيب قبل استخدام المكملات عند وجود حالة صحية أو تناول أدوية."
+  },
+  {
+    id: 3,
+    name: "DXN Lingzhi Coffee",
+    category: "المشروبات",
+    icon: "☕",
+    image: "",
+    description:
+      "قهوة فورية ممزوجة بمكونات نباتية ومستخلص الجانوديرما.",
+    benefits:
+      "مشروب يمكن تناوله باعتدال، مع الانتباه إلى كمية الكافيين والسكر حسب نوع المنتج.",
+    details:
+      "هذا المنتج مشروب غذائي وليس دواءً. يُنصح باتباع تعليمات التحضير الموجودة على العبوة."
+  },
+  {
+    id: 4,
+    name: "DXN Cordyceps",
+    category: "مكملات غذائية",
+    icon: "🌱",
+    image: "",
+    description:
+      "مكمل غذائي يحتوي على مكونات مرتبطة بفطر الكورديسيبس.",
+    benefits:
+      "يُستخدم كمكمل ضمن نظام غذائي متوازن، ولا ينبغي اعتباره بديلًا للعلاج الطبي.",
+    details:
+      "قبل استعمال أي مكمل غذائي، يجب التأكد من ملاءمته للعمر والحالة الصحية والأدوية المستخدمة."
+  },
+  {
+    id: 5,
+    name: "DXN Vita Café",
+    category: "المشروبات",
+    icon: "☕",
+    image: "",
+    description:
+      "مشروب قهوة فورية للاستخدام اليومي.",
+    benefits:
+      "يمكن تناوله باعتدال وفق الاحتياجات الشخصية وتعليمات المنتج.",
+    details:
+      "يُرجى الانتباه إلى مكونات المشروب، خاصة الكافيين والسكر."
+  },
+  {
+    id: 6,
+    name: "DXN Lion's Mane",
+    category: "مكملات غذائية",
+    icon: "🍄",
+    image: "",
+    description:
+      "مكمل غذائي يعتمد على فطر عرف الأسد.",
+    benefits:
+      "يُستخدم ضمن النظام الغذائي، ولا توجد في هذا التطبيق وعود علاجية.",
+    details:
+      "المعلومات المقدمة للتثقيف فقط، ويجب الرجوع إلى مختص قبل الاستخدام عند الحاجة."
+  }
+];
+
+
+/* =========================================
+   بيانات المقالات
+========================================= */
+
+const defaultArticles = [
+  {
+    id: 1,
+    title: "أهمية الغذاء المتوازن",
+    icon: "🥗",
+    image: "",
+    content:
+      "الغذاء المتوازن يساعد على تزويد الجسم بالعناصر الغذائية الضرورية. احرص على تنويع الأطعمة وتناول الخضروات والفواكه والحبوب الكاملة وشرب الماء بانتظام."
+  },
+  {
+    id: 2,
+    title: "أهمية شرب الماء",
+    icon: "💧",
+    image: "",
+    content:
+      "الماء عنصر أساسي للحياة، ويساعد الجسم على أداء وظائفه المختلفة. تختلف الحاجة إلى الماء حسب العمر والنشاط والطقس والحالة الصحية."
+  },
+  {
+    id: 3,
+    title: "النشاط البدني والصحة",
+    icon: "🚶",
+    image: "",
+    content:
+      "يساعد النشاط البدني المنتظم على تحسين اللياقة ودعم الصحة العامة. ابدأ بخطوات بسيطة واختر نشاطًا يناسب قدراتك."
+  }
+];
+
+
+/* =========================================
+   بيانات الروابط
+========================================= */
+
+const defaultLinks = [
+  {
+    id: 1,
+    title: "الموقع الرسمي لشركة DXN",
+    url: "https://www.dxn2u.com",
+    description: "زيارة الموقع الرسمي للتعرف على الشركة ومنتجاتها."
+  },
+  {
+    id: 2,
+    title: "معلومات عامة عن التغذية",
+    url: "https://www.who.int",
+    description: "مصدر عام للمعلومات الصحية والتوعوية."
+  }
+];
+
+
+/* =========================================
+   المتغيرات
+========================================= */
 
 let products = [];
 let articles = [];
 let links = [];
 
 let currentProductPage = 1;
-let currentProductCategory = "الكل";
+const productsPerPage = 10;
 
-const KEYS = {
-  products: "dxn_products",
-  articles: "dxn_articles",
-  links: "dxn_links"
-};
+let currentCategory = "الكل";
 
-const defaultProducts = [
-  {id:1,name:"DXN Spirulina",category:"مكملات غذائية",icon:"🌿",description:"معلومات عامة عن منتج سبيرولينا.",ingredients:"سبيرولينا ومكونات المنتج كما هي موضحة على العبوة.",forms:"أقراص / حسب العبوة.",image:""},
-  {id:2,name:"DXN Reishi Gano (RG)",category:"مكملات غذائية",icon:"🍄",description:"منتج يحتوي على الجانوديرما وفق تركيبة المنتج.",ingredients:"مكونات المنتج حسب الملصق.",forms:"أقراص / حسب العبوة.",image:""},
-  {id:3,name:"DXN Ganocelium (GL)",category:"مكملات غذائية",icon:"🍄",description:"معلومات تعريفية عن منتج Ganocelium.",ingredients:"مكونات المنتج حسب الملصق.",forms:"حسب العبوة.",image:""},
-  {id:4,name:"DXN Reishilium Powder",category:"مكملات غذائية",icon:"🌿",description:"مسحوق غذائي ضمن منتجات DXN.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"مسحوق.",image:""},
-  {id:5,name:"DXN Cordyceps",category:"مكملات غذائية",icon:"🌱",description:"معلومات عامة عن منتج Cordyceps.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:6,name:"DXN Lion's Mane Mushroom",category:"مكملات غذائية",icon:"🍄",description:"منتج مرتبط بفطر عرف الأسد.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:7,name:"DXN Andro-G",category:"مكملات غذائية",icon:"🌿",description:"معلومات عامة عن المنتج.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:8,name:"DXN Lingzhi Coffee 3-in-1",category:"مشروبات",icon:"☕",description:"قهوة سريعة التحضير ضمن منتجات DXN.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"أكياس / حسب العبوة.",image:""},
-  {id:9,name:"DXN Lingzhi Black Coffee",category:"مشروبات",icon:"☕",description:"قهوة سوداء سريعة التحضير.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:10,name:"DXN Cocozhi",category:"مشروبات",icon:"🥥",description:"مشروب الكاكاو وجوز الهند.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"أكياس / حسب العبوة.",image:""},
-  {id:11,name:"DXN Cordyceps Coffee 3-in-1",category:"مشروبات",icon:"☕",description:"قهوة 3 في 1 ضمن منتجات DXN.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:12,name:"DXN Spirulina Cereal",category:"غذاء",icon:"🥣",description:"منتج غذائي يعتمد على الحبوب مع مكونات موضحة على العبوة.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:13,name:"DXN Morinzhi",category:"مشروبات",icon:"🍹",description:"مشروب غذائي ضمن مجموعة DXN.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""},
-  {id:14,name:"DXN Cordypine",category:"مشروبات",icon:"🍍",description:"مشروب غذائي ضمن منتجات DXN.",ingredients:"يرجى مراجعة ملصق المنتج.",forms:"حسب العبوة.",image:""}
-];
 
-const defaultArticles = [
-  {id:1,title:"الغذاء المتوازن",icon:"🥗",summary:"تعرف على أهمية التنوع الغذائي.",content:"الغذاء المتوازن يعتمد على التنوع والاعتدال واختيار مجموعة مختلفة من الأغذية. لا يعتمد نمط الحياة الصحي على طعام واحد فقط.",image:""},
-  {id:2,title:"أهمية شرب الماء",icon:"💧",summary:"الماء جزء أساسي من النظام الغذائي اليومي.",content:"الماء عنصر أساسي للعديد من وظائف الجسم. تختلف الاحتياجات حسب النشاط والطقس والغذاء. اجعل شرب الماء عادة منتظمة خلال اليوم.",image:""},
-  {id:3,title:"الحركة والنشاط",icon:"🏃",summary:"الحركة المنتظمة جزء مهم من نمط حياة صحي.",content:"يمكن أن تكون الحركة اليومية بسيطة مثل المشي أو ممارسة تمارين مناسبة لقدرات الشخص. المهم هو الاستمرارية.",image:""}
-];
+/* =========================================
+   تحميل البيانات من الهاتف
+========================================= */
 
-const defaultLinks = [
-  {id:1,title:"موقع DXN الرسمي",description:"الموقع الرسمي لشركة DXN.",url:"https://www.dxn2u.com/"}
-];
+function loadData() {
+  try {
+    const savedProducts = localStorage.getItem("dxn_products");
+    const savedArticles = localStorage.getItem("dxn_articles");
+    const savedLinks = localStorage.getItem("dxn_links");
 
-function escapeHTML(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    products = savedProducts
+      ? JSON.parse(savedProducts)
+      : JSON.parse(JSON.stringify(defaultProducts));
+
+    articles = savedArticles
+      ? JSON.parse(savedArticles)
+      : JSON.parse(JSON.stringify(defaultArticles));
+
+    links = savedLinks
+      ? JSON.parse(savedLinks)
+      : JSON.parse(JSON.stringify(defaultLinks));
+
+  } catch (error) {
+    console.error("خطأ في تحميل البيانات:", error);
+
+    products = JSON.parse(JSON.stringify(defaultProducts));
+    articles = JSON.parse(JSON.stringify(defaultArticles));
+    links = JSON.parse(JSON.stringify(defaultLinks));
+  }
+
+  saveData();
 }
 
-function normalizeUrl(url){
-  let value = String(url || "").trim();
-  if(!value) return "";
-  if(!/^https?:\/\//i.test(value)) value = "https://" + value;
-  return value;
+
+/* =========================================
+   حفظ البيانات
+========================================= */
+
+function saveData() {
+  try {
+    localStorage.setItem("dxn_products", JSON.stringify(products));
+    localStorage.setItem("dxn_articles", JSON.stringify(articles));
+    localStorage.setItem("dxn_links", JSON.stringify(links));
+  } catch (error) {
+    console.error("خطأ في حفظ البيانات:", error);
+  }
 }
 
-function loadData(){
-  try{ products = JSON.parse(localStorage.getItem(KEYS.products)) || structuredClone(defaultProducts); }
-  catch(e){ products = structuredClone(defaultProducts); }
-  try{ articles = JSON.parse(localStorage.getItem(KEYS.articles)) || structuredClone(defaultArticles); }
-  catch(e){ articles = structuredClone(defaultArticles); }
-  try{ links = JSON.parse(localStorage.getItem(KEYS.links)) || structuredClone(defaultLinks); }
-  catch(e){ links = structuredClone(defaultLinks); }
 
-  products = products.map((p,i)=>({
-    id:p.id ?? Date.now()+i,
-    name:p.name || "منتج بدون اسم",
-    category:p.category || "عام",
-    icon:p.icon || "🌿",
-    description:p.description || "",
-    ingredients:p.ingredients || "",
-    forms:p.forms || "",
-    image:p.image || ""
-  }));
-  articles = articles.map((a,i)=>({
-    id:a.id ?? Date.now()+i,title:a.title || "مقال",icon:a.icon || "📖",
-    summary:a.summary || "",content:a.content || "",image:a.image || ""
-  }));
-  links = links.map((l,i)=>({
-    id:l.id ?? Date.now()+i,title:l.title || "رابط",description:l.description || "",url:normalizeUrl(l.url)
-  }));
-}
+/* =========================================
+   الانتقال بين الصفحات
+========================================= */
 
-function saveProducts(){
-  try{ localStorage.setItem(KEYS.products,JSON.stringify(products)); return true; }
-  catch(e){ alert("⚠️ تعذر حفظ المنتجات. مساحة التخزين قد تكون ممتلئة، جرّب صورة أصغر."); return false; }
-}
-function saveArticles(){
-  try{ localStorage.setItem(KEYS.articles,JSON.stringify(articles)); return true; }
-  catch(e){ alert("⚠️ تعذر حفظ المقالات. جرّب صورة أصغر."); return false; }
-}
-function saveLinks(){
-  try{ localStorage.setItem(KEYS.links,JSON.stringify(links)); return true; }
-  catch(e){ alert("⚠️ تعذر حفظ الروابط."); return false; }
-}
+function showPage(pageId) {
+  const pages = document.querySelectorAll(".page");
 
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  const page = document.getElementById(id);
-  if(!page) return;
-  page.classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-  if(id==="products") renderProducts();
-  if(id==="articles") renderArticles();
-  if(id==="images") renderGallery();
-  if(id==="links") renderLinks();
-  if(id==="admin"){renderAdminProductPages();renderAdminProducts();renderAdminArticles();renderAdminLinks();}
-}
+  pages.forEach(function(page) {
+    page.classList.remove("active");
+  });
 
-function renderCategories(){
-  const box = document.getElementById("productCategories");
-  if(!box) return;
-  const cats = ["الكل",...new Set(products.map(p=>p.category).filter(Boolean))];
-  box.innerHTML = cats.map(cat=>`
-    <button class="category-btn ${cat===currentProductCategory?"active":""}"
-      onclick="filterProducts('${escapeHTML(cat)}')">${escapeHTML(cat)}</button>
-  `).join("");
-}
+  const targetPage = document.getElementById(pageId);
 
-function filterProducts(category){
-  currentProductCategory = category || "الكل";
-  currentProductPage = 1;
-  renderProducts();
-}
+  if (targetPage) {
+    targetPage.classList.add("active");
+  }
 
-function getFilteredProducts(){
-  const search = (document.getElementById("productSearch")?.value || "").trim().toLowerCase();
-  return products.filter(p=>{
-    const catOK = currentProductCategory==="الكل" || p.category===currentProductCategory;
-    const text = [p.name,p.category,p.description,p.ingredients,p.forms].join(" ").toLowerCase();
-    return catOK && (!search || text.includes(search));
+  if (pageId === "products") {
+    currentProductPage = 1;
+    renderProducts();
+  }
+
+  if (pageId === "articles") {
+    renderArticles();
+  }
+
+  if (pageId === "images") {
+    renderGallery();
+  }
+
+  if (pageId === "links") {
+    renderLinks();
+  }
+
+  if (pageId === "admin") {
+    renderAdmin();
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
 }
 
-function renderProducts(){
-  renderCategories();
-  const list = document.getElementById("productsList");
-  if(!list) return;
 
-  const filtered = getFilteredProducts();
-  const totalPages = PRODUCT_PAGES;
-  if(currentProductPage<1) currentProductPage=1;
-  if(currentProductPage>totalPages) currentProductPage=totalPages;
+/* =========================================
+   عرض فئات المنتجات
+========================================= */
 
-  const start=(currentProductPage-1)*PRODUCTS_PER_PAGE;
-  const items=filtered.slice(start,start+PRODUCTS_PER_PAGE);
+function renderCategories() {
+  const container = document.getElementById("productCategories");
 
-  if(!items.length){
-    list.innerHTML=`<div class="empty">لا توجد منتجات في الصفحة ${currentProductPage}.</div>`;
-  }else{
-    list.innerHTML=items.map(p=>`
-      <article class="product-card">
-        ${p.image?`<img class="product-image" src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}">`:""}
-        <div class="product-body">
-          <div class="product-icon">${escapeHTML(p.icon)}</div>
-          <h3>${escapeHTML(p.name)}</h3>
-          <p>🏷️ ${escapeHTML(p.category)}</p>
-          <p>${escapeHTML(p.description)}</p>
-          <button class="product-button" onclick="showProductDetails('${escapeHTML(p.id)}')">📖 التفاصيل</button>
-        </div>
-      </article>
-    `).join("");
-  }
-  renderProductPagination();
-}
-
-function renderProductPagination(){
-  const box=document.getElementById("productPagination");
-  if(!box) return;
-  let html=`<div class="page-info">صفحة <strong>${currentProductPage}</strong> من <strong>${PRODUCT_PAGES}</strong> — ${products.length} منتج</div>`;
-  html+=`<button class="page-arrow" onclick="prevProductPage()" ${currentProductPage===1?"disabled":""}>◀ السابقة</button>`;
-  for(let i=1;i<=PRODUCT_PAGES;i++){
-    html+=`<button class="page-number ${i===currentProductPage?"active":""}" onclick="goToProductPage(${i})">${i}</button>`;
-  }
-  html+=`<button class="page-arrow" onclick="nextProductPage()" ${currentProductPage===PRODUCT_PAGES?"disabled":""}>التالية ▶</button>`;
-  box.innerHTML=html;
-}
-
-function goToProductPage(page){
-  const n=Math.max(1,Math.min(PRODUCT_PAGES,Number(page)||1));
-  currentProductPage=n;
-  showPage("products");
-}
-function nextProductPage(){ if(currentProductPage<PRODUCT_PAGES) goToProductPage(currentProductPage+1); }
-function prevProductPage(){ if(currentProductPage>1) goToProductPage(currentProductPage-1); }
-function searchProducts(){ currentProductPage=1; renderProducts(); }
-
-function showProductDetails(id){
-  const p=products.find(x=>String(x.id)===String(id));
-  if(!p){alert("⚠️ المنتج غير موجود.");return;}
-  const page=document.createElement("section");
-  page.className="page active";
-  page.id="productDetailsTemp";
-  page.innerHTML=`
-    <div class="page-head">
-      <button class="back-button" onclick="document.getElementById('productDetailsTemp')?.remove();showPage('products')">↩️ رجوع</button>
-      <h2>📦 تفاصيل المنتج</h2>
-    </div>
-    <div class="info-card">
-      ${p.image?`<img class="article-image" src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}">`:""}
-      <h3>${escapeHTML(p.icon)} ${escapeHTML(p.name)}</h3>
-      <p>🏷️ التصنيف: ${escapeHTML(p.category)}</p>
-      <p>📝 ${escapeHTML(p.description)}</p>
-      <p>🧪 <strong>المكونات:</strong><br>${escapeHTML(p.ingredients)}</p>
-      <p>📦 <strong>الشكل:</strong><br>${escapeHTML(p.forms)}</p>
-      <p>⚠️ المعلومات للتثقيف فقط. راجع عبوة المنتج ومختصاً عند الحاجة.</p>
-    </div>`;
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById("app").appendChild(page);
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function renderAdminProductPages(){
-  const box=document.getElementById("adminProductPages");
-  if(!box)return;
-  box.innerHTML="";
-  for(let page=1;page<=PRODUCT_PAGES;page++){
-    const count=products.slice((page-1)*PRODUCTS_PER_PAGE,page*PRODUCTS_PER_PAGE).length;
-    const b=document.createElement("button");
-    b.className="admin-page-btn"+(page===currentProductPage?" current":"");
-    b.innerHTML=`صفحة ${page}<small>${count} منتج</small>`;
-    b.onclick=()=>goToProductPage(page);
-    box.appendChild(b);
-  }
-}
-
-function renderAdminProducts(){
-  const box=document.getElementById("adminProducts");
-  if(!box)return;
-  if(!products.length){box.innerHTML='<div class="empty">لا توجد منتجات.</div>';return;}
-  box.innerHTML=products.map((p,i)=>{
-    const page=Math.floor(i/PRODUCTS_PER_PAGE)+1;
-    return `<div class="admin-item">
-      ${p.image?`<img class="article-image" src="${escapeHTML(p.image)}" alt="">`:""}
-      <strong>${escapeHTML(p.icon)} ${escapeHTML(p.name)}</strong>
-      <div>🏷️ ${escapeHTML(p.category)} — 📄 الصفحة ${page} من ${PRODUCT_PAGES}</div>
-      <div class="admin-actions">
-        <button class="secondary-btn" onclick="showProductDetails('${escapeHTML(p.id)}')">👁️ عرض</button>
-        <button class="edit-btn product-button" onclick="editProduct('${escapeHTML(p.id)}')">✏️ تعديل</button>
-        <button class="delete-btn product-button" onclick="deleteProduct('${escapeHTML(p.id)}')">🗑️ حذف</button>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-function openProductForm(id=""){
-  const p=id?products.find(x=>String(x.id)===String(id)):null;
-  if(id && !p){alert("⚠️ المنتج غير موجود.");return;}
-  const isEdit=!!p;
-  document.getElementById("formTitle").textContent=isEdit?"✏️ تعديل المنتج":"➕ إضافة منتج جديد";
-  document.getElementById("formContent").innerHTML=`
-    <label class="form-label">اسم المنتج *</label>
-    <input id="productName" class="form-input" value="${escapeHTML(p?.name||"")}" placeholder="اكتب اسم المنتج">
-    <label class="form-label">التصنيف</label>
-    <input id="productCategory" class="form-input" value="${escapeHTML(p?.category||"مكملات غذائية")}" placeholder="مثال: مكملات غذائية">
-    <label class="form-label">الأيقونة</label>
-    <input id="productIcon" class="form-input" value="${escapeHTML(p?.icon||"🌿")}" placeholder="🌿">
-    <label class="form-label">وصف المنتج *</label>
-    <textarea id="productDescription" class="form-textarea" placeholder="اكتب وصفاً للمنتج">${escapeHTML(p?.description||"")}</textarea>
-    <label class="form-label">المكونات</label>
-    <textarea id="productIngredients" class="form-textarea" placeholder="اكتب المكونات">${escapeHTML(p?.ingredients||"")}</textarea>
-    <label class="form-label">الشكل / العبوة</label>
-    <input id="productForms" class="form-input" value="${escapeHTML(p?.forms||"")}" placeholder="مثال: أقراص / مسحوق">
-    <label class="form-label">🖼️ صورة المنتج</label>
-    <div class="upload-box">
-      <input id="productImage" type="file" accept="image/*" onchange="previewUpload('productImage','productPreview')">
-      <img id="productPreview" class="image-preview" style="display:${p?.image?"block":"none"}" src="${escapeHTML(p?.image||"")}" alt="">
-      <button type="button" class="secondary-btn" onclick="removePreview('productPreview','productImage')">🗑️ إزالة الصورة</button>
-    </div>
-    <div class="form-actions">
-      <button class="primary-btn" onclick="saveProduct('${escapeHTML(p?.id||"")}')">💾 حفظ</button>
-      <button class="secondary-btn" onclick="closeForm()">↩️ إلغاء</button>
-    </div>`;
-  openForm();
-}
-
-async function saveProduct(id=""){
-  const name=document.getElementById("productName")?.value.trim();
-  const category=document.getElementById("productCategory")?.value.trim()||"عام";
-  const icon=document.getElementById("productIcon")?.value.trim()||"🌿";
-  const description=document.getElementById("productDescription")?.value.trim();
-  const ingredients=document.getElementById("productIngredients")?.value.trim()||"";
-  const forms=document.getElementById("productForms")?.value.trim()||"";
-  const input=document.getElementById("productImage");
-
-  if(!name || !description){alert("⚠️ يرجى كتابة اسم المنتج ووصف المنتج.");return;}
-
-  let image="";
-  if(id){
-    const old=products.find(p=>String(p.id)===String(id));
-    image=old?.image||"";
-  }
-  const preview=document.getElementById("productPreview");
-  if(preview && preview.src && preview.style.display!=="none" && preview.src.startsWith("data:")) image=preview.src;
-  if(input?.files?.[0]){
-    try{image=await compressImage(input.files[0]);}
-    catch(e){alert("⚠️ تعذر معالجة الصورة.");return;}
-  }
-
-  if(!id && products.length>=PRODUCT_PAGES*PRODUCTS_PER_PAGE){
-    alert("⚠️ وصلت إلى الحد الأقصى: 400 منتج.");
+  if (!container) {
     return;
   }
 
-  if(id){
-    const index=products.findIndex(p=>String(p.id)===String(id));
-    if(index===-1){alert("⚠️ المنتج غير موجود.");return;}
-    products[index]={...products[index],name,category,icon,description,ingredients,forms,image};
-  }else{
-    products.push({id:Date.now(),name,category,icon,description,ingredients,forms,image});
-  }
+  const categories = ["الكل"];
 
-  if(saveProducts()){
-    closeForm();
-    renderAdminProducts();
-    renderAdminProductPages();
-    renderProducts();
-    alert(id?"✅ تم تعديل المنتج بنجاح.":"✅ تمت إضافة المنتج بنجاح.");
-  }
-}
+  products.forEach(function(product) {
+    if (product.category && !categories.includes(product.category)) {
+      categories.push(product.category);
+    }
+  });
 
-function editProduct(id){openProductForm(id);}
+  container.innerHTML = "";
 
-function deleteProduct(id){
-  const p=products.find(x=>String(x.id)===String(id));
-  if(!p){alert("⚠️ المنتج غير موجود.");return;}
-  if(!confirm("هل تريد حذف المنتج:\n\n"+p.name+" ؟"))return;
-  products=products.filter(x=>String(x.id)!==String(id));
-  if(saveProducts()){
-    renderAdminProducts();renderAdminProductPages();renderProducts();
-    alert("✅ تم حذف المنتج.");
-  }
-}
+  categories.forEach(function(category) {
+    const button = document.createElement("button");
 
-function renderArticles(){
-  const box=document.getElementById("articlesList");
-  if(!box)return;
-  const q=(document.getElementById("articleSearch")?.value||"").trim().toLowerCase();
-  const arr=articles.filter(a=>[a.title,a.summary,a.content].join(" ").toLowerCase().includes(q));
-  if(!arr.length){box.innerHTML='<div class="empty">لا توجد مقالات مطابقة.</div>';return;}
-  box.innerHTML=arr.map(a=>`
-    <article class="article-card">
-      ${a.image?`<img class="article-image" src="${escapeHTML(a.image)}" alt="${escapeHTML(a.title)}">`:""}
-      <h3>${escapeHTML(a.icon)} ${escapeHTML(a.title)}</h3>
-      <p>${escapeHTML(a.summary)}</p>
-      <button class="product-button" onclick="showArticleDetails('${escapeHTML(a.id)}')">📖 قراءة المقال</button>
-    </article>`).join("");
-}
+    button.className = "category-btn";
 
-function showArticleDetails(id){
-  const a=articles.find(x=>String(x.id)===String(id));
-  if(!a){alert("⚠️ المقال غير موجود.");return;}
-  const old=document.getElementById("articleDetailsTemp"); if(old)old.remove();
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  const page=document.createElement("section");
-  page.className="page active";page.id="articleDetailsTemp";
-  page.innerHTML=`
-    <div class="page-head"><button class="back-button" onclick="document.getElementById('articleDetailsTemp')?.remove();showPage('articles')">↩️ رجوع</button><h2>📖 المقال</h2></div>
-    <div class="info-card">
-      ${a.image?`<img class="article-image" src="${escapeHTML(a.image)}" alt="">`:""}
-      <h3>${escapeHTML(a.icon)} ${escapeHTML(a.title)}</h3>
-      <h4>${escapeHTML(a.summary)}</h4>
-      <p style="white-space:pre-line">${escapeHTML(a.content)}</p>
-    </div>`;
-  document.getElementById("app").appendChild(page);
-  window.scrollTo({top:0,behavior:"smooth"});
-}
+    if (category === currentCategory) {
+      button.classList.add("active");
+    }
 
-function renderAdminArticles(){
-  const box=document.getElementById("adminArticles");if(!box)return;
-  box.innerHTML=articles.length?articles.map(a=>`
-    <div class="admin-item"><strong>${escapeHTML(a.icon)} ${escapeHTML(a.title)}</strong>
-      <div class="admin-actions">
-        <button class="secondary-btn" onclick="showArticleDetails('${escapeHTML(a.id)}')">👁️ عرض</button>
-        <button class="edit-btn product-button" onclick="openArticleForm('${escapeHTML(a.id)}')">✏️ تعديل</button>
-        <button class="delete-btn product-button" onclick="deleteArticle('${escapeHTML(a.id)}')">🗑️ حذف</button>
-      </div>
-    </div>`).join(""):'<div class="empty">لا توجد مقالات.</div>';
-}
+    button.textContent = category;
 
-function openArticleForm(id=""){
-  const a=id?articles.find(x=>String(x.id)===String(id)):null;
-  if(id&&!a){alert("⚠️ المقال غير موجود.");return;}
-  document.getElementById("formTitle").textContent=a?"✏️ تعديل المقال":"➕ إضافة مقال";
-  document.getElementById("formContent").innerHTML=`
-    <label class="form-label">العنوان *</label>
-    <input id="articleTitle" class="form-input" value="${escapeHTML(a?.title||"")}" placeholder="عنوان المقال">
-    <label class="form-label">الأيقونة</label>
-    <input id="articleIcon" class="form-input" value="${escapeHTML(a?.icon||"📖")}" placeholder="📖">
-    <label class="form-label">الوصف المختصر *</label>
-    <textarea id="articleSummary" class="form-textarea">${escapeHTML(a?.summary||"")}</textarea>
-    <label class="form-label">المحتوى *</label>
-    <textarea id="articleContent" class="form-textarea" style="min-height:220px">${escapeHTML(a?.content||"")}</textarea>
-    <label class="form-label">🖼️ الصورة</label>
-    <div class="upload-box">
-      <input id="articleImage" type="file" accept="image/*" onchange="previewUpload('articleImage','articlePreview')">
-      <img id="articlePreview" class="image-preview" style="display:${a?.image?"block":"none"}" src="${escapeHTML(a?.image||"")}" alt="">
-      <button type="button" class="secondary-btn" onclick="removePreview('articlePreview','articleImage')">🗑️ إزالة الصورة</button>
-    </div>
-    <div class="form-actions">
-      <button class="primary-btn" onclick="saveArticle('${escapeHTML(a?.id||"")}')">💾 حفظ</button>
-      <button class="secondary-btn" onclick="closeForm()">↩️ إلغاء</button>
-    </div>`;
-  openForm();
-}
+    button.addEventListener("click", function() {
+      currentCategory = category;
+      currentProductPage = 1;
+      renderProducts();
+    });
 
-async function saveArticle(id=""){
-  const title=document.getElementById("articleTitle")?.value.trim();
-  const icon=document.getElementById("articleIcon")?.value.trim()||"📖";
-  const summary=document.getElementById("articleSummary")?.value.trim();
-  const content=document.getElementById("articleContent")?.value.trim();
-  const input=document.getElementById("articleImage");
-  if(!title||!summary||!content){alert("⚠️ يرجى ملء العنوان والوصف والمحتوى.");return;}
-  let image=id?(articles.find(a=>String(a.id)===String(id))?.image||""):"";
-  const preview=document.getElementById("articlePreview");
-  if(preview&&preview.src&&preview.style.display!=="none"&&preview.src.startsWith("data:"))image=preview.src;
-  if(input?.files?.[0]){try{image=await compressImage(input.files[0]);}catch(e){alert("⚠️ تعذر معالجة الصورة.");return;}}
-  if(id){
-    const i=articles.findIndex(a=>String(a.id)===String(id));
-    if(i<0){alert("⚠️ المقال غير موجود.");return;}
-    articles[i]={...articles[i],title,icon,summary,content,image};
-  }else articles.push({id:Date.now(),title,icon,summary,content,image});
-  if(saveArticles()){closeForm();renderArticles();renderAdminArticles();alert(id?"✅ تم تعديل المقال.":"✅ تمت إضافة المقال.");}
-}
-function deleteArticle(id){
-  const a=articles.find(x=>String(x.id)===String(id));if(!a)return;
-  if(!confirm("هل تريد حذف المقال:\n\n"+a.title+" ؟"))return;
-  articles=articles.filter(x=>String(x.id)!==String(id));
-  if(saveArticles()){renderArticles();renderAdminArticles();alert("✅ تم حذف المقال.");}
-}
-
-function renderLinks(){
-  const box=document.getElementById("linksList");if(!box)return;
-  box.innerHTML=links.length?links.map(l=>`
-    <div class="link-card">
-      <h3>🔗 ${escapeHTML(l.title)}</h3>
-      <p>${escapeHTML(l.description)}</p>
-      <a class="product-button" style="display:inline-block;text-decoration:none" href="${escapeHTML(l.url)}" target="_blank" rel="noopener noreferrer">🌐 فتح الرابط</a>
-    </div>`).join(""):'<div class="empty">لا توجد روابط.</div>';
-}
-
-function renderAdminLinks(){
-  const box=document.getElementById("adminLinks");if(!box)return;
-  box.innerHTML=links.length?links.map(l=>`
-    <div class="admin-item"><strong>🔗 ${escapeHTML(l.title)}</strong><div>${escapeHTML(l.url)}</div>
-      <div class="admin-actions">
-        <button class="secondary-btn" onclick="openExternal('${escapeHTML(l.url)}')">🌐 فتح</button>
-        <button class="edit-btn product-button" onclick="openLinkForm('${escapeHTML(l.id)}')">✏️ تعديل</button>
-        <button class="delete-btn product-button" onclick="deleteLink('${escapeHTML(l.id)}')">🗑️ حذف</button>
-      </div>
-    </div>`).join(""):'<div class="empty">لا توجد روابط.</div>';
-}
-
-function openLinkForm(id=""){
-  const l=id?links.find(x=>String(x.id)===String(id)):null;
-  if(id&&!l){alert("⚠️ الرابط غير موجود.");return;}
-  document.getElementById("formTitle").textContent=l?"✏️ تعديل الرابط":"➕ إضافة رابط";
-  document.getElementById("formContent").innerHTML=`
-    <label class="form-label">عنوان الرابط *</label>
-    <input id="linkTitle" class="form-input" value="${escapeHTML(l?.title||"")}" placeholder="مثال: موقع DXN الرسمي">
-    <label class="form-label">وصف الرابط</label>
-    <textarea id="linkDescription" class="form-textarea">${escapeHTML(l?.description||"")}</textarea>
-    <label class="form-label">الرابط URL *</label>
-    <input id="linkUrl" class="form-input" type="url" value="${escapeHTML(l?.url||"")}" placeholder="https://example.com">
-    <div class="form-actions">
-      <button class="primary-btn" onclick="saveLink('${escapeHTML(l?.id||"")}')">💾 حفظ الرابط</button>
-      <button class="secondary-btn" onclick="closeForm()">↩️ إلغاء</button>
-    </div>`;
-  openForm();
-}
-
-function saveLink(id=""){
-  const title=document.getElementById("linkTitle")?.value.trim();
-  const description=document.getElementById("linkDescription")?.value.trim()||"";
-  const url=normalizeUrl(document.getElementById("linkUrl")?.value);
-  if(!title||!url){alert("⚠️ يرجى كتابة عنوان الرابط والرابط.");return;}
-  if(!/^https?:\/\/.+/i.test(url)){alert("⚠️ الرابط غير صحيح.");return;}
-  if(id){
-    const i=links.findIndex(l=>String(l.id)===String(id));
-    if(i<0){alert("⚠️ الرابط غير موجود.");return;}
-    links[i]={...links[i],title,description,url};
-  }else links.push({id:Date.now(),title,description,url});
-  if(saveLinks()){closeForm();renderLinks();renderAdminLinks();alert(id?"✅ تم تعديل الرابط.":"✅ تمت إضافة الرابط.");}
-}
-
-function deleteLink(id){
-  const l=links.find(x=>String(x.id)===String(id));if(!l)return;
-  if(!confirm("هل تريد حذف الرابط:\n\n"+l.title+" ؟"))return;
-  links=links.filter(x=>String(x.id)!==String(id));
-  if(saveLinks()){renderLinks();renderAdminLinks();alert("✅ تم حذف الرابط.");}
-}
-
-function openExternal(url){
-  const u=normalizeUrl(url);
-  if(u) window.open(u,"_blank","noopener,noreferrer");
-}
-
-function openForm(){document.getElementById("formOverlay")?.classList.add("show");}
-function closeForm(){document.getElementById("formOverlay")?.classList.remove("show");}
-function overlayClose(e){if(e.target===e.currentTarget)closeForm();}
-
-function previewUpload(inputId,previewId){
-  const input=document.getElementById(inputId), preview=document.getElementById(previewId);
-  if(!input?.files?.[0]||!preview)return;
-  const reader=new FileReader();
-  reader.onload=e=>{preview.src=e.target.result;preview.style.display="block";};
-  reader.readAsDataURL(input.files[0]);
-}
-
-function removePreview(previewId,inputId){
-  const p=document.getElementById(previewId),i=document.getElementById(inputId);
-  if(i)i.value="";
-  if(p){p.src="";p.style.display="none";}
-}
-
-function compressImage(file,maxSize=900,quality=.72){
-  return new Promise((resolve,reject)=>{
-    if(!file||!file.type.startsWith("image/")){reject(new Error("not-image"));return;}
-    const reader=new FileReader();
-    reader.onload=e=>{
-      const img=new Image();
-      img.onload=()=>{
-        let w=img.width,h=img.height;
-        if(w>maxSize||h>maxSize){const r=Math.min(maxSize/w,maxSize/h);w=Math.round(w*r);h=Math.round(h*r);}
-        const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
-        const ctx=canvas.getContext("2d");ctx.drawImage(img,0,0,w,h);
-        resolve(canvas.toDataURL("image/jpeg",quality));
-      };
-      img.onerror=()=>reject(new Error("image"));
-      img.src=e.target.result;
-    };
-    reader.onerror=()=>reject(new Error("read"));
-    reader.readAsDataURL(file);
+    container.appendChild(button);
   });
 }
 
-function renderGallery(){
-  const box=document.getElementById("galleryList");if(!box)return;
-  const imgs=products.filter(p=>p.image).map(p=>({src:p.image,title:p.name}))
-    .concat(articles.filter(a=>a.image).map(a=>({src:a.image,title:a.title})));
-  box.innerHTML=imgs.length?imgs.map(x=>`<div><img src="${escapeHTML(x.src)}" alt="${escapeHTML(x.title)}"><p>${escapeHTML(x.title)}</p></div>`).join("")
-    :'<div class="empty">لا توجد صور مضافة بعد.</div>';
+
+/* =========================================
+   عرض المنتجات
+========================================= */
+
+function renderProducts() {
+  const list = document.getElementById("productsList");
+  const pagination = document.getElementById("productPagination");
+  const searchInput = document.getElementById("productSearch");
+
+  if (!list) {
+    return;
+  }
+
+  const searchText = searchInput
+    ? searchInput.value.trim().toLowerCase()
+    : "";
+
+  let filteredProducts = products.filter(function(product) {
+    const matchesSearch =
+      !searchText ||
+      String(product.name || "").toLowerCase().includes(searchText) ||
+      String(product.description || "").toLowerCase().includes(searchText) ||
+      String(product.category || "").toLowerCase().includes(searchText);
+
+    const matchesCategory =
+      currentCategory === "الكل" ||
+      product.category === currentCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredProducts.length / productsPerPage)
+  );
+
+  if (currentProductPage > totalPages) {
+    currentProductPage = totalPages;
+  }
+
+  const startIndex = (currentProductPage - 1) * productsPerPage;
+  const visibleProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + productsPerPage
+  );
+
+  list.innerHTML = "";
+
+  if (visibleProducts.length === 0) {
+    list.innerHTML = `
+      <div class="empty">
+        لا توجد منتجات مطابقة للبحث.
+      </div>
+    `;
+
+    if (pagination) {
+      pagination.innerHTML = "";
+    }
+
+    renderCategories();
+    return;
+  }
+
+  visibleProducts.forEach(function(product) {
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    let imageHTML = "";
+
+    if (product.image) {
+      imageHTML = `
+        <img
+          class="product-image"
+          src="${product.image}"
+          alt="${escapeHTML(product.name)}"
+        >
+      `;
+    } else {
+      imageHTML = `
+        <div
+          class="product-image"
+          style="height:150px;display:flex;align-items:center;justify-content:center;font-size:65px;background:#17251b;"
+        >
+          ${product.icon || "🌿"}
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      ${imageHTML}
+
+      <div class="product-body">
+
+        <div class="product-icon">
+          ${product.icon || "🌿"}
+        </div>
+
+        <h3>${escapeHTML(product.name)}</h3>
+
+        <p>
+          <strong>الفئة:</strong>
+          ${escapeHTML(product.category || "عام")}
+        </p>
+
+        <p>
+          ${escapeHTML(product.description || "")}
+        </p>
+
+        <button
+          class="product-button"
+          onclick="showProductDetails(${product.id})"
+        >
+          التفاصيل 📖
+        </button>
+
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+
+  renderCategories();
+  renderProductPagination(totalPages);
 }
 
-function resetAllData(){
-  if(!confirm("سيتم حذف التعديلات وإرجاع البيانات الافتراضية. هل أنت متأكد؟"))return;
-  products=structuredClone(defaultProducts);
-  articles=structuredClone(defaultArticles);
-  links=structuredClone(defaultLinks);
-  saveProducts();saveArticles();saveLinks();
-  currentProductPage=1;currentProductCategory="الكل";
-  const s=document.getElementById("productSearch");if(s)s.value="";
-  renderProducts();renderArticles();renderGallery();renderLinks();
-  renderAdminProductPages();renderAdminProducts();renderAdminArticles();renderAdminLinks();
-  alert("✅ تمت إعادة البيانات الافتراضية.");
+
+/* =========================================
+   صفحات المنتجات
+========================================= */
+
+function renderProductPagination(totalPages) {
+  const pagination = document.getElementById("productPagination");
+
+  if (!pagination) {
+    return;
+  }
+
+  pagination.innerHTML = "";
+
+  if (totalPages <= 1) {
+    return;
+  }
+
+  const info = document.createElement("div");
+  info.className = "page-info";
+  info.textContent =
+    "الصفحة " + currentProductPage + " من " + totalPages;
+
+  pagination.appendChild(info);
+
+  const previousButton = document.createElement("button");
+  previousButton.className = "page-arrow";
+  previousButton.textContent = "السابق";
+
+  previousButton.disabled = currentProductPage === 1;
+
+  previousButton.addEventListener("click", function() {
+    if (currentProductPage > 1) {
+      currentProductPage--;
+      renderProducts();
+    }
+  });
+
+  pagination.appendChild(previousButton);
+
+  for (let page = 1; page <= totalPages; page++) {
+    const pageButton = document.createElement("button");
+
+    pageButton.className = "page-number";
+    pageButton.textContent = page;
+
+    if (page === currentProductPage) {
+      pageButton.classList.add("active");
+    }
+
+    pageButton.addEventListener("click", function() {
+      currentProductPage = page;
+      renderProducts();
+    });
+
+    pagination.appendChild(pageButton);
+  }
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "page-arrow";
+  nextButton.textContent = "التالي";
+
+  nextButton.disabled = currentProductPage === totalPages;
+
+  nextButton.addEventListener("click", function() {
+    if (currentProductPage < totalPages) {
+      currentProductPage++;
+      renderProducts();
+    }
+  });
+
+  pagination.appendChild(nextButton);
 }
 
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm();});
+
+/* =========================================
+   تفاصيل المنتج - إصلاح الصفحة الفارغة
+========================================= */
+
+function showProductDetails(productId) {
+  const product = products.find(function(item) {
+    return Number(item.id) === Number(productId);
+  });
+
+  if (!product) {
+    alert("لم يتم العثور على المنتج.");
+    return;
+  }
+
+  const oldDetailsPage = document.getElementById("product-details-page");
+
+  if (oldDetailsPage) {
+    oldDetailsPage.remove();
+  }
+
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+
+  const detailsPage = document.createElement("section");
+
+  detailsPage.id = "product-details-page";
+  detailsPage.className = "page active";
+
+  let imageHTML = "";
+
+  if (product.image) {
+    imageHTML = `
+      <img
+        src="${product.image}"
+        alt="${escapeHTML(product.name)}"
+        style="width:100%;max-height:300px;object-fit:contain;border-radius:18px;margin-bottom:18px;"
+      >
+    `;
+  } else {
+    imageHTML = `
+      <div
+        style="font-size:90px;text-align:center;padding:25px;background:#17251b;border-radius:18px;margin-bottom:18px;"
+      >
+        ${product.icon || "🌿"}
+      </div>
+    `;
+  }
+
+  detailsPage.innerHTML = `
+    <div class="page-head">
+
+      <button
+        class="back-button"
+        onclick="closeProductDetails()"
+      >
+        رجوع
+      </button>
+
+      <h2>تفاصيل المنتج</h2>
+
+    </div>
+
+    <div class="info-card">
+
+      ${imageHTML}
+
+      <h3>${escapeHTML(product.name)}</h3>
+
+      <p>
+        <strong>الفئة:</strong>
+        ${escapeHTML(product.category || "عام")}
+      </p>
+
+      <h3>نبذة عن المنتج</h3>
+
+      <p>
+        ${escapeHTML(product.description || "لا يوجد وصف متاح.")}
+      </p>
+
+      <h3>الفوائد والمعلومات</h3>
+
+      <p>
+        ${escapeHTML(product.benefits || "لا توجد معلومات إضافية.")}
+      </p>
+
+      <h3>تفاصيل إضافية</h3>
+
+      <p>
+        ${escapeHTML(product.details || "لا توجد تفاصيل إضافية.")}
+      </p>
+
+      <div class="info-card">
+        <p>
+          ⚠️ المعلومات للتثقيف والتعريف فقط، وليست وصفة علاجية،
+          ولا تغني عن استشارة الطبيب أو المختص.
+        </p>
+      </div>
+
+    </div>
+  `;
+
+  const app = document.getElementById("app");
+
+  if (app) {
+    app.appendChild(detailsPage);
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =========================================
+   إغلاق تفاصيل المنتج
+========================================= */
+
+function closeProductDetails() {
+  const detailsPage = document.getElementById("product-details-page");
+
+  if (detailsPage) {
+    detailsPage.remove();
+  }
+
+  showPage("products");
+}
+
+
+/* =========================================
+   عرض المقالات
+========================================= */
+
+function renderArticles() {
+  const list = document.getElementById("articlesList");
+  const searchInput = document.getElementById("articleSearch");
+
+  if (!list) {
+    return;
+  }
+
+  const searchText = searchInput
+    ? searchInput.value.trim().toLowerCase()
+    : "";
+
+  const filteredArticles = articles.filter(function(article) {
+    return (
+      !searchText ||
+      String(article.title || "").toLowerCase().includes(searchText) ||
+      String(article.content || "").toLowerCase().includes(searchText)
+    );
+  });
+
+  list.innerHTML = "";
+
+  if (filteredArticles.length === 0) {
+    list.innerHTML = `
+      <div class="empty">
+        لا توجد مقالات مطابقة للبحث.
+      </div>
+    `;
+    return;
+  }
+
+  filteredArticles.forEach(function(article) {
+    const card = document.createElement("article");
+    card.className = "article-card";
+
+    let imageHTML = "";
+
+    if (article.image) {
+      imageHTML = `
+        <img
+          class="article-image"
+          src="${article.image}"
+          alt="${escapeHTML(article.title)}"
+        >
+      `;
+    }
+
+    card.innerHTML = `
+      ${imageHTML}
+
+      <h3>
+        ${article.icon || "📚"}
+        ${escapeHTML(article.title)}
+      </h3>
+
+      <p>
+        ${escapeHTML(article.content)}
+      </p>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+
+/* =========================================
+   معرض الصور
+========================================= */
+
+function renderGallery() {
+  const gallery = document.getElementById("galleryList");
+
+  if (!gallery) {
+    return;
+  }
+
+  gallery.innerHTML = `
+    <div class="empty">
+      يمكنك إضافة الصور من قسم الإدارة.
+    </div>
+  `;
+}
+
+
+/* =========================================
+   عرض الروابط
+========================================= */
+
+function renderLinks() {
+  const list = document.getElementById("linksList");
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML = "";
+
+  if (links.length === 0) {
+    list.innerHTML = `
+      <div class="empty">
+        لا توجد روابط حاليًا.
+      </div>
+    `;
+    return;
+  }
+
+  links.forEach(function(link) {
+    const card = document.createElement("article");
+    card.className = "link-card";
+
+    card.innerHTML = `
+      <h3>🔗 ${escapeHTML(link.title)}</h3>
+
+      <p>
+        ${escapeHTML(link.description || "")}
+      </p>
+
+      <button
+        class="primary-btn"
+        onclick="openExternalLink('${encodeURIComponent(link.url)}')"
+      >
+        فتح الرابط
+      </button>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+
+/* =========================================
+   فتح رابط خارجي
+========================================= */
+
+function openExternalLink(encodedUrl) {
+  const url = decodeURIComponent(encodedUrl);
+
+  if (url) {
+    window.open(url, "_blank");
+  }
+}
+
+
+/* =========================================
+   لوحة الإدارة
+========================================= */
+
+function renderAdmin() {
+  renderAdminProducts();
+  renderAdminArticles();
+  renderAdminLinks();
+}
+
+
+/* =========================================
+   إدارة المنتجات
+========================================= */
+
+function renderAdminProducts() {
+  const container = document.getElementById("adminProducts");
+
+  if (!container) {
+    return;
+  }
+
+  let html = `
+    <div class="admin-box">
+
+      <div class="admin-title">
+        <h3>إدارة المنتجات</h3>
+      </div>
+
+      <button
+        class="primary-btn"
+        onclick="openProductForm()"
+      >
+        + إضافة منتج
+      </button>
+  `;
+
+  if (products.length === 0) {
+    html += `
+      <p class="empty">لا توجد منتجات.</p>
+    `;
+  }
+
+  products.forEach(function(product) {
+    html += `
+      <div class="admin-item">
+
+        <strong>
+          ${product.icon || "🌿"}
+          ${escapeHTML(product.name)}
+        </strong>
+
+        <p class="small-note">
+          ${escapeHTML(product.category || "عام")}
+        </p>
+
+        <div class="admin-actions">
+
+          <button
+            class="edit-btn"
+            onclick="openProductForm(${product.id})"
+          >
+            تعديل
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteProduct(${product.id})"
+          >
+            حذف
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   إضافة أو تعديل منتج
+========================================= */
+
+function openProductForm(productId) {
+  const product = productId
+    ? products.find(function(item) {
+        return Number(item.id) === Number(productId);
+      })
+    : null;
+
+  const overlay = document.getElementById("formOverlay");
+  const title = document.getElementById("formTitle");
+  const content = document.getElementById("formContent");
+
+  if (!overlay || !title || !content) {
+    alert("نافذة الإدارة غير موجودة في الصفحة.");
+    return;
+  }
+
+  title.textContent = product ? "تعديل المنتج" : "إضافة منتج";
+
+  content.innerHTML = `
+    <label class="form-label">اسم المنتج</label>
+    <input
+      id="formProductName"
+      class="form-input"
+      type="text"
+      value="${product ? escapeAttribute(product.name) : ""}"
+      placeholder="اسم المنتج"
+    >
+
+    <label class="form-label">الفئة</label>
+    <input
+      id="formProductCategory"
+      class="form-input"
+      type="text"
+      value="${product ? escapeAttribute(product.category) : ""}"
+      placeholder="مثل: مكملات غذائية"
+    >
+
+    <label class="form-label">الأيقونة</label>
+    <input
+      id="formProductIcon"
+      class="form-input"
+      type="text"
+      value="${product ? escapeAttribute(product.icon) : "🌿"}"
+      placeholder="🌿"
+    >
+
+    <label class="form-label">الوصف</label>
+    <textarea
+      id="formProductDescription"
+      class="form-textarea"
+      placeholder="وصف المنتج"
+    >${product ? escapeHTML(product.description) : ""}</textarea>
+
+    <label class="form-label">الفوائد والمعلومات</label>
+    <textarea
+      id="formProductBenefits"
+      class="form-textarea"
+      placeholder="الفوائد والمعلومات"
+    >${product ? escapeHTML(product.benefits) : ""}</textarea>
+
+    <label class="form-label">التفاصيل</label>
+    <textarea
+      id="formProductDetails"
+      class="form-textarea"
+      placeholder="تفاصيل إضافية"
+    >${product ? escapeHTML(product.details) : ""}</textarea>
+
+    <label class="form-label">رابط الصورة، اختياري</label>
+    <input
+      id="formProductImage"
+      class="form-input"
+      type="text"
+      value="${product ? escapeAttribute(product.image) : ""}"
+      placeholder="اتركه فارغًا إذا لم توجد صورة"
+    >
+
+    <div class="form-actions">
+
+      <button
+        class="primary-btn"
+        onclick="saveProductForm(${product ? product.id : "null"})"
+      >
+        حفظ
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeForm()"
+      >
+        إلغاء
+      </button>
+
+    </div>
+  `;
+
+  overlay.classList.add("show");
+}
+
+
+/* =========================================
+   حفظ المنتج
+========================================= */
+
+function saveProductForm(productId) {
+  const name = document.getElementById("formProductName").value.trim();
+  const category = document.getElementById("formProductCategory").value.trim();
+  const icon = document.getElementById("formProductIcon").value.trim();
+  const description = document.getElementById("formProductDescription").value.trim();
+  const benefits = document.getElementById("formProductBenefits").value.trim();
+  const details = document.getElementById("formProductDetails").value.trim();
+  const image = document.getElementById("formProductImage").value.trim();
+
+  if (!name) {
+    alert("اكتب اسم المنتج أولًا.");
+    return;
+  }
+
+  if (productId) {
+    const index = products.findIndex(function(item) {
+      return Number(item.id) === Number(productId);
+    });
+
+    if (index !== -1) {
+      products[index] = {
+        ...products[index],
+        name,
+        category: category || "عام",
+        icon: icon || "🌿",
+        description,
+        benefits,
+        details,
+        image
+      };
+    }
+  } else {
+    const newId = products.length
+      ? Math.max(...products.map(function(item) {
+          return Number(item.id) || 0;
+        })) + 1
+      : 1;
+
+    products.push({
+      id: newId,
+      name,
+      category: category || "عام",
+      icon: icon || "🌿",
+      description,
+      benefits,
+      details,
+      image
+    });
+  }
+
+  saveData();
+  closeForm();
+  renderProducts();
+  renderAdmin();
+}
+
+
+/* =========================================
+   حذف منتج
+========================================= */
+
+function deleteProduct(productId) {
+  const product = products.find(function(item) {
+    return Number(item.id) === Number(productId);
+  });
+
+  if (!product) {
+    return;
+  }
+
+  const confirmed = confirm(
+    "هل تريد حذف المنتج: " + product.name + " ؟"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  products = products.filter(function(item) {
+    return Number(item.id) !== Number(productId);
+  });
+
+  saveData();
+  renderProducts();
+  renderAdmin();
+}
+
+
+/* =========================================
+   إدارة المقالات
+========================================= */
+
+function renderAdminArticles() {
+  const container = document.getElementById("adminArticles");
+
+  if (!container) {
+    return;
+  }
+
+  let html = `
+    <div class="admin-box">
+
+      <div class="admin-title">
+        <h3>إدارة المقالات</h3>
+      </div>
+
+      <button
+        class="primary-btn"
+        onclick="openArticleForm()"
+      >
+        + إضافة مقال
+      </button>
+  `;
+
+  articles.forEach(function(article) {
+    html += `
+      <div class="admin-item">
+
+        <strong>
+          ${article.icon || "📚"}
+          ${escapeHTML(article.title)}
+        </strong>
+
+        <div class="admin-actions">
+
+          <button
+            class="edit-btn"
+            onclick="openArticleForm(${article.id})"
+          >
+            تعديل
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteArticle(${article.id})"
+          >
+            حذف
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   إضافة أو تعديل مقال
+========================================= */
+
+function openArticleForm(articleId) {
+  const article = articleId
+    ? articles.find(function(item) {
+        return Number(item.id) === Number(articleId);
+      })
+    : null;
+
+  const overlay = document.getElementById("formOverlay");
+  const title = document.getElementById("formTitle");
+  const content = document.getElementById("formContent");
+
+  if (!overlay || !title || !content) {
+    return;
+  }
+
+  title.textContent = article ? "تعديل المقال" : "إضافة مقال";
+
+  content.innerHTML = `
+    <label class="form-label">عنوان المقال</label>
+    <input
+      id="formArticleTitle"
+      class="form-input"
+      type="text"
+      value="${article ? escapeAttribute(article.title) : ""}"
+      placeholder="عنوان المقال"
+    >
+
+    <label class="form-label">الأيقونة</label>
+    <input
+      id="formArticleIcon"
+      class="form-input"
+      type="text"
+      value="${article ? escapeAttribute(article.icon) : "📚"}"
+      placeholder="📚"
+    >
+
+    <label class="form-label">محتوى المقال</label>
+    <textarea
+      id="formArticleContent"
+      class="form-textarea"
+      placeholder="اكتب محتوى المقال"
+    >${article ? escapeHTML(article.content) : ""}</textarea>
+
+    <label class="form-label">رابط الصورة، اختياري</label>
+    <input
+      id="formArticleImage"
+      class="form-input"
+      type="text"
+      value="${article ? escapeAttribute(article.image) : ""}"
+      placeholder="رابط الصورة أو اتركه فارغًا"
+    >
+
+    <div class="form-actions">
+
+      <button
+        class="primary-btn"
+        onclick="saveArticleForm(${article ? article.id : "null"})"
+      >
+        حفظ
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeForm()"
+      >
+        إلغاء
+      </button>
+
+    </div>
+  `;
+
+  overlay.classList.add("show");
+}
+
+
+/* =========================================
+   حفظ المقال
+========================================= */
+
+function saveArticleForm(articleId) {
+  const title = document.getElementById("formArticleTitle").value.trim();
+  const icon = document.getElementById("formArticleIcon").value.trim();
+  const content = document.getElementById("formArticleContent").value.trim();
+  const image = document.getElementById("formArticleImage").value.trim();
+
+  if (!title) {
+    alert("اكتب عنوان المقال أولًا.");
+    return;
+  }
+
+  if (articleId) {
+    const index = articles.findIndex(function(item) {
+      return Number(item.id) === Number(articleId);
+    });
+
+    if (index !== -1) {
+      articles[index] = {
+        ...articles[index],
+        title,
+        icon: icon || "📚",
+        content,
+        image
+      };
+    }
+  } else {
+    const newId = articles.length
+      ? Math.max(...articles.map(function(item) {
+          return Number(item.id) || 0;
+        })) + 1
+      : 1;
+
+    articles.push({
+      id: newId,
+      title,
+      icon: icon || "📚",
+      content,
+      image
+    });
+  }
+
+  saveData();
+  closeForm();
+  renderArticles();
+  renderAdmin();
+}
+
+
+/* =========================================
+   حذف مقال
+========================================= */
+
+function deleteArticle(articleId) {
+  const confirmed = confirm("هل تريد حذف هذا المقال؟");
+
+  if (!confirmed) {
+    return;
+  }
+
+  articles = articles.filter(function(item) {
+    return Number(item.id) !== Number(articleId);
+  });
+
+  saveData();
+  renderArticles();
+  renderAdmin();
+}
+
+
+/* =========================================
+   إدارة الروابط
+========================================= */
+
+function renderAdminLinks() {
+  const container = document.getElementById("adminLinks");
+
+  if (!container) {
+    return;
+  }
+
+  let html = `
+    <div class="admin-box">
+
+      <div class="admin-title">
+        <h3>إدارة الروابط</h3>
+      </div>
+
+      <button
+        class="primary-btn"
+        onclick="openLinkForm()"
+      >
+        + إضافة رابط
+      </button>
+  `;
+
+  links.forEach(function(link) {
+    html += `
+      <div class="admin-item">
+
+        <strong>
+          🔗 ${escapeHTML(link.title)}
+        </strong>
+
+        <p class="small-note">
+          ${escapeHTML(link.url)}
+        </p>
+
+        <div class="admin-actions">
+
+          <button
+            class="edit-btn"
+            onclick="openLinkForm(${link.id})"
+          >
+            تعديل
+          </button>
+
+          <button
+            class="delete-btn"
+            onclick="deleteLink(${link.id})"
+          >
+            حذف
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   إضافة أو تعديل رابط
+========================================= */
+
+function openLinkForm(linkId) {
+  const link = linkId
+    ? links.find(function(item) {
+        return Number(item.id) === Number(linkId);
+      })
+    : null;
+
+  const overlay = document.getElementById("formOverlay");
+  const title = document.getElementById("formTitle");
+  const content = document.getElementById("formContent");
+
+  if (!overlay || !title || !content) {
+    return;
+  }
+
+  title.textContent = link ? "تعديل الرابط" : "إضافة رابط";
+
+  content.innerHTML = `
+    <label class="form-label">اسم الرابط</label>
+    <input
+      id="formLinkTitle"
+      class="form-input"
+      type="text"
+      value="${link ? escapeAttribute(link.title) : ""}"
+      placeholder="اسم الرابط"
+    >
+
+    <label class="form-label">الرابط</label>
+    <input
+      id="formLinkUrl"
+      class="form-input"
+      type="url"
+      value="${link ? escapeAttribute(link.url) : ""}"
+      placeholder="https://example.com"
+    >
+
+    <label class="form-label">الوصف</label>
+    <textarea
+      id="formLinkDescription"
+      class="form-textarea"
+      placeholder="وصف الرابط"
+    >${link ? escapeHTML(link.description) : ""}</textarea>
+
+    <div class="form-actions">
+
+      <button
+        class="primary-btn"
+        onclick="saveLinkForm(${link ? link.id : "null"})"
+      >
+        حفظ
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeForm()"
+      >
+        إلغاء
+      </button>
+
+    </div>
+  `;
+
+  overlay.classList.add("show");
+}
+
+
+/* =========================================
+   حفظ الرابط
+========================================= */
+
+function saveLinkForm(linkId) {
+  const title = document.getElementById("formLinkTitle").value.trim();
+  const url = document.getElementById("formLinkUrl").value.trim();
+  const description = document.getElementById("formLinkDescription").value.trim();
+
+  if (!title || !url) {
+    alert("اكتب اسم الرابط والرابط.");
+    return;
+  }
+
+  if (linkId) {
+    const index = links.findIndex(function(item) {
+      return Number(item.id) === Number(linkId);
+    });
+
+    if (index !== -1) {
+      links[index] = {
+        ...links[index],
+        title,
+        url,
+        description
+      };
+    }
+  } else {
+    const newId = links.length
+      ? Math.max(...links.map(function(item) {
+          return Number(item.id) || 0;
+        })) + 1
+      : 1;
+
+    links.push({
+      id: newId,
+      title,
+      url,
+      description
+    });
+  }
+
+  saveData();
+  closeForm();
+  renderLinks();
+  renderAdmin();
+}
+
+
+/* =========================================
+   حذف رابط
+========================================= */
+
+function deleteLink(linkId) {
+  const confirmed = confirm("هل تريد حذف هذا الرابط؟");
+
+  if (!confirmed) {
+    return;
+  }
+
+  links = links.filter(function(item) {
+    return Number(item.id) !== Number(linkId);
+  });
+
+  saveData();
+  renderLinks();
+  renderAdmin();
+}
+
+
+/* =========================================
+   إغلاق نافذة الإدارة
+========================================= */
+
+function closeForm() {
+  const overlay = document.getElementById("formOverlay");
+
+  if (overlay) {
+    overlay.classList.remove("show");
+  }
+}
+
+
+/* =========================================
+   البحث في المنتجات والمقالات
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+  const productSearch = document.getElementById("productSearch");
+  const articleSearch = document.getElementById("articleSearch");
+
+  if (productSearch) {
+    productSearch.addEventListener("input", function() {
+      currentProductPage = 1;
+      renderProducts();
+    });
+  }
+
+  if (articleSearch) {
+    articleSearch.addEventListener("input", function() {
+      renderArticles();
+    });
+  }
+});
+
+
+/* =========================================
+   حماية النصوص من HTML
+========================================= */
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+  return escapeHTML(value);
+}
+
+
+/* =========================================
+   تشغيل التطبيق
+========================================= */
 
 loadData();
 renderProducts();
@@ -572,30 +1535,27 @@ renderArticles();
 renderGallery();
 renderLinks();
 
-/* مهم جداً: جعل الدوال متاحة للأزرار onclick داخل HTML */
-window.showPage=showPage;
-window.filterProducts=filterProducts;
-window.goToProductPage=goToProductPage;
-window.nextProductPage=nextProductPage;
-window.prevProductPage=prevProductPage;
-window.searchProducts=searchProducts;
-window.showProductDetails=showProductDetails;
-window.openProductForm=openProductForm;
-window.saveProduct=saveProduct;
-window.editProduct=editProduct;
-window.deleteProduct=deleteProduct;
-window.openArticleForm=openArticleForm;
-window.saveArticle=saveArticle;
-window.deleteArticle=deleteArticle;
-window.renderArticles=renderArticles;
-window.showArticleDetails=showArticleDetails;
-window.openLinkForm=openLinkForm;
-window.saveLink=saveLink;
-window.deleteLink=deleteLink;
-window.openExternal=openExternal;
-window.openForm=openForm;
-window.closeForm=closeForm;
-window.overlayClose=overlayClose;
-window.previewUpload=previewUpload;
-window.removePreview=removePreview;
-window.resetAllData=resetAllData;
+
+/* =========================================
+   جعل الدوال متاحة للأزرار
+========================================= */
+
+window.showPage = showPage;
+window.showProductDetails = showProductDetails;
+window.closeProductDetails = closeProductDetails;
+window.openExternalLink = openExternalLink;
+
+window.openProductForm = openProductForm;
+window.saveProductForm = saveProductForm;
+window.deleteProduct = deleteProduct;
+
+window.openArticleForm = openArticleForm;
+window.saveArticleForm = saveArticleForm;
+window.deleteArticle = deleteArticle;
+
+window.openLinkForm = openLinkForm;
+window.saveLinkForm = saveLinkForm;
+window.deleteLink = deleteLink;
+
+window.closeForm = closeForm;
+window.renderAdmin = renderAdmin;
