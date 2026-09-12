@@ -5,7 +5,7 @@
 
 
 /* =========================================
-   بيانات المنتجات
+   البيانات الافتراضية للمنتجات
 ========================================= */
 
 const defaultProducts = [
@@ -15,12 +15,9 @@ const defaultProducts = [
     category: "مكملات غذائية",
     icon: "🌿",
     image: "",
-    description:
-      "سبيرولينا DXN هي مكمل غذائي يعتمد على الطحالب الخضراء المزرقة، وتُستخدم ضمن النظام الغذائي اليومي.",
-    benefits:
-      "تحتوي على عناصر غذائية متنوعة، ويجب استعمالها وفق تعليمات المنتج واستشارة المختص عند الحاجة.",
-    details:
-      "سبيرولينا هي نوع من الطحالب الخضراء المزرقة. تُستخدم كمكمل غذائي، ولا تُعد علاجًا لأي مرض."
+    description: "سبيرولينا DXN هي مكمل غذائي يعتمد على الطحالب الخضراء المزرقة، وتُستخدم ضمن النظام الغذائي اليومي.",
+    benefits: "تحتوي على عناصر غذائية متنوعة، ويجب استعمالها وفق تعليمات المنتج واستشارة المختص عند الحاجة.",
+    details: "سبيرولينا هي نوع من الطحالب الخضراء المزرقة. تُستخدم كمكمل غذائي، ولا تُعد علاجًا لأي مرض."
   },
   {
     id: 2,
@@ -28,12 +25,9 @@ const defaultProducts = [
     category: "مكملات غذائية",
     icon: "🍄",
     image: "",
-    description:
-      "منتج يعتمد على فطر الجانوديرما المعروف باسم الريشي، ويُستخدم كمكمل غذائي.",
-    benefits:
-      "يُستخدم ضمن نمط حياة متوازن، مع الالتزام بتعليمات الاستخدام الموجودة على العبوة.",
-    details:
-      "يُرجى قراءة مكونات المنتج وطريقة استعماله، واستشارة الطبيب قبل استخدام المكملات عند وجود حالة صحية أو تناول أدوية."
+    description: "منتج يعتمد على فطر الجانوديرما المعروف باسم الريشي، ويُستخدم كمكمل غذائي.",
+    benefits: "يُستخدم ضمن نمط حياة متوازن، مع الالتزام بتعليمات الاستخدام الموجودة على العبوة.",
+    details: "يُرجى قراءة مكونات المنتج وطريقة استعماله، واستشارة الطبيب قبل استخدام المكملات عند وجود حالة صحية أو تناول أدوية."
   },
   {
     id: 3,
@@ -41,12 +35,9 @@ const defaultProducts = [
     category: "المشروبات",
     icon: "☕",
     image: "",
-    description:
-      "قهوة فورية ممزوجة بمكونات نباتية ومستخلص الجانوديرما.",
-    benefits:
-      "مشروب يمكن تناوله باعتدال، مع الانتباه إلى كمية الكافيين والسكر حسب نوع المنتج.",
-    details:
-      "هذا المنتج مشروب غذائي وليس دواءً. يُنصح باتباع تعليمات التحضير الموجودة على العبوة."
+    description: "قهوة فورية ممزوجة بمكونات نباتية ومستخلص الجانوديرما.",
+    benefits: "مشروب يمكن تناوله باعتدال، مع الانتباه إلى كمية الكافيين والسكر حسب نوع المنتج.",
+    details: "هذا المنتج مشروب غذائي وليس دواءً. يُنصح باتباع تعليمات التحضير الموجودة على العبوة."
   },
   {
     id: 4,
@@ -54,12 +45,9 @@ const defaultProducts = [
     category: "مكملات غذائية",
     icon: "🌱",
     image: "",
-    description:
-      "مكمل غذائي يحتوي على مكونات مرتبطة بفطر الكورديسيبس.",
-    benefits:
-      "يُستخدم كمكمل ضمن نظام غذائي متوازن، ولا ينبغي اعتباره بديلًا للعلاج الطبي.",
-    details:
-      "قبل استعمال أي مكمل غذائي، يجب التأكد من ملاءمته للعمر والحالة الصحية والأدوية المستخدمة."
+    description: "مكمل غذائي يحتوي على مكونات مرتبطة بفطر الكورديسيبس.",
+    benefits: "يُستخدم كمكمل ضمن نظام غذائي متوازن، ولا ينبغي اعتباره بديلًا للعلاج الطبي.",
+    details: "قبل استعمال أي مكمل غذائي، يجب التأكد من ملاءمته للعمر والحالة الصحية والأدوية المستخدمة."
   },
   {
     id: 5,
@@ -67,12 +55,9 @@ const defaultProducts = [
     category: "المشروبات",
     icon: "☕",
     image: "",
-    description:
-      "مشروب قهوة فورية للاستخدام اليومي.",
-    benefits:
-      "يمكن تناوله باعتدال وفق الاحتياجات الشخصية وتعليمات المنتج.",
-    details:
-      "يُرجى الانتباه إلى مكونات المشروب، خاصة الكافيين والسكر."
+    description: "مشروب قهوة فورية للاستخدام اليومي.",
+    benefits: "يمكن تناوله باعتدال وفق الاحتياجات الشخصية وتعليمات المنتج.",
+    details: "يُرجى الانتباه إلى مكونات المشروب، خاصة الكافيين والسكر."
   },
   {
     id: 6,
@@ -80,18 +65,15 @@ const defaultProducts = [
     category: "مكملات غذائية",
     icon: "🍄",
     image: "",
-    description:
-      "مكمل غذائي يعتمد على فطر عرف الأسد.",
-    benefits:
-      "يُستخدم ضمن النظام الغذائي، ولا توجد في هذا التطبيق وعود علاجية.",
-    details:
-      "المعلومات المقدمة للتثقيف فقط، ويجب الرجوع إلى مختص قبل الاستخدام عند الحاجة."
+    description: "مكمل غذائي يعتمد على فطر عرف الأسد.",
+    benefits: "يُستخدم ضمن النظام الغذائي، ولا توجد في هذا التطبيق وعود علاجية.",
+    details: "المعلومات المقدمة للتثقيف فقط، ويجب الرجوع إلى مختص قبل الاستخدام عند الحاجة."
   }
 ];
 
 
 /* =========================================
-   بيانات المقالات
+   البيانات الافتراضية للمقالات
 ========================================= */
 
 const defaultArticles = [
@@ -100,30 +82,27 @@ const defaultArticles = [
     title: "أهمية الغذاء المتوازن",
     icon: "🥗",
     image: "",
-    content:
-      "الغذاء المتوازن يساعد على تزويد الجسم بالعناصر الغذائية الضرورية. احرص على تنويع الأطعمة وتناول الخضروات والفواكه والحبوب الكاملة وشرب الماء بانتظام."
+    content: "الغذاء المتوازن يساعد على تزويد الجسم بالعناصر الغذائية الضرورية. احرص على تنويع الأطعمة وتناول الخضروات والفواكه والحبوب الكاملة وشرب الماء بانتظام."
   },
   {
     id: 2,
     title: "أهمية شرب الماء",
     icon: "💧",
     image: "",
-    content:
-      "الماء عنصر أساسي للحياة، ويساعد الجسم على أداء وظائفه المختلفة. تختلف الحاجة إلى الماء حسب العمر والنشاط والطقس والحالة الصحية."
+    content: "الماء عنصر أساسي للحياة، ويساعد الجسم على أداء وظائفه المختلفة. تختلف الحاجة إلى الماء حسب العمر والنشاط والطقس والحالة الصحية."
   },
   {
     id: 3,
     title: "النشاط البدني والصحة",
     icon: "🚶",
     image: "",
-    content:
-      "يساعد النشاط البدني المنتظم على تحسين اللياقة ودعم الصحة العامة. ابدأ بخطوات بسيطة واختر نشاطًا يناسب قدراتك."
+    content: "يساعد النشاط البدني المنتظم على تحسين اللياقة ودعم الصحة العامة. ابدأ بخطوات بسيطة واختر نشاطًا يناسب قدراتك."
   }
 ];
 
 
 /* =========================================
-   بيانات الروابط
+   البيانات الافتراضية للروابط
 ========================================= */
 
 const defaultLinks = [
@@ -135,7 +114,7 @@ const defaultLinks = [
   },
   {
     id: 2,
-    title: "معلومات عامة عن التغذية",
+    title: "منظمة الصحة العالمية",
     url: "https://www.who.int",
     description: "مصدر عام للمعلومات الصحية والتوعوية."
   }
@@ -157,7 +136,31 @@ let currentCategory = "الكل";
 
 
 /* =========================================
-   تحميل البيانات من الهاتف
+   أدوات مساعدة
+========================================= */
+
+function cloneData(data) {
+  return JSON.parse(JSON.stringify(data));
+}
+
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+  return escapeHTML(value);
+}
+
+
+/* =========================================
+   تحميل البيانات
 ========================================= */
 
 function loadData() {
@@ -168,22 +171,22 @@ function loadData() {
 
     products = savedProducts
       ? JSON.parse(savedProducts)
-      : JSON.parse(JSON.stringify(defaultProducts));
+      : cloneData(defaultProducts);
 
     articles = savedArticles
       ? JSON.parse(savedArticles)
-      : JSON.parse(JSON.stringify(defaultArticles));
+      : cloneData(defaultArticles);
 
     links = savedLinks
       ? JSON.parse(savedLinks)
-      : JSON.parse(JSON.stringify(defaultLinks));
+      : cloneData(defaultLinks);
 
   } catch (error) {
     console.error("خطأ في تحميل البيانات:", error);
 
-    products = JSON.parse(JSON.stringify(defaultProducts));
-    articles = JSON.parse(JSON.stringify(defaultArticles));
-    links = JSON.parse(JSON.stringify(defaultLinks));
+    products = cloneData(defaultProducts);
+    articles = cloneData(defaultArticles);
+    links = cloneData(defaultLinks);
   }
 
   saveData();
@@ -206,7 +209,7 @@ function saveData() {
 
 
 /* =========================================
-   الانتقال بين الصفحات
+   التنقل بين الصفحات
 ========================================= */
 
 function showPage(pageId) {
@@ -218,9 +221,12 @@ function showPage(pageId) {
 
   const targetPage = document.getElementById(pageId);
 
-  if (targetPage) {
-    targetPage.classList.add("active");
+  if (!targetPage) {
+    console.error("الصفحة غير موجودة:", pageId);
+    return;
   }
+
+  targetPage.classList.add("active");
 
   if (pageId === "products") {
     currentProductPage = 1;
@@ -251,7 +257,7 @@ function showPage(pageId) {
 
 
 /* =========================================
-   عرض فئات المنتجات
+   فئات المنتجات
 ========================================= */
 
 function renderCategories() {
@@ -264,7 +270,10 @@ function renderCategories() {
   const categories = ["الكل"];
 
   products.forEach(function(product) {
-    if (product.category && !categories.includes(product.category)) {
+    if (
+      product.category &&
+      !categories.includes(product.category)
+    ) {
       categories.push(product.category);
     }
   });
@@ -275,12 +284,11 @@ function renderCategories() {
     const button = document.createElement("button");
 
     button.className = "category-btn";
+    button.textContent = category;
 
     if (category === currentCategory) {
       button.classList.add("active");
     }
-
-    button.textContent = category;
 
     button.addEventListener("click", function() {
       currentCategory = category;
@@ -310,12 +318,16 @@ function renderProducts() {
     ? searchInput.value.trim().toLowerCase()
     : "";
 
-  let filteredProducts = products.filter(function(product) {
+  const filteredProducts = products.filter(function(product) {
+    const name = String(product.name || "").toLowerCase();
+    const description = String(product.description || "").toLowerCase();
+    const category = String(product.category || "").toLowerCase();
+
     const matchesSearch =
       !searchText ||
-      String(product.name || "").toLowerCase().includes(searchText) ||
-      String(product.description || "").toLowerCase().includes(searchText) ||
-      String(product.category || "").toLowerCase().includes(searchText);
+      name.includes(searchText) ||
+      description.includes(searchText) ||
+      category.includes(searchText);
 
     const matchesCategory =
       currentCategory === "الكل" ||
@@ -333,7 +345,9 @@ function renderProducts() {
     currentProductPage = totalPages;
   }
 
-  const startIndex = (currentProductPage - 1) * productsPerPage;
+  const startIndex =
+    (currentProductPage - 1) * productsPerPage;
+
   const visibleProducts = filteredProducts.slice(
     startIndex,
     startIndex + productsPerPage
@@ -366,16 +380,21 @@ function renderProducts() {
       imageHTML = `
         <img
           class="product-image"
-          src="${product.image}"
-          alt="${escapeHTML(product.name)}"
-        >
+          src="${escapeAttribute(product.image)}"
+          alt="${escapeAttribute(product.name)}">
       `;
     } else {
       imageHTML = `
         <div
           class="product-image"
-          style="height:150px;display:flex;align-items:center;justify-content:center;font-size:65px;background:#17251b;"
-        >
+          style="
+            height:150px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:65px;
+            background:#17251b;
+          ">
           ${product.icon || "🌿"}
         </div>
       `;
@@ -403,8 +422,7 @@ function renderProducts() {
 
         <button
           class="product-button"
-          onclick="showProductDetails(${product.id})"
-        >
+          onclick="showProductDetails(${Number(product.id)})">
           التفاصيل 📖
         </button>
 
@@ -420,7 +438,7 @@ function renderProducts() {
 
 
 /* =========================================
-   صفحات المنتجات
+   ترقيم صفحات المنتجات
 ========================================= */
 
 function renderProductPagination(totalPages) {
@@ -446,7 +464,6 @@ function renderProductPagination(totalPages) {
   const previousButton = document.createElement("button");
   previousButton.className = "page-arrow";
   previousButton.textContent = "السابق";
-
   previousButton.disabled = currentProductPage === 1;
 
   previousButton.addEventListener("click", function() {
@@ -479,7 +496,6 @@ function renderProductPagination(totalPages) {
   const nextButton = document.createElement("button");
   nextButton.className = "page-arrow";
   nextButton.textContent = "التالي";
-
   nextButton.disabled = currentProductPage === totalPages;
 
   nextButton.addEventListener("click", function() {
@@ -494,7 +510,7 @@ function renderProductPagination(totalPages) {
 
 
 /* =========================================
-   تفاصيل المنتج - إصلاح الصفحة الفارغة
+   تفاصيل المنتج
 ========================================= */
 
 function showProductDetails(productId) {
@@ -507,7 +523,8 @@ function showProductDetails(productId) {
     return;
   }
 
-  const oldDetailsPage = document.getElementById("product-details-page");
+  const oldDetailsPage =
+    document.getElementById("product-details-page");
 
   if (oldDetailsPage) {
     oldDetailsPage.remove();
@@ -527,16 +544,27 @@ function showProductDetails(productId) {
   if (product.image) {
     imageHTML = `
       <img
-        src="${product.image}"
-        alt="${escapeHTML(product.name)}"
-        style="width:100%;max-height:300px;object-fit:contain;border-radius:18px;margin-bottom:18px;"
-      >
+        src="${escapeAttribute(product.image)}"
+        alt="${escapeAttribute(product.name)}"
+        style="
+          width:100%;
+          max-height:300px;
+          object-fit:contain;
+          border-radius:18px;
+          margin-bottom:18px;
+        ">
     `;
   } else {
     imageHTML = `
       <div
-        style="font-size:90px;text-align:center;padding:25px;background:#17251b;border-radius:18px;margin-bottom:18px;"
-      >
+        style="
+          font-size:90px;
+          text-align:center;
+          padding:25px;
+          background:#17251b;
+          border-radius:18px;
+          margin-bottom:18px;
+        ">
         ${product.icon || "🌿"}
       </div>
     `;
@@ -547,8 +575,7 @@ function showProductDetails(productId) {
 
       <button
         class="back-button"
-        onclick="closeProductDetails()"
-      >
+        onclick="closeProductDetails()">
         رجوع
       </button>
 
@@ -597,9 +624,12 @@ function showProductDetails(productId) {
 
   const app = document.getElementById("app");
 
-  if (app) {
-    app.appendChild(detailsPage);
+  if (!app) {
+    alert("حدث خطأ: لم يتم العثور على مساحة التطبيق.");
+    return;
   }
+
+  app.appendChild(detailsPage);
 
   window.scrollTo({
     top: 0,
@@ -613,7 +643,8 @@ function showProductDetails(productId) {
 ========================================= */
 
 function closeProductDetails() {
-  const detailsPage = document.getElementById("product-details-page");
+  const detailsPage =
+    document.getElementById("product-details-page");
 
   if (detailsPage) {
     detailsPage.remove();
@@ -668,9 +699,8 @@ function renderArticles() {
       imageHTML = `
         <img
           class="article-image"
-          src="${article.image}"
-          alt="${escapeHTML(article.title)}"
-        >
+          src="${escapeAttribute(article.image)}"
+          alt="${escapeAttribute(article.title)}">
       `;
     }
 
@@ -683,7 +713,7 @@ function renderArticles() {
       </h3>
 
       <p>
-        ${escapeHTML(article.content)}
+        ${escapeHTML(article.content || "")}
       </p>
     `;
 
@@ -746,8 +776,7 @@ function renderLinks() {
 
       <button
         class="primary-btn"
-        onclick="openExternalLink('${encodeURIComponent(link.url)}')"
-      >
+        onclick="openExternalLink('${encodeURIComponent(link.url)}')">
         فتح الرابط
       </button>
     `;
@@ -774,92 +803,10 @@ function openExternalLink(encodedUrl) {
    لوحة الإدارة
 ========================================= */
 
-/* =========================================
-   لوحة الإدارة والإعدادات
-========================================= */
-
 function renderAdmin() {
-  renderAdminProductPages();
   renderAdminProducts();
   renderAdminArticles();
   renderAdminLinks();
-}
-
-
-/* =========================================
-   إدارة صفحات المنتجات
-========================================= */
-
-function renderAdminProductPages() {
-  const container = document.getElementById("adminProductPages");
-
-  if (!container) {
-    return;
-  }
-
-  const totalPages = Math.max(
-    1,
-    Math.ceil(products.length / productsPerPage)
-  );
-
-  let html = `
-    <div class="admin-box">
-
-      <div class="admin-title">
-        <h3>صفحات المنتجات</h3>
-      </div>
-
-      <p class="small-note">
-        عدد المنتجات الحالية: ${products.length}
-      </p>
-
-      <div class="admin-pages">
-  `;
-
-  for (let page = 1; page <= totalPages; page++) {
-    const start = (page - 1) * productsPerPage;
-    const end = Math.min(start + productsPerPage, products.length);
-    const count = Math.max(0, end - start);
-
-    html += `
-      <button
-        class="admin-page-btn ${page === currentProductPage ? "current" : ""}"
-        onclick="goToAdminProductPage(${page})"
-      >
-        صفحة ${page}
-        <small>${count} منتجات</small>
-      </button>
-    `;
-  }
-
-  html += `
-      </div>
-
-      <p class="small-note">
-        يمكنك اختيار صفحة لمراجعة المنتجات الموجودة فيها.
-      </p>
-
-    </div>
-  `;
-
-  container.innerHTML = html;
-}
-
-
-/* =========================================
-   الانتقال إلى صفحة منتجات من الإعدادات
-========================================= */
-
-function goToAdminProductPage(page) {
-  currentProductPage = Number(page) || 1;
-
-  showPage("products");
-  renderProducts();
-}
-
-
-/* إتاحة الدالة للأزرار */
-window.goToAdminProductPage = goToAdminProductPage;
 }
 
 
@@ -883,15 +830,16 @@ function renderAdminProducts() {
 
       <button
         class="primary-btn"
-        onclick="openProductForm()"
-      >
+        onclick="openProductForm()">
         + إضافة منتج
       </button>
   `;
 
   if (products.length === 0) {
     html += `
-      <p class="empty">لا توجد منتجات.</p>
+      <p class="empty">
+        لا توجد منتجات.
+      </p>
     `;
   }
 
@@ -912,15 +860,13 @@ function renderAdminProducts() {
 
           <button
             class="edit-btn"
-            onclick="openProductForm(${product.id})"
-          >
+            onclick="openProductForm(${Number(product.id)})">
             تعديل
           </button>
 
           <button
             class="delete-btn"
-            onclick="deleteProduct(${product.id})"
-          >
+            onclick="deleteProduct(${Number(product.id)})">
             حذف
           </button>
 
@@ -937,7 +883,7 @@ function renderAdminProducts() {
 
 
 /* =========================================
-   إضافة أو تعديل منتج
+   نموذج إضافة أو تعديل منتج
 ========================================= */
 
 function openProductForm(productId) {
@@ -952,83 +898,83 @@ function openProductForm(productId) {
   const content = document.getElementById("formContent");
 
   if (!overlay || !title || !content) {
-    alert("نافذة الإدارة غير موجودة في الصفحة.");
+    alert("نافذة الإضافة غير موجودة.");
     return;
   }
 
-  title.textContent = product ? "تعديل المنتج" : "إضافة منتج";
+  title.textContent = product
+    ? "تعديل المنتج"
+    : "إضافة منتج";
 
   content.innerHTML = `
     <label class="form-label">اسم المنتج</label>
+
     <input
       id="formProductName"
       class="form-input"
       type="text"
       value="${product ? escapeAttribute(product.name) : ""}"
-      placeholder="اسم المنتج"
-    >
+      placeholder="اسم المنتج">
 
     <label class="form-label">الفئة</label>
+
     <input
       id="formProductCategory"
       class="form-input"
       type="text"
       value="${product ? escapeAttribute(product.category) : ""}"
-      placeholder="مثل: مكملات غذائية"
-    >
+      placeholder="مثل: مكملات غذائية">
 
     <label class="form-label">الأيقونة</label>
+
     <input
       id="formProductIcon"
       class="form-input"
       type="text"
       value="${product ? escapeAttribute(product.icon) : "🌿"}"
-      placeholder="🌿"
-    >
+      placeholder="🌿">
 
     <label class="form-label">الوصف</label>
+
     <textarea
       id="formProductDescription"
       class="form-textarea"
-      placeholder="وصف المنتج"
-    >${product ? escapeHTML(product.description) : ""}</textarea>
+      placeholder="وصف المنتج">${product ? escapeHTML(product.description) : ""}</textarea>
 
     <label class="form-label">الفوائد والمعلومات</label>
+
     <textarea
       id="formProductBenefits"
       class="form-textarea"
-      placeholder="الفوائد والمعلومات"
-    >${product ? escapeHTML(product.benefits) : ""}</textarea>
+      placeholder="الفوائد والمعلومات">${product ? escapeHTML(product.benefits) : ""}</textarea>
 
     <label class="form-label">التفاصيل</label>
+
     <textarea
       id="formProductDetails"
       class="form-textarea"
-      placeholder="تفاصيل إضافية"
-    >${product ? escapeHTML(product.details) : ""}</textarea>
+      placeholder="تفاصيل إضافية">${product ? escapeHTML(product.details) : ""}</textarea>
 
     <label class="form-label">رابط الصورة، اختياري</label>
+
     <input
       id="formProductImage"
       class="form-input"
       type="text"
       value="${product ? escapeAttribute(product.image) : ""}"
-      placeholder="اتركه فارغًا إذا لم توجد صورة"
-    >
+      placeholder="اتركه فارغًا إذا لم توجد صورة">
 
     <div class="form-actions">
 
       <button
         class="primary-btn"
-        onclick="saveProductForm(${product ? product.id : "null"})"
-      >
+        onclick="saveProductForm(${product ? Number(product.id) : "null"})">
         حفظ
       </button>
 
       <button
         class="secondary-btn"
-        onclick="closeForm()"
-      >
+        onclick="closeForm()">
         إلغاء
       </button>
 
@@ -1044,20 +990,41 @@ function openProductForm(productId) {
 ========================================= */
 
 function saveProductForm(productId) {
-  const name = document.getElementById("formProductName").value.trim();
-  const category = document.getElementById("formProductCategory").value.trim();
-  const icon = document.getElementById("formProductIcon").value.trim();
-  const description = document.getElementById("formProductDescription").value.trim();
-  const benefits = document.getElementById("formProductBenefits").value.trim();
-  const details = document.getElementById("formProductDetails").value.trim();
-  const image = document.getElementById("formProductImage").value.trim();
+  const nameElement = document.getElementById("formProductName");
+  const categoryElement = document.getElementById("formProductCategory");
+  const iconElement = document.getElementById("formProductIcon");
+  const descriptionElement = document.getElementById("formProductDescription");
+  const benefitsElement = document.getElementById("formProductBenefits");
+  const detailsElement = document.getElementById("formProductDetails");
+  const imageElement = document.getElementById("formProductImage");
+
+  if (
+    !nameElement ||
+    !categoryElement ||
+    !iconElement ||
+    !descriptionElement ||
+    !benefitsElement ||
+    !detailsElement ||
+    !imageElement
+  ) {
+    alert("حدث خطأ في نموذج المنتج.");
+    return;
+  }
+
+  const name = nameElement.value.trim();
+  const category = categoryElement.value.trim();
+  const icon = iconElement.value.trim();
+  const description = descriptionElement.value.trim();
+  const benefits = benefitsElement.value.trim();
+  const details = detailsElement.value.trim();
+  const image = imageElement.value.trim();
 
   if (!name) {
     alert("اكتب اسم المنتج أولًا.");
     return;
   }
 
-  if (productId) {
+  if (productId !== null && productId !== undefined) {
     const index = products.findIndex(function(item) {
       return Number(item.id) === Number(productId);
     });
@@ -1065,31 +1032,34 @@ function saveProductForm(productId) {
     if (index !== -1) {
       products[index] = {
         ...products[index],
-        name,
+        name: name,
         category: category || "عام",
         icon: icon || "🌿",
-        description,
-        benefits,
-        details,
-        image
+        description: description,
+        benefits: benefits,
+        details: details,
+        image: image
       };
     }
   } else {
     const newId = products.length
-      ? Math.max(...products.map(function(item) {
-          return Number(item.id) || 0;
-        })) + 1
+      ? Math.max.apply(
+          null,
+          products.map(function(item) {
+            return Number(item.id) || 0;
+          })
+        ) + 1
       : 1;
 
     products.push({
       id: newId,
-      name,
+      name: name,
       category: category || "عام",
       icon: icon || "🌿",
-      description,
-      benefits,
-      details,
-      image
+      description: description,
+      benefits: benefits,
+      details: details,
+      image: image
     });
   }
 
@@ -1151,11 +1121,18 @@ function renderAdminArticles() {
 
       <button
         class="primary-btn"
-        onclick="openArticleForm()"
-      >
+        onclick="openArticleForm()">
         + إضافة مقال
       </button>
   `;
+
+  if (articles.length === 0) {
+    html += `
+      <p class="empty">
+        لا توجد مقالات.
+      </p>
+    `;
+  }
 
   articles.forEach(function(article) {
     html += `
@@ -1170,15 +1147,13 @@ function renderAdminArticles() {
 
           <button
             class="edit-btn"
-            onclick="openArticleForm(${article.id})"
-          >
+            onclick="openArticleForm(${Number(article.id)})">
             تعديل
           </button>
 
           <button
             class="delete-btn"
-            onclick="deleteArticle(${article.id})"
-          >
+            onclick="deleteArticle(${Number(article.id)})">
             حذف
           </button>
 
@@ -1195,7 +1170,7 @@ function renderAdminArticles() {
 
 
 /* =========================================
-   إضافة أو تعديل مقال
+   نموذج المقال
 ========================================= */
 
 function openArticleForm(articleId) {
@@ -1210,59 +1185,60 @@ function openArticleForm(articleId) {
   const content = document.getElementById("formContent");
 
   if (!overlay || !title || !content) {
+    alert("نافذة الإضافة غير موجودة.");
     return;
   }
 
-  title.textContent = article ? "تعديل المقال" : "إضافة مقال";
+  title.textContent = article
+    ? "تعديل المقال"
+    : "إضافة مقال";
 
   content.innerHTML = `
     <label class="form-label">عنوان المقال</label>
+
     <input
       id="formArticleTitle"
       class="form-input"
       type="text"
       value="${article ? escapeAttribute(article.title) : ""}"
-      placeholder="عنوان المقال"
-    >
+      placeholder="عنوان المقال">
 
     <label class="form-label">الأيقونة</label>
+
     <input
       id="formArticleIcon"
       class="form-input"
       type="text"
       value="${article ? escapeAttribute(article.icon) : "📚"}"
-      placeholder="📚"
-    >
+      placeholder="📚">
 
     <label class="form-label">محتوى المقال</label>
+
     <textarea
       id="formArticleContent"
       class="form-textarea"
-      placeholder="اكتب محتوى المقال"
-    >${article ? escapeHTML(article.content) : ""}</textarea>
+      placeholder="اكتب محتوى المقال">${article ? escapeHTML(article.content) : ""}</textarea>
 
     <label class="form-label">رابط الصورة، اختياري</label>
+
     <input
       id="formArticleImage"
       class="form-input"
       type="text"
       value="${article ? escapeAttribute(article.image) : ""}"
-      placeholder="رابط الصورة أو اتركه فارغًا"
-    >
+      placeholder="رابط الصورة أو اتركه فارغًا">
 
     <div class="form-actions">
 
       <button
         class="primary-btn"
-        onclick="saveArticleForm(${article ? article.id : "null"})"
-      >
+        onclick="saveArticleForm(${article ? Number(article.id) : "null"})">
         حفظ
       </button>
 
       <button
         class="secondary-btn"
-        onclick="closeForm()"
-      >
+        onclick="closeForm()">
         إلغاء
       </button>
 
@@ -1278,17 +1254,32 @@ function openArticleForm(articleId) {
 ========================================= */
 
 function saveArticleForm(articleId) {
-  const title = document.getElementById("formArticleTitle").value.trim();
-  const icon = document.getElementById("formArticleIcon").value.trim();
-  const content = document.getElementById("formArticleContent").value.trim();
-  const image = document.getElementById("formArticleImage").value.trim();
+  const titleElement = document.getElementById("formArticleTitle");
+  const iconElement = document.getElementById("formArticleIcon");
+  const contentElement = document.getElementById("formArticleContent");
+  const imageElement = document.getElementById("formArticleImage");
+
+  if (
+    !titleElement ||
+    !iconElement ||
+    !contentElement ||
+    !imageElement
+  ) {
+    alert("حدث خطأ في نموذج المقال.");
+    return;
+  }
+
+  const title = titleElement.value.trim();
+  const icon = iconElement.value.trim();
+  const content = contentElement.value.trim();
+  const image = imageElement.value.trim();
 
   if (!title) {
     alert("اكتب عنوان المقال أولًا.");
     return;
   }
 
-  if (articleId) {
+  if (articleId !== null && articleId !== undefined) {
     const index = articles.findIndex(function(item) {
       return Number(item.id) === Number(articleId);
     });
@@ -1296,25 +1287,28 @@ function saveArticleForm(articleId) {
     if (index !== -1) {
       articles[index] = {
         ...articles[index],
-        title,
+        title: title,
         icon: icon || "📚",
-        content,
-        image
+        content: content,
+        image: image
       };
     }
   } else {
     const newId = articles.length
-      ? Math.max(...articles.map(function(item) {
-          return Number(item.id) || 0;
-        })) + 1
+      ? Math.max.apply(
+          null,
+          articles.map(function(item) {
+            return Number(item.id) || 0;
+          })
+        ) + 1
       : 1;
 
     articles.push({
       id: newId,
-      title,
+      title: title,
       icon: icon || "📚",
-      content,
-      image
+      content: content,
+      image: image
     });
   }
 
@@ -1366,11 +1360,18 @@ function renderAdminLinks() {
 
       <button
         class="primary-btn"
-        onclick="openLinkForm()"
-      >
+        onclick="openLinkForm()">
         + إضافة رابط
       </button>
   `;
+
+  if (links.length === 0) {
+    html += `
+      <p class="empty">
+        لا توجد روابط.
+      </p>
+    `;
+  }
 
   links.forEach(function(link) {
     html += `
@@ -1388,15 +1389,13 @@ function renderAdminLinks() {
 
           <button
             class="edit-btn"
-            onclick="openLinkForm(${link.id})"
-          >
+            onclick="openLinkForm(${Number(link.id)})">
             تعديل
           </button>
 
           <button
             class="delete-btn"
-            onclick="deleteLink(${link.id})"
-          >
+            onclick="deleteLink(${Number(link.id)})">
             حذف
           </button>
 
@@ -1413,7 +1412,7 @@ function renderAdminLinks() {
 
 
 /* =========================================
-   إضافة أو تعديل رابط
+   نموذج الرابط
 ========================================= */
 
 function openLinkForm(linkId) {
@@ -1428,50 +1427,51 @@ function openLinkForm(linkId) {
   const content = document.getElementById("formContent");
 
   if (!overlay || !title || !content) {
+    alert("نافذة الإضافة غير موجودة.");
     return;
   }
 
-  title.textContent = link ? "تعديل الرابط" : "إضافة رابط";
+  title.textContent = link
+    ? "تعديل الرابط"
+    : "إضافة رابط";
 
   content.innerHTML = `
     <label class="form-label">اسم الرابط</label>
+
     <input
       id="formLinkTitle"
       class="form-input"
       type="text"
       value="${link ? escapeAttribute(link.title) : ""}"
-      placeholder="اسم الرابط"
-    >
+      placeholder="اسم الرابط">
 
     <label class="form-label">الرابط</label>
+
     <input
       id="formLinkUrl"
       class="form-input"
       type="url"
       value="${link ? escapeAttribute(link.url) : ""}"
-      placeholder="https://example.com"
-    >
+      placeholder="https://example.com">
 
     <label class="form-label">الوصف</label>
+
     <textarea
       id="formLinkDescription"
       class="form-textarea"
-      placeholder="وصف الرابط"
-    >${link ? escapeHTML(link.description) : ""}</textarea>
+      placeholder="وصف الرابط">${link ? escapeHTML(link.description) : ""}</textarea>
 
     <div class="form-actions">
 
       <button
         class="primary-btn"
-        onclick="saveLinkForm(${link ? link.id : "null"})"
-      >
+        onclick="saveLinkForm(${link ? Number(link.id) : "null"})">
         حفظ
       </button>
 
       <button
         class="secondary-btn"
-        onclick="closeForm()"
-      >
+        onclick="closeForm()">
         إلغاء
       </button>
 
@@ -1487,16 +1487,29 @@ function openLinkForm(linkId) {
 ========================================= */
 
 function saveLinkForm(linkId) {
-  const title = document.getElementById("formLinkTitle").value.trim();
-  const url = document.getElementById("formLinkUrl").value.trim();
-  const description = document.getElementById("formLinkDescription").value.trim();
+  const titleElement = document.getElementById("formLinkTitle");
+  const urlElement = document.getElementById("formLinkUrl");
+  const descriptionElement = document.getElementById("formLinkDescription");
+
+  if (
+    !titleElement ||
+    !urlElement ||
+    !descriptionElement
+  ) {
+    alert("حدث خطأ في نموذج الرابط.");
+    return;
+  }
+
+  const title = titleElement.value.trim();
+  const url = urlElement.value.trim();
+  const description = descriptionElement.value.trim();
 
   if (!title || !url) {
     alert("اكتب اسم الرابط والرابط.");
     return;
   }
 
-  if (linkId) {
+  if (linkId !== null && linkId !== undefined) {
     const index = links.findIndex(function(item) {
       return Number(item.id) === Number(linkId);
     });
@@ -1504,23 +1517,26 @@ function saveLinkForm(linkId) {
     if (index !== -1) {
       links[index] = {
         ...links[index],
-        title,
-        url,
-        description
+        title: title,
+        url: url,
+        description: description
       };
     }
   } else {
     const newId = links.length
-      ? Math.max(...links.map(function(item) {
-          return Number(item.id) || 0;
-        })) + 1
+      ? Math.max.apply(
+          null,
+          links.map(function(item) {
+            return Number(item.id) || 0;
+          })
+        ) + 1
       : 1;
 
     links.push({
       id: newId,
-      title,
-      url,
-      description
+      title: title,
+      url: url,
+      description: description
     });
   }
 
@@ -1553,7 +1569,7 @@ function deleteLink(linkId) {
 
 
 /* =========================================
-   إغلاق نافذة الإدارة
+   إغلاق نافذة الإضافة
 ========================================= */
 
 function closeForm() {
@@ -1566,10 +1582,10 @@ function closeForm() {
 
 
 /* =========================================
-   البحث في المنتجات والمقالات
+   البحث
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
+function setupSearch() {
   const productSearch = document.getElementById("productSearch");
   const articleSearch = document.getElementById("articleSearch");
 
@@ -1585,25 +1601,6 @@ document.addEventListener("DOMContentLoaded", function() {
       renderArticles();
     });
   }
-});
-
-
-/* =========================================
-   حماية النصوص من HTML
-========================================= */
-
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-
-function escapeAttribute(value) {
-  return escapeHTML(value);
 }
 
 
@@ -1616,6 +1613,7 @@ renderProducts();
 renderArticles();
 renderGallery();
 renderLinks();
+setupSearch();
 
 
 /* =========================================
@@ -1623,8 +1621,10 @@ renderLinks();
 ========================================= */
 
 window.showPage = showPage;
+
 window.showProductDetails = showProductDetails;
 window.closeProductDetails = closeProductDetails;
+
 window.openExternalLink = openExternalLink;
 
 window.openProductForm = openProductForm;
