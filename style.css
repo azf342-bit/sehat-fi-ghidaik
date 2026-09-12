@@ -781,8 +781,12 @@ body:has(#formOverlay.show) {
   display: none !important;
 }
 
-/* إخفاء زر الإعدادات */
-.icon-btn {
-  display: none !important;
+/* إظهار لوحة الإدارة مؤقتًا */
+#admin {
+  display: block !important;
 }
 
+/* إظهار زر الإعدادات */
+.icon-btn {
+  display: flex !important;
+}
