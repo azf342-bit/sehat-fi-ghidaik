@@ -786,7 +786,3 @@ body:has(#formOverlay.show) {
   display: block !important;
 }
 
-/* إظهار زر الإعدادات */
-.icon-btn {
-  display: flex !important;
-}
