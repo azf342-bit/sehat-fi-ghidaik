@@ -774,10 +774,92 @@ function openExternalLink(encodedUrl) {
    لوحة الإدارة
 ========================================= */
 
+/* =========================================
+   لوحة الإدارة والإعدادات
+========================================= */
+
 function renderAdmin() {
+  renderAdminProductPages();
   renderAdminProducts();
   renderAdminArticles();
   renderAdminLinks();
+}
+
+
+/* =========================================
+   إدارة صفحات المنتجات
+========================================= */
+
+function renderAdminProductPages() {
+  const container = document.getElementById("adminProductPages");
+
+  if (!container) {
+    return;
+  }
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(products.length / productsPerPage)
+  );
+
+  let html = `
+    <div class="admin-box">
+
+      <div class="admin-title">
+        <h3>صفحات المنتجات</h3>
+      </div>
+
+      <p class="small-note">
+        عدد المنتجات الحالية: ${products.length}
+      </p>
+
+      <div class="admin-pages">
+  `;
+
+  for (let page = 1; page <= totalPages; page++) {
+    const start = (page - 1) * productsPerPage;
+    const end = Math.min(start + productsPerPage, products.length);
+    const count = Math.max(0, end - start);
+
+    html += `
+      <button
+        class="admin-page-btn ${page === currentProductPage ? "current" : ""}"
+        onclick="goToAdminProductPage(${page})"
+      >
+        صفحة ${page}
+        <small>${count} منتجات</small>
+      </button>
+    `;
+  }
+
+  html += `
+      </div>
+
+      <p class="small-note">
+        يمكنك اختيار صفحة لمراجعة المنتجات الموجودة فيها.
+      </p>
+
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   الانتقال إلى صفحة منتجات من الإعدادات
+========================================= */
+
+function goToAdminProductPage(page) {
+  currentProductPage = Number(page) || 1;
+
+  showPage("products");
+  renderProducts();
+}
+
+
+/* إتاحة الدالة للأزرار */
+window.goToAdminProductPage = goToAdminProductPage;
 }
 
 
