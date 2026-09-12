@@ -798,17 +798,85 @@ function openExternalLink(encodedUrl) {
   }
 }
 
-
 /* =========================================
    لوحة الإدارة
 ========================================= */
 
 function renderAdmin() {
+  renderAdminProductPages();
   renderAdminProducts();
   renderAdminArticles();
   renderAdminLinks();
 }
 
+
+/* =========================================
+   إدارة صفحات المنتجات
+========================================= */
+
+function renderAdminProductPages() {
+  const container = document.getElementById("adminProductPages");
+
+  if (!container) {
+    return;
+  }
+
+  const totalPages = 40;
+
+  let html = `
+    <div class="admin-box">
+      <div class="admin-title">
+        <h3>إدارة صفحات المنتجات</h3>
+      </div>
+
+      <p class="small-note">
+        يمكنك اختيار صفحة المنتجات التي تريد إدارتها.
+      </p>
+
+      <div class="admin-pages">
+  `;
+
+  for (let page = 1; page <= totalPages; page++) {
+    const start = (page - 1) * productsPerPage + 1;
+    const end = page * productsPerPage;
+
+    html += `
+      <button
+        type="button"
+        class="admin-page-btn"
+        onclick="selectAdminProductPage(${page})"
+      >
+        صفحة ${page}
+        <small>${start} - ${end}</small>
+      </button>
+    `;
+  }
+
+  html += `
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   اختيار صفحة المنتجات من الإدارة
+========================================= */
+
+function selectAdminProductPage(page) {
+  currentProductPage = Number(page) || 1;
+
+  showPage("products");
+
+  renderProducts();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
 
 /* =========================================
    إدارة المنتجات
