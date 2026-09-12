@@ -775,7 +775,14 @@ body:has(#formOverlay.show) {
   display: block !important;
 }
 
-/* إظهار زر الإعدادات */
-.icon-btn {
-  display: flex !important;
+
+/* إخفاء لوحة الإدارة عن زوار التطبيق */
+#admin {
+  display: none !important;
 }
+
+/* إخفاء زر الإعدادات */
+.icon-btn {
+  display: none !important;
+}
+
