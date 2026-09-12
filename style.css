@@ -677,3 +677,31 @@ main {
     min-width: 82px;
   }
 }
+/* =========================================
+   الحل النهائي لتداخل إدارة المحتوى
+   مع شريط التنقل السفلي
+========================================= */
+
+/* مساحة إضافية داخل صندوق إدارة المنتجات */
+.admin-box {
+  padding-bottom: 180px !important;
+}
+
+/* مساحة إضافية داخل صفحة الإعدادات */
+.page.active {
+  padding-bottom: 150px !important;
+}
+
+/* آخر بطاقة في قائمة الإدارة */
+.admin-box .admin-item:last-child {
+  margin-bottom: 30px !important;
+}
+
+/* تثبيت شريط التنقل في الأسفل */
+.bottom-nav {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+}
