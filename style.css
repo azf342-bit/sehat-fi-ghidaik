@@ -737,3 +737,32 @@ main {
     padding: 15px;
   }
 }
+/* =========================================
+   الإصلاح الحقيقي:
+   إخفاء شريط التنقل عند فتح نافذة الإضافة
+========================================= */
+
+/* عندما تكون نافذة الإضافة مفتوحة */
+body:has(#formOverlay.show) .bottom-nav {
+  display: none !important;
+}
+
+/* منع تمرير الصفحة الخلفية أثناء فتح النافذة */
+body:has(#formOverlay.show) {
+  overflow: hidden;
+}
+
+/* جعل النافذة فوق جميع العناصر */
+#formOverlay.show {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+}
+
+/* محتوى النافذة قابل للتمرير */
+#formOverlay.show .form-card {
+  max-height: calc(100vh - 20px) !important;
+  overflow-y: auto !important;
+  margin-bottom: 10px !important;
+}
