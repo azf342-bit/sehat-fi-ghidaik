@@ -1709,3 +1709,5 @@ window.deleteLink = deleteLink;
 
 window.closeForm = closeForm;
 window.renderAdmin = renderAdmin;
+window.renderAdminProductPages = renderAdminProductPages;
+window.selectAdminProductPage = selectAdminProductPage;
