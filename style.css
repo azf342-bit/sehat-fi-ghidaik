@@ -83,3 +83,106 @@ main{max-width:900px;margin:auto;padding:18px 14px}
   .admin-pages{grid-template-columns:repeat(5,1fr)}
   .topbar h1{font-size:20px}
 }
+/* =========================================
+   إصلاح تداخل شريط التنقل مع المحتوى
+========================================= */
+
+/* السماح للصفحة بالتمرير */
+html,
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* مساحة أسفل المحتوى حتى لا يغطيه شريط التنقل */
+main,
+#app,
+.app-content,
+.page-content,
+.content,
+.container {
+  padding-bottom: 110px !important;
+}
+
+/* إذا كانت صفحة الإعدادات لها هذا المعرّف */
+#settingsPage,
+.settings-page,
+#settings {
+  padding-bottom: 130px !important;
+}
+
+/* شريط التنقل السفلي */
+.bottom-nav,
+.bottom-navigation,
+nav.bottom-nav,
+#bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 76px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* تنسيق بطاقات المنتجات */
+.product-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+/* ترتيب أزرار تعديل وحذف */
+.product-card .actions,
+.product-card .product-actions,
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+/* منع الأزرار من التشوه */
+.product-card button {
+  min-width: 85px;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+/* زر التعديل */
+.product-card .edit-btn,
+.product-card button.edit-btn {
+  background: #087f49;
+  color: white;
+}
+
+/* زر الحذف */
+.product-card .delete-btn,
+.product-card button.delete-btn {
+  background: #71333d;
+  color: white;
+}
+
+/* تحسين العرض على الهاتف */
+@media (max-width: 600px) {
+  .product-card {
+    padding: 18px !important;
+  }
+
+  .product-card .actions,
+  .product-card .product-actions,
+  .product-actions {
+    gap: 10px;
+  }
+
+  .product-card button {
+    min-width: 82px;
+    font-size: 15px;
+  }
+}
