@@ -770,8 +770,12 @@ body:has(#formOverlay.show) {
 #admin {
   display: none !important;
 }
+/* إظهار لوحة الإدارة مؤقتًا أثناء إضافة المحتوى */
+#admin {
+  display: block !important;
+}
 
-/* إخفاء زر الإعدادات */
+/* إظهار زر الإعدادات */
 .icon-btn {
-  display: none !important;
+  display: flex !important;
 }
