@@ -705,3 +705,36 @@ main {
   right: 0 !important;
   z-index: 1000 !important;
 }
+/* =========================================
+   إصلاح نافذة إضافة المقال والمنتج
+   حتى لا يغطيها شريط التنقل
+========================================= */
+
+/* جعل النافذة فوق شريط التنقل */
+.overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2000 !important;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 10px;
+  padding-bottom: 30px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.overlay.show {
+  display: flex !important;
+}
+
+/* جعل محتوى النافذة قابلًا للتمرير */
+.form-card {
+  position: relative;
+  z-index: 2001;
+  width: min(700px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 25px;
+}
