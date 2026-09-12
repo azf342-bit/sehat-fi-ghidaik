@@ -1,10 +1,6 @@
 /* =========================================
    تطبيق صحتك في غذائك
-   ملف التصميم CSS
-========================================= */
-
-/* =========================================
-   الإعدادات العامة
+   التصميم النهائي - RTL
 ========================================= */
 
 * {
@@ -22,7 +18,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  padding-bottom: 120px;
+  padding-bottom: 100px;
   min-height: 100vh;
   background: #0b100d;
   color: #e9f4ec;
@@ -56,6 +52,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .topbar h1 {
@@ -71,6 +68,7 @@ button {
 }
 
 .icon-btn {
+  flex-shrink: 0;
   background: #1c2821;
   color: #91d8a5;
   border: 1px solid #36503e;
@@ -88,12 +86,13 @@ main {
   width: 100%;
   max-width: 900px;
   margin: auto;
-  padding: 18px 14px 140px;
+  padding: 18px 14px 130px;
   min-height: calc(100vh - 80px);
 }
 
 .page {
   display: none;
+  width: 100%;
 }
 
 .page.active {
@@ -115,6 +114,11 @@ main {
 
 .hero-icon {
   font-size: 54px;
+}
+
+.hero-icon img {
+  max-width: 100%;
+  height: auto;
 }
 
 .hero h2 {
@@ -168,6 +172,7 @@ main {
   color: #91d8a5;
   flex: 1;
   text-align: center;
+  font-size: 24px;
 }
 
 .back-button,
@@ -222,7 +227,7 @@ main {
 }
 
 /* =========================================
-   النماذج والحقول
+   الحقول والنماذج
 ========================================= */
 
 .toolbar {
@@ -241,6 +246,13 @@ main {
   border: 1px solid #39473e;
   border-radius: 12px;
   outline: none;
+}
+
+.full-input:focus,
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: #0b8f46;
 }
 
 .form-textarea {
@@ -281,12 +293,12 @@ main {
 }
 
 /* =========================================
-   المنتجات في الصفحة الرئيسية
+   المنتجات
 ========================================= */
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -333,7 +345,7 @@ main {
 }
 
 /* =========================================
-   الصفحات
+   الترقيم
 ========================================= */
 
 .pagination {
@@ -375,7 +387,7 @@ main {
 }
 
 /* =========================================
-   المقالات والروابط
+   المقالات والروابط والصور
 ========================================= */
 
 .article-card,
@@ -403,7 +415,7 @@ main {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -462,13 +474,12 @@ main {
   margin-top: 3px;
 }
 
-/* بطاقات المنتجات داخل إدارة المحتوى */
 .admin-item {
   background: #171e19;
   border: 1px solid #334139;
   border-radius: 14px;
   padding: 12px;
-  margin: 8px 0;
+  margin: 10px 0;
   width: 100%;
   max-width: 100%;
 }
@@ -477,12 +488,8 @@ main {
   color: #91d8a5;
 }
 
-/* مساحة إضافية بعد آخر بطاقة في إدارة المحتوى */
-.admin-box .admin-item:last-child {
-  margin-bottom: 120px;
-}
+/* أزرار تعديل وحذف الإدارة */
 
-/* أزرار الإدارة */
 .admin-actions {
   display: flex;
   gap: 10px;
@@ -496,6 +503,7 @@ main {
   min-height: 44px;
   padding: 9px 14px;
   border-radius: 0;
+  border: 0;
   box-sizing: border-box;
 }
 
@@ -510,7 +518,7 @@ main {
 }
 
 /* =========================================
-   معاينة الصور والنماذج
+   معاينة الصور
 ========================================= */
 
 .image-preview {
@@ -532,6 +540,7 @@ main {
 .form-actions button {
   flex: 1;
   min-width: 120px;
+  min-height: 45px;
 }
 
 .empty {
@@ -541,19 +550,27 @@ main {
 }
 
 /* =========================================
-   النافذة المنبثقة
+   النافذة المنبثقة - الإصلاح الأساسي
 ========================================= */
+
+/*
+  النافذة تظهر فوق شريط التنقل
+  ويمكن تمرير محتواها بالكامل
+*/
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, .78);
-  z-index: 100;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.82);
+
   display: none;
   align-items: flex-start;
   justify-content: center;
-  padding: 20px 10px;
-  overflow: auto;
+
+  padding: 15px 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .overlay.show {
@@ -561,12 +578,28 @@ main {
 }
 
 .form-card {
+  position: relative;
+  z-index: 100000;
+
   width: min(700px, 100%);
+  max-width: 100%;
+
   background: #101511;
   border: 1px solid #3b4c40;
   border-radius: 20px;
+
   padding: 17px;
-  margin-top: 20px;
+  margin: 10px 0 30px;
+
+  /*
+    مهم:
+    يسمح بالتمرير داخل نافذة الإضافة
+    حتى تظهر أزرار الحفظ والإلغاء
+  */
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
+  overflow-x: hidden;
+
   box-shadow: 0 20px 60px #000;
 }
 
@@ -574,6 +607,7 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
+
   border-bottom: 1px solid #2c3930;
   padding-bottom: 10px;
   margin-bottom: 10px;
@@ -586,6 +620,7 @@ main {
 }
 
 .close-btn {
+  flex-shrink: 0;
   background: #5b252c;
   color: #fff;
   border: 0;
@@ -609,15 +644,18 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
+
   z-index: 1000;
   width: 100%;
   min-height: 82px;
+
   background: #111612;
   border-top: 1px solid #2d3a31;
+
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
   padding: 7px 5px calc(7px + env(safe-area-inset-bottom));
-  box-sizing: border-box;
 }
 
 .bottom-nav button {
@@ -625,11 +663,13 @@ main {
   border: 0;
   color: #b9c7bd;
   font-size: 21px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
+
   min-height: 60px;
 }
 
@@ -659,14 +699,18 @@ main {
     font-size: 20px;
   }
 
+  .topbar p {
+    font-size: 13px;
+  }
+
   main {
     padding-left: 14px;
     padding-right: 14px;
-    padding-bottom: 150px;
+    padding-bottom: 130px;
   }
 
-  .admin-box .admin-item:last-child {
-    margin-bottom: 130px;
+  .page-head h2 {
+    font-size: 21px;
   }
 
   .admin-actions {
@@ -676,65 +720,20 @@ main {
   .admin-actions button {
     min-width: 82px;
   }
-}
-/* =========================================
-   الحل النهائي لتداخل إدارة المحتوى
-   مع شريط التنقل السفلي
-========================================= */
 
-/* مساحة إضافية داخل صندوق إدارة المنتجات */
-.admin-box {
-  padding-bottom: 180px !important;
-}
+  /*
+    في الهاتف:
+    النافذة تأخذ مساحة الشاشة وتسمح بالتمرير
+  */
 
-/* مساحة إضافية داخل صفحة الإعدادات */
-.page.active {
-  padding-bottom: 150px !important;
-}
+  .overlay {
+    padding: 8px 8px;
+  }
 
-/* آخر بطاقة في قائمة الإدارة */
-.admin-box .admin-item:last-child {
-  margin-bottom: 30px !important;
-}
-
-/* تثبيت شريط التنقل في الأسفل */
-.bottom-nav {
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 1000 !important;
-}
-/* =========================================
-   إصلاح نافذة إضافة المقال والمنتج
-   حتى لا يغطيها شريط التنقل
-========================================= */
-
-/* جعل النافذة فوق شريط التنقل */
-.overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 2000 !important;
-  display: none;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 20px 10px;
-  padding-bottom: 30px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.overlay.show {
-  display: flex !important;
-}
-
-/* جعل محتوى النافذة قابلًا للتمرير */
-.form-card {
-  position: relative;
-  z-index: 2001;
-  width: min(700px, 100%);
-  max-height: calc(100vh - 40px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-bottom: 25px;
+  .form-card {
+    width: 100%;
+    max-height: calc(100vh - 16px);
+    margin: 0 0 20px;
+    padding: 15px;
+  }
 }
