@@ -128,6 +128,7 @@ const defaultLinks = [
 let products = [];
 let articles = [];
 let links = [];
+let galleryImages = [];
 
 let currentProductPage = 1;
 const productsPerPage = 10;
