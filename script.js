@@ -137,6 +137,18 @@ let currentCategory = "الكل";
 
 
 /* =========================================
+   مفاتيح التخزين
+========================================= */
+
+const STORAGE_KEYS = {
+  products: "dxn_products",
+  articles: "dxn_articles",
+  links: "dxn_links",
+  gallery: "dxn_gallery"
+};
+
+
+/* =========================================
    أدوات مساعدة
 ========================================= */
 
@@ -166,9 +178,10 @@ function escapeAttribute(value) {
 
 function loadData() {
   try {
-    const savedProducts = localStorage.getItem("dxn_products");
-    const savedArticles = localStorage.getItem("dxn_articles");
-    const savedLinks = localStorage.getItem("dxn_links");
+    const savedProducts = localStorage.getItem(STORAGE_KEYS.products);
+    const savedArticles = localStorage.getItem(STORAGE_KEYS.articles);
+    const savedLinks = localStorage.getItem(STORAGE_KEYS.links);
+    const savedGallery = localStorage.getItem(STORAGE_KEYS.gallery);
 
     products = savedProducts
       ? JSON.parse(savedProducts)
@@ -182,12 +195,33 @@ function loadData() {
       ? JSON.parse(savedLinks)
       : cloneData(defaultLinks);
 
+    galleryImages = savedGallery
+      ? JSON.parse(savedGallery)
+      : [];
+
+    if (!Array.isArray(products)) {
+      products = cloneData(defaultProducts);
+    }
+
+    if (!Array.isArray(articles)) {
+      articles = cloneData(defaultArticles);
+    }
+
+    if (!Array.isArray(links)) {
+      links = cloneData(defaultLinks);
+    }
+
+    if (!Array.isArray(galleryImages)) {
+      galleryImages = [];
+    }
+
   } catch (error) {
     console.error("خطأ في تحميل البيانات:", error);
 
     products = cloneData(defaultProducts);
     articles = cloneData(defaultArticles);
     links = cloneData(defaultLinks);
+    galleryImages = [];
   }
 
   saveData();
@@ -200,11 +234,32 @@ function loadData() {
 
 function saveData() {
   try {
-    localStorage.setItem("dxn_products", JSON.stringify(products));
-    localStorage.setItem("dxn_articles", JSON.stringify(articles));
-    localStorage.setItem("dxn_links", JSON.stringify(links));
+    localStorage.setItem(
+      STORAGE_KEYS.products,
+      JSON.stringify(products)
+    );
+
+    localStorage.setItem(
+      STORAGE_KEYS.articles,
+      JSON.stringify(articles)
+    );
+
+    localStorage.setItem(
+      STORAGE_KEYS.links,
+      JSON.stringify(links)
+    );
+
+    localStorage.setItem(
+      STORAGE_KEYS.gallery,
+      JSON.stringify(galleryImages)
+    );
+
   } catch (error) {
     console.error("خطأ في حفظ البيانات:", error);
+
+    alert(
+      "تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة."
+    );
   }
 }
 
@@ -734,11 +789,315 @@ function renderGallery() {
     return;
   }
 
-  gallery.innerHTML = `
-    <div class="empty">
-      يمكنك إضافة الصور من قسم الإدارة.
+  gallery.innerHTML = "";
+
+  if (galleryImages.length === 0) {
+    gallery.innerHTML = `
+      <div class="empty">
+        لا توجد صور في المعرض حاليًا.
+      </div>
+    `;
+    return;
+  }
+
+  galleryImages.forEach(function(image) {
+    const item = document.createElement("div");
+
+    item.className = "gallery-item";
+
+    item.innerHTML = `
+      <img
+        src="${escapeAttribute(image.url)}"
+        alt="${escapeAttribute(image.title || "صورة")}"
+        loading="lazy">
+
+      <h3>
+        ${escapeHTML(image.title || "")}
+      </h3>
+
+      ${
+        image.description
+          ? `<p>${escapeHTML(image.description)}</p>`
+          : ""
+      }
+    `;
+
+    gallery.appendChild(item);
+  });
+}
+
+
+/* =========================================
+   إدارة معرض الصور
+========================================= */
+
+function renderAdminGallery() {
+  const container = document.getElementById("adminGallery");
+
+  if (!container) {
+    return;
+  }
+
+  let html = `
+    <div class="admin-box">
+
+      <div class="admin-title">
+        <h3>🖼️ إدارة معرض الصور</h3>
+
+        <button
+          class="primary-btn"
+          onclick="openGalleryForm()">
+          + إضافة صورة
+        </button>
+      </div>
+
+      <p class="small-note">
+        استخدم رابطًا عامًا للصورة حتى يمكن لجميع مستخدمي التطبيق
+        رؤيتها عند فتح التطبيق.
+      </p>
+  `;
+
+  if (galleryImages.length === 0) {
+    html += `
+      <p class="empty">
+        لا توجد صور مضافة إلى المعرض.
+      </p>
+    `;
+  }
+
+  galleryImages.forEach(function(image) {
+    html += `
+      <div class="admin-item">
+
+        <div
+          style="
+            display:flex;
+            gap:12px;
+            align-items:center;
+            margin-bottom:10px;
+          ">
+
+          <img
+            src="${escapeAttribute(image.url)}"
+            alt="${escapeAttribute(image.title || "صورة")}"
+            style="
+              width:70px;
+              height:70px;
+              object-fit:cover;
+              border-radius:12px;
+              background:#eee;
+            ">
+
+          <div>
+            <strong>
+              ${escapeHTML(image.title || "صورة بدون عنوان")}
+            </strong>
+
+            ${
+              image.description
+                ? `<p class="small-note">${escapeHTML(image.description)}</p>`
+                : ""
+            }
+          </div>
+
+        </div>
+
+        <div class="admin-actions">
+
+          <button
+            class="delete-btn"
+            onclick="deleteGalleryImage(${Number(image.id)})">
+            حذف
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+
+/* =========================================
+   نموذج إضافة صورة
+========================================= */
+
+function openGalleryForm() {
+  const overlay = document.getElementById("formOverlay");
+  const title = document.getElementById("formTitle");
+  const content = document.getElementById("formContent");
+
+  if (!overlay || !title || !content) {
+    alert("نافذة الإضافة غير موجودة.");
+    return;
+  }
+
+  title.textContent = "إضافة صورة للمعرض";
+
+  content.innerHTML = `
+    <label class="form-label">
+      عنوان الصورة
+    </label>
+
+    <input
+      id="formGalleryTitle"
+      class="form-input"
+      type="text"
+      placeholder="مثال: منتجات DXN">
+
+    <label class="form-label">
+      رابط الصورة
+    </label>
+
+    <input
+      id="formGalleryUrl"
+      class="form-input"
+      type="url"
+      placeholder="https://example.com/image.jpg">
+
+    <label class="form-label">
+      وصف الصورة، اختياري
+    </label>
+
+    <textarea
+      id="formGalleryDescription"
+      class="form-textarea"
+      placeholder="وصف مختصر للصورة"></textarea>
+
+    <p class="small-note">
+      ⚠️ يجب أن يكون الرابط رابطًا عامًا يمكن فتحه من أي هاتف.
+    </p>
+
+    <div class="form-actions">
+
+      <button
+        class="primary-btn"
+        onclick="saveGalleryImage()">
+        حفظ الصورة
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeForm()">
+        إلغاء
+      </button>
+
     </div>
   `;
+
+  overlay.classList.add("show");
+}
+
+
+/* =========================================
+   حفظ صورة المعرض
+========================================= */
+
+function saveGalleryImage() {
+  const titleElement =
+    document.getElementById("formGalleryTitle");
+
+  const urlElement =
+    document.getElementById("formGalleryUrl");
+
+  const descriptionElement =
+    document.getElementById("formGalleryDescription");
+
+  if (
+    !titleElement ||
+    !urlElement ||
+    !descriptionElement
+  ) {
+    alert("حدث خطأ في نموذج الصورة.");
+    return;
+  }
+
+  const title = titleElement.value.trim();
+  const url = urlElement.value.trim();
+  const description = descriptionElement.value.trim();
+
+  if (!url) {
+    alert("أدخل رابط الصورة أولًا.");
+    return;
+  }
+
+  let validUrl;
+
+  try {
+    validUrl = new URL(url);
+  } catch (error) {
+    alert("رابط الصورة غير صحيح.");
+    return;
+  }
+
+  if (
+    validUrl.protocol !== "http:" &&
+    validUrl.protocol !== "https:"
+  ) {
+    alert("يجب أن يبدأ رابط الصورة بـ http أو https.");
+    return;
+  }
+
+  const newId = galleryImages.length
+    ? Math.max.apply(
+        null,
+        galleryImages.map(function(item) {
+          return Number(item.id) || 0;
+        })
+      ) + 1
+    : 1;
+
+  galleryImages.push({
+    id: newId,
+    title: title || "صورة",
+    url: url,
+    description: description
+  });
+
+  saveData();
+
+  closeForm();
+
+  renderGallery();
+  renderAdminGallery();
+
+  alert("تمت إضافة الصورة بنجاح.");
+}
+
+
+/* =========================================
+   حذف صورة من المعرض
+========================================= */
+
+function deleteGalleryImage(imageId) {
+  const image = galleryImages.find(function(item) {
+    return Number(item.id) === Number(imageId);
+  });
+
+  if (!image) {
+    return;
+  }
+
+  const confirmed = confirm(
+    "هل تريد حذف هذه الصورة من المعرض؟"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  galleryImages = galleryImages.filter(function(item) {
+    return Number(item.id) !== Number(imageId);
+  });
+
+  saveData();
+
+  renderGallery();
+  renderAdminGallery();
 }
 
 
@@ -799,6 +1158,7 @@ function openExternalLink(encodedUrl) {
   }
 }
 
+
 /* =========================================
    لوحة الإدارة
 ========================================= */
@@ -808,6 +1168,7 @@ function renderAdmin() {
   renderAdminProducts();
   renderAdminArticles();
   renderAdminLinks();
+  renderAdminGallery();
 }
 
 
@@ -826,6 +1187,7 @@ function renderAdminProductPages() {
 
   let html = `
     <div class="admin-box">
+
       <div class="admin-title">
         <h3>إدارة صفحات المنتجات</h3>
       </div>
@@ -878,6 +1240,7 @@ function selectAdminProductPage(page) {
     behavior: "smooth"
   });
 }
+
 
 /* =========================================
    إدارة المنتجات
@@ -1708,7 +2071,12 @@ window.openLinkForm = openLinkForm;
 window.saveLinkForm = saveLinkForm;
 window.deleteLink = deleteLink;
 
+window.openGalleryForm = openGalleryForm;
+window.saveGalleryImage = saveGalleryImage;
+window.deleteGalleryImage = deleteGalleryImage;
+
 window.closeForm = closeForm;
+
 window.renderAdmin = renderAdmin;
 window.renderAdminProductPages = renderAdminProductPages;
 window.selectAdminProductPage = selectAdminProductPage;
