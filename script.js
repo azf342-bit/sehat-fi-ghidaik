@@ -782,10 +782,105 @@ function renderArticles() {
    معرض الصور
 ========================================= */
 
+/* =========================================
+   معرض الصور - نسخة متوافقة مع جميع البيانات
+========================================= */
+
 function renderGallery() {
   const gallery = document.getElementById("galleryList");
 
   if (!gallery) {
+    return;
+  }
+
+  const images = [];
+
+  /* الصور المضافة من إدارة المعرض */
+  if (Array.isArray(galleryImages)) {
+    galleryImages.forEach(function(item) {
+      const imageSource =
+        item.url ||
+        item.src ||
+        item.image ||
+        "";
+
+      if (imageSource) {
+        images.push({
+          src: imageSource,
+          title: item.title || "صورة",
+          description: item.description || ""
+        });
+      }
+    });
+  }
+
+  /* صور المنتجات */
+  if (Array.isArray(products)) {
+    products.forEach(function(product) {
+      if (product.image) {
+        images.push({
+          src: product.image,
+          title: product.name || "منتج",
+          description: product.description || ""
+        });
+      }
+    });
+  }
+
+  /* صور المقالات */
+  if (Array.isArray(articles)) {
+    articles.forEach(function(article) {
+      if (article.image) {
+        images.push({
+          src: article.image,
+          title: article.title || "مقال",
+          description: article.content || ""
+        });
+      }
+    });
+  }
+
+  gallery.innerHTML = "";
+
+  if (images.length === 0) {
+    gallery.innerHTML = `
+      <div class="empty">
+        لا توجد صور مضافة حاليًا.
+      </div>
+    `;
+    return;
+  }
+
+  images.forEach(function(item) {
+    const card = document.createElement("div");
+
+    card.className = "gallery-item";
+
+    const image = document.createElement("img");
+
+    image.src = item.src;
+    image.alt = item.title;
+    image.loading = "lazy";
+
+    image.onerror = function() {
+      image.style.display = "none";
+    };
+
+    const title = document.createElement("h3");
+    title.textContent = item.title;
+
+    card.appendChild(image);
+    card.appendChild(title);
+
+    if (item.description) {
+      const description = document.createElement("p");
+      description.textContent = item.description;
+      card.appendChild(description);
+    }
+
+    gallery.appendChild(card);
+  });
+}
     return;
   }
 
