@@ -1,7 +1,9 @@
 /* =========================================
    تطبيق صحتك في غذائك
-   ملف وظائف التطبيق
+   ملف وظائف التطبيق - نسخة مستقرة وكاملة
 ========================================= */
+
+"use strict";
 
 
 /* =========================================
@@ -122,7 +124,7 @@ const defaultLinks = [
 
 
 /* =========================================
-   المتغيرات
+   المتغيرات العامة
 ========================================= */
 
 let products = [];
@@ -169,6 +171,40 @@ function escapeHTML(value) {
 
 function escapeAttribute(value) {
   return escapeHTML(value);
+}
+
+
+function createId(items) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return 1;
+  }
+
+  return Math.max.apply(
+    null,
+    items.map(function(item) {
+      return Number(item.id) || 0;
+    })
+  ) + 1;
+}
+
+
+function isValidImageUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (error) {
+    return false;
+  }
+}
+
+
+function isValidExternalUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (error) {
+    return false;
+  }
 }
 
 
@@ -223,8 +259,6 @@ function loadData() {
     links = cloneData(defaultLinks);
     galleryImages = [];
   }
-
-  saveData();
 }
 
 
@@ -254,12 +288,16 @@ function saveData() {
       JSON.stringify(galleryImages)
     );
 
+    return true;
+
   } catch (error) {
     console.error("خطأ في حفظ البيانات:", error);
 
     alert(
       "تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة."
     );
+
+    return false;
   }
 }
 
@@ -269,46 +307,50 @@ function saveData() {
 ========================================= */
 
 function showPage(pageId) {
-  const pages = document.querySelectorAll(".page");
+  try {
+    const pages = document.querySelectorAll(".page");
 
-  pages.forEach(function(page) {
-    page.classList.remove("active");
-  });
+    pages.forEach(function(page) {
+      page.classList.remove("active");
+    });
 
-  const targetPage = document.getElementById(pageId);
+    const targetPage = document.getElementById(pageId);
 
-  if (!targetPage) {
-    console.error("الصفحة غير موجودة:", pageId);
-    return;
+    if (!targetPage) {
+      console.error("الصفحة غير موجودة:", pageId);
+      return;
+    }
+
+    targetPage.classList.add("active");
+
+    if (pageId === "products") {
+      renderProducts();
+    }
+
+    if (pageId === "articles") {
+      renderArticles();
+    }
+
+    if (pageId === "images") {
+      renderGallery();
+    }
+
+    if (pageId === "links") {
+      renderLinks();
+    }
+
+    if (pageId === "admin") {
+      renderAdmin();
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  } catch (error) {
+    console.error("خطأ في التنقل بين الصفحات:", error);
   }
-
-  targetPage.classList.add("active");
-
-  if (pageId === "products") {
-    currentProductPage = 1;
-    renderProducts();
-  }
-
-  if (pageId === "articles") {
-    renderArticles();
-  }
-
-  if (pageId === "images") {
-    renderGallery();
-  }
-
-  if (pageId === "links") {
-    renderLinks();
-  }
-
-  if (pageId === "admin") {
-    renderAdmin();
-  }
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
 }
 
 
@@ -326,11 +368,10 @@ function renderCategories() {
   const categories = ["الكل"];
 
   products.forEach(function(product) {
-    if (
-      product.category &&
-      !categories.includes(product.category)
-    ) {
-      categories.push(product.category);
+    const category = String(product.category || "").trim();
+
+    if (category && !categories.includes(category)) {
+      categories.push(category);
     }
   });
 
@@ -339,6 +380,7 @@ function renderCategories() {
   categories.forEach(function(category) {
     const button = document.createElement("button");
 
+    button.type = "button";
     button.className = "category-btn";
     button.textContent = category;
 
@@ -437,7 +479,9 @@ function renderProducts() {
         <img
           class="product-image"
           src="${escapeAttribute(product.image)}"
-          alt="${escapeAttribute(product.name)}">
+          alt="${escapeAttribute(product.name)}"
+          loading="lazy"
+          onerror="this.style.display='none';">
       `;
     } else {
       imageHTML = `
@@ -451,7 +495,7 @@ function renderProducts() {
             font-size:65px;
             background:#17251b;
           ">
-          ${product.icon || "🌿"}
+          ${escapeHTML(product.icon || "🌿")}
         </div>
       `;
     }
@@ -462,7 +506,7 @@ function renderProducts() {
       <div class="product-body">
 
         <div class="product-icon">
-          ${product.icon || "🌿"}
+          ${escapeHTML(product.icon || "🌿")}
         </div>
 
         <h3>${escapeHTML(product.name)}</h3>
@@ -477,6 +521,7 @@ function renderProducts() {
         </p>
 
         <button
+          type="button"
           class="product-button"
           onclick="showProductDetails(${Number(product.id)})">
           التفاصيل 📖
@@ -518,6 +563,7 @@ function renderProductPagination(totalPages) {
   pagination.appendChild(info);
 
   const previousButton = document.createElement("button");
+  previousButton.type = "button";
   previousButton.className = "page-arrow";
   previousButton.textContent = "السابق";
   previousButton.disabled = currentProductPage === 1;
@@ -534,6 +580,7 @@ function renderProductPagination(totalPages) {
   for (let page = 1; page <= totalPages; page++) {
     const pageButton = document.createElement("button");
 
+    pageButton.type = "button";
     pageButton.className = "page-number";
     pageButton.textContent = page;
 
@@ -550,6 +597,7 @@ function renderProductPagination(totalPages) {
   }
 
   const nextButton = document.createElement("button");
+  nextButton.type = "button";
   nextButton.className = "page-arrow";
   nextButton.textContent = "التالي";
   nextButton.disabled = currentProductPage === totalPages;
@@ -608,7 +656,8 @@ function showProductDetails(productId) {
           object-fit:contain;
           border-radius:18px;
           margin-bottom:18px;
-        ">
+        "
+        onerror="this.style.display='none';">
     `;
   } else {
     imageHTML = `
@@ -621,7 +670,7 @@ function showProductDetails(productId) {
           border-radius:18px;
           margin-bottom:18px;
         ">
-        ${product.icon || "🌿"}
+        ${escapeHTML(product.icon || "🌿")}
       </div>
     `;
   }
@@ -630,6 +679,7 @@ function showProductDetails(productId) {
     <div class="page-head">
 
       <button
+        type="button"
         class="back-button"
         onclick="closeProductDetails()">
         رجوع
@@ -756,7 +806,9 @@ function renderArticles() {
         <img
           class="article-image"
           src="${escapeAttribute(article.image)}"
-          alt="${escapeAttribute(article.title)}">
+          alt="${escapeAttribute(article.title)}"
+          loading="lazy"
+          onerror="this.style.display='none';">
       `;
     }
 
@@ -764,7 +816,7 @@ function renderArticles() {
       ${imageHTML}
 
       <h3>
-        ${article.icon || "📚"}
+        ${escapeHTML(article.icon || "📚")}
         ${escapeHTML(article.title)}
       </h3>
 
@@ -782,10 +834,6 @@ function renderArticles() {
    معرض الصور
 ========================================= */
 
-/* =========================================
-   معرض الصور - نسخة متوافقة مع جميع البيانات
-========================================= */
-
 function renderGallery() {
   const gallery = document.getElementById("galleryList");
 
@@ -795,18 +843,18 @@ function renderGallery() {
 
   const images = [];
 
-  /* الصور المضافة من إدارة المعرض */
+  /* الصور المضافة من إدارة معرض الصور */
   if (Array.isArray(galleryImages)) {
     galleryImages.forEach(function(item) {
-      const imageSource =
+      const source =
         item.url ||
         item.src ||
         item.image ||
         "";
 
-      if (imageSource) {
+      if (source) {
         images.push({
-          src: imageSource,
+          src: source,
           title: item.title || "صورة",
           description: item.description || ""
         });
@@ -853,11 +901,9 @@ function renderGallery() {
 
   images.forEach(function(item) {
     const card = document.createElement("div");
-
     card.className = "gallery-item";
 
     const image = document.createElement("img");
-
     image.src = item.src;
     image.alt = item.title;
     image.loading = "lazy";
@@ -881,45 +927,6 @@ function renderGallery() {
     gallery.appendChild(card);
   });
 }
-    return;
-  }
-
-  gallery.innerHTML = "";
-
-  if (galleryImages.length === 0) {
-    gallery.innerHTML = `
-      <div class="empty">
-        لا توجد صور في المعرض حاليًا.
-      </div>
-    `;
-    return;
-  }
-
-  galleryImages.forEach(function(image) {
-    const item = document.createElement("div");
-
-    item.className = "gallery-item";
-
-    item.innerHTML = `
-      <img
-        src="${escapeAttribute(image.url)}"
-        alt="${escapeAttribute(image.title || "صورة")}"
-        loading="lazy">
-
-      <h3>
-        ${escapeHTML(image.title || "")}
-      </h3>
-
-      ${
-        image.description
-          ? `<p>${escapeHTML(image.description)}</p>`
-          : ""
-      }
-    `;
-
-    gallery.appendChild(item);
-  });
-}
 
 
 /* =========================================
@@ -933,92 +940,53 @@ function renderAdminGallery() {
     return;
   }
 
-  let html = `
-    <div class="admin-box">
+  container.innerHTML = "";
 
-      <div class="admin-title">
-        <h3>🖼️ إدارة معرض الصور</h3>
-
-        <button
-          class="primary-btn"
-          onclick="openGalleryForm()">
-          + إضافة صورة
-        </button>
-      </div>
-
-      <p class="small-note">
-        استخدم رابطًا عامًا للصورة حتى يمكن لجميع مستخدمي التطبيق
-        رؤيتها عند فتح التطبيق.
-      </p>
-  `;
-
-  if (galleryImages.length === 0) {
-    html += `
+  if (!Array.isArray(galleryImages) || galleryImages.length === 0) {
+    container.innerHTML = `
       <p class="empty">
-        لا توجد صور مضافة إلى المعرض.
+        لا توجد صور مستقلة في المعرض.
       </p>
     `;
+    return;
   }
 
-  galleryImages.forEach(function(image) {
-    html += `
-      <div class="admin-item">
+  galleryImages.forEach(function(item) {
+    const source =
+      item.url ||
+      item.src ||
+      item.image ||
+      "";
 
-        <div
-          style="
-            display:flex;
-            gap:12px;
-            align-items:center;
-            margin-bottom:10px;
-          ">
+    const row = document.createElement("div");
+    row.className = "admin-item";
 
-          <img
-            src="${escapeAttribute(image.url)}"
-            alt="${escapeAttribute(image.title || "صورة")}"
-            style="
-              width:70px;
-              height:70px;
-              object-fit:cover;
-              border-radius:12px;
-              background:#eee;
-            ">
+    row.innerHTML = `
+      <strong>
+        🖼️ ${escapeHTML(item.title || "صورة")}
+      </strong>
 
-          <div>
-            <strong>
-              ${escapeHTML(image.title || "صورة بدون عنوان")}
-            </strong>
+      <p class="small-note">
+        ${escapeHTML(source)}
+      </p>
 
-            ${
-              image.description
-                ? `<p class="small-note">${escapeHTML(image.description)}</p>`
-                : ""
-            }
-          </div>
-
-        </div>
-
-        <div class="admin-actions">
-
-          <button
-            class="delete-btn"
-            onclick="deleteGalleryImage(${Number(image.id)})">
-            حذف
-          </button>
-
-        </div>
-
+      <div class="admin-actions">
+        <button
+          type="button"
+          class="delete-btn"
+          onclick="deleteGalleryImage(${Number(item.id)})">
+          حذف
+        </button>
       </div>
     `;
+
+    container.appendChild(row);
   });
-
-  html += `</div>`;
-
-  container.innerHTML = html;
 }
 
 
 /* =========================================
-   نموذج إضافة صورة
+   نموذج إضافة صورة للمعرض
 ========================================= */
 
 function openGalleryForm() {
@@ -1027,11 +995,11 @@ function openGalleryForm() {
   const content = document.getElementById("formContent");
 
   if (!overlay || !title || !content) {
-    alert("نافذة الإضافة غير موجودة.");
+    alert("نافذة الإضافة غير موجودة في الصفحة.");
     return;
   }
 
-  title.textContent = "إضافة صورة للمعرض";
+  title.textContent = "إضافة صورة إلى المعرض";
 
   content.innerHTML = `
     <label class="form-label">
@@ -1045,14 +1013,14 @@ function openGalleryForm() {
       placeholder="مثال: منتجات DXN">
 
     <label class="form-label">
-      رابط الصورة
+      رابط الصورة العام
     </label>
 
     <input
       id="formGalleryUrl"
       class="form-input"
       type="url"
-      placeholder="https://example.com/image.jpg">
+      placeholder="https://example.com/image.png">
 
     <label class="form-label">
       وصف الصورة، اختياري
@@ -1064,18 +1032,21 @@ function openGalleryForm() {
       placeholder="وصف مختصر للصورة"></textarea>
 
     <p class="small-note">
-      ⚠️ يجب أن يكون الرابط رابطًا عامًا يمكن فتحه من أي هاتف.
+      يجب أن يكون الرابط عامًا ويبدأ بـ https:// أو http://
+      حتى تظهر الصورة لجميع المستخدمين.
     </p>
 
     <div class="form-actions">
 
       <button
+        type="button"
         class="primary-btn"
         onclick="saveGalleryImage()">
         حفظ الصورة
       </button>
 
       <button
+        type="button"
         class="secondary-btn"
         onclick="closeForm()">
         إلغاء
@@ -1093,20 +1064,12 @@ function openGalleryForm() {
 ========================================= */
 
 function saveGalleryImage() {
-  const titleElement =
-    document.getElementById("formGalleryTitle");
-
-  const urlElement =
-    document.getElementById("formGalleryUrl");
-
+  const titleElement = document.getElementById("formGalleryTitle");
+  const urlElement = document.getElementById("formGalleryUrl");
   const descriptionElement =
     document.getElementById("formGalleryDescription");
 
-  if (
-    !titleElement ||
-    !urlElement ||
-    !descriptionElement
-  ) {
+  if (!titleElement || !urlElement || !descriptionElement) {
     alert("حدث خطأ في نموذج الصورة.");
     return;
   }
@@ -1115,52 +1078,36 @@ function saveGalleryImage() {
   const url = urlElement.value.trim();
   const description = descriptionElement.value.trim();
 
+  if (!title) {
+    alert("اكتب عنوان الصورة.");
+    return;
+  }
+
   if (!url) {
-    alert("أدخل رابط الصورة أولًا.");
+    alert("ضع رابط الصورة.");
     return;
   }
 
-  let validUrl;
-
-  try {
-    validUrl = new URL(url);
-  } catch (error) {
-    alert("رابط الصورة غير صحيح.");
+  if (!isValidImageUrl(url)) {
+    alert(
+      "رابط الصورة غير صحيح. يجب أن يبدأ بـ http:// أو https://"
+    );
     return;
   }
-
-  if (
-    validUrl.protocol !== "http:" &&
-    validUrl.protocol !== "https:"
-  ) {
-    alert("يجب أن يبدأ رابط الصورة بـ http أو https.");
-    return;
-  }
-
-  const newId = galleryImages.length
-    ? Math.max.apply(
-        null,
-        galleryImages.map(function(item) {
-          return Number(item.id) || 0;
-        })
-      ) + 1
-    : 1;
 
   galleryImages.push({
-    id: newId,
-    title: title || "صورة",
+    id: createId(galleryImages),
+    title: title,
     url: url,
     description: description
   });
 
-  saveData();
-
-  closeForm();
-
-  renderGallery();
-  renderAdminGallery();
-
-  alert("تمت إضافة الصورة بنجاح.");
+  if (saveData()) {
+    closeForm();
+    renderGallery();
+    renderAdminGallery();
+    alert("تمت إضافة الصورة بنجاح.");
+  }
 }
 
 
@@ -1178,7 +1125,9 @@ function deleteGalleryImage(imageId) {
   }
 
   const confirmed = confirm(
-    "هل تريد حذف هذه الصورة من المعرض؟"
+    "هل تريد حذف الصورة: " +
+    (image.title || "هذه الصورة") +
+    " ؟"
   );
 
   if (!confirmed) {
@@ -1190,7 +1139,6 @@ function deleteGalleryImage(imageId) {
   });
 
   saveData();
-
   renderGallery();
   renderAdminGallery();
 }
@@ -1222,20 +1170,24 @@ function renderLinks() {
     const card = document.createElement("article");
     card.className = "link-card";
 
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "primary-btn";
+    button.textContent = "فتح الرابط";
+
+    button.addEventListener("click", function() {
+      openExternalLink(link.url);
+    });
+
     card.innerHTML = `
       <h3>🔗 ${escapeHTML(link.title)}</h3>
 
       <p>
         ${escapeHTML(link.description || "")}
       </p>
-
-      <button
-        class="primary-btn"
-        onclick="openExternalLink('${encodeURIComponent(link.url)}')">
-        فتح الرابط
-      </button>
     `;
 
+    card.appendChild(button);
     list.appendChild(card);
   });
 }
@@ -1245,12 +1197,18 @@ function renderLinks() {
    فتح رابط خارجي
 ========================================= */
 
-function openExternalLink(encodedUrl) {
-  const url = decodeURIComponent(encodedUrl);
-
-  if (url) {
-    window.open(url, "_blank");
+function openExternalLink(url) {
+  if (!url) {
+    alert("الرابط غير موجود.");
+    return;
   }
+
+  if (!isValidExternalUrl(url)) {
+    alert("الرابط غير صحيح.");
+    return;
+  }
+
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 
@@ -1302,8 +1260,7 @@ function renderAdminProductPages() {
       <button
         type="button"
         class="admin-page-btn"
-        onclick="selectAdminProductPage(${page})"
-      >
+        onclick="selectAdminProductPage(${page})">
         صفحة ${page}
         <small>${start} - ${end}</small>
       </button>
@@ -1327,7 +1284,6 @@ function selectAdminProductPage(page) {
   currentProductPage = Number(page) || 1;
 
   showPage("products");
-
   renderProducts();
 
   window.scrollTo({
@@ -1356,6 +1312,7 @@ function renderAdminProducts() {
       </div>
 
       <button
+        type="button"
         class="primary-btn"
         onclick="openProductForm()">
         + إضافة منتج
@@ -1375,7 +1332,7 @@ function renderAdminProducts() {
       <div class="admin-item">
 
         <strong>
-          ${product.icon || "🌿"}
+          ${escapeHTML(product.icon || "🌿")}
           ${escapeHTML(product.name)}
         </strong>
 
@@ -1386,12 +1343,14 @@ function renderAdminProducts() {
         <div class="admin-actions">
 
           <button
+            type="button"
             class="edit-btn"
             onclick="openProductForm(${Number(product.id)})">
             تعديل
           </button>
 
           <button
+            type="button"
             class="delete-btn"
             onclick="deleteProduct(${Number(product.id)})">
             حذف
@@ -1414,7 +1373,7 @@ function renderAdminProducts() {
 ========================================= */
 
 function openProductForm(productId) {
-  const product = productId
+  const product = productId !== undefined && productId !== null
     ? products.find(function(item) {
         return Number(item.id) === Number(productId);
       })
@@ -1487,19 +1446,21 @@ function openProductForm(productId) {
     <input
       id="formProductImage"
       class="form-input"
-      type="text"
+      type="url"
       value="${product ? escapeAttribute(product.image) : ""}"
-      placeholder="اتركه فارغًا إذا لم توجد صورة">
+      placeholder="https://example.com/image.png">
 
     <div class="form-actions">
 
       <button
+        type="button"
         class="primary-btn"
         onclick="saveProductForm(${product ? Number(product.id) : "null"})">
         حفظ
       </button>
 
       <button
+        type="button"
         class="secondary-btn"
         onclick="closeForm()">
         إلغاء
@@ -1520,10 +1481,14 @@ function saveProductForm(productId) {
   const nameElement = document.getElementById("formProductName");
   const categoryElement = document.getElementById("formProductCategory");
   const iconElement = document.getElementById("formProductIcon");
-  const descriptionElement = document.getElementById("formProductDescription");
-  const benefitsElement = document.getElementById("formProductBenefits");
-  const detailsElement = document.getElementById("formProductDetails");
-  const imageElement = document.getElementById("formProductImage");
+  const descriptionElement =
+    document.getElementById("formProductDescription");
+  const benefitsElement =
+    document.getElementById("formProductBenefits");
+  const detailsElement =
+    document.getElementById("formProductDetails");
+  const imageElement =
+    document.getElementById("formProductImage");
 
   if (
     !nameElement ||
@@ -1551,6 +1516,13 @@ function saveProductForm(productId) {
     return;
   }
 
+  if (image && !isValidImageUrl(image)) {
+    alert(
+      "رابط صورة المنتج غير صحيح. يجب أن يبدأ بـ http:// أو https://"
+    );
+    return;
+  }
+
   if (productId !== null && productId !== undefined) {
     const index = products.findIndex(function(item) {
       return Number(item.id) === Number(productId);
@@ -1569,17 +1541,8 @@ function saveProductForm(productId) {
       };
     }
   } else {
-    const newId = products.length
-      ? Math.max.apply(
-          null,
-          products.map(function(item) {
-            return Number(item.id) || 0;
-          })
-        ) + 1
-      : 1;
-
     products.push({
-      id: newId,
+      id: createId(products),
       name: name,
       category: category || "عام",
       icon: icon || "🌿",
@@ -1647,6 +1610,7 @@ function renderAdminArticles() {
       </div>
 
       <button
+        type="button"
         class="primary-btn"
         onclick="openArticleForm()">
         + إضافة مقال
@@ -1666,19 +1630,21 @@ function renderAdminArticles() {
       <div class="admin-item">
 
         <strong>
-          ${article.icon || "📚"}
+          ${escapeHTML(article.icon || "📚")}
           ${escapeHTML(article.title)}
         </strong>
 
         <div class="admin-actions">
 
           <button
+            type="button"
             class="edit-btn"
             onclick="openArticleForm(${Number(article.id)})">
             تعديل
           </button>
 
           <button
+            type="button"
             class="delete-btn"
             onclick="deleteArticle(${Number(article.id)})">
             حذف
@@ -1701,7 +1667,7 @@ function renderAdminArticles() {
 ========================================= */
 
 function openArticleForm(articleId) {
-  const article = articleId
+  const article = articleId !== undefined && articleId !== null
     ? articles.find(function(item) {
         return Number(item.id) === Number(articleId);
       })
@@ -1751,19 +1717,21 @@ function openArticleForm(articleId) {
     <input
       id="formArticleImage"
       class="form-input"
-      type="text"
+      type="url"
       value="${article ? escapeAttribute(article.image) : ""}"
-      placeholder="رابط الصورة أو اتركه فارغًا">
+      placeholder="https://example.com/image.png">
 
     <div class="form-actions">
 
       <button
+        type="button"
         class="primary-btn"
         onclick="saveArticleForm(${article ? Number(article.id) : "null"})">
         حفظ
       </button>
 
       <button
+        type="button"
         class="secondary-btn"
         onclick="closeForm()">
         إلغاء
@@ -1806,6 +1774,13 @@ function saveArticleForm(articleId) {
     return;
   }
 
+  if (image && !isValidImageUrl(image)) {
+    alert(
+      "رابط صورة المقال غير صحيح. يجب أن يبدأ بـ http:// أو https://"
+    );
+    return;
+  }
+
   if (articleId !== null && articleId !== undefined) {
     const index = articles.findIndex(function(item) {
       return Number(item.id) === Number(articleId);
@@ -1821,17 +1796,8 @@ function saveArticleForm(articleId) {
       };
     }
   } else {
-    const newId = articles.length
-      ? Math.max.apply(
-          null,
-          articles.map(function(item) {
-            return Number(item.id) || 0;
-          })
-        ) + 1
-      : 1;
-
     articles.push({
-      id: newId,
+      id: createId(articles),
       title: title,
       icon: icon || "📚",
       content: content,
@@ -1886,6 +1852,7 @@ function renderAdminLinks() {
       </div>
 
       <button
+        type="button"
         class="primary-btn"
         onclick="openLinkForm()">
         + إضافة رابط
@@ -1915,12 +1882,14 @@ function renderAdminLinks() {
         <div class="admin-actions">
 
           <button
+            type="button"
             class="edit-btn"
             onclick="openLinkForm(${Number(link.id)})">
             تعديل
           </button>
 
           <button
+            type="button"
             class="delete-btn"
             onclick="deleteLink(${Number(link.id)})">
             حذف
@@ -1943,7 +1912,7 @@ function renderAdminLinks() {
 ========================================= */
 
 function openLinkForm(linkId) {
-  const link = linkId
+  const link = linkId !== undefined && linkId !== null
     ? links.find(function(item) {
         return Number(item.id) === Number(linkId);
       })
@@ -1991,12 +1960,14 @@ function openLinkForm(linkId) {
     <div class="form-actions">
 
       <button
+        type="button"
         class="primary-btn"
         onclick="saveLinkForm(${link ? Number(link.id) : "null"})">
         حفظ
       </button>
 
       <button
+        type="button"
         class="secondary-btn"
         onclick="closeForm()">
         إلغاء
@@ -2016,7 +1987,8 @@ function openLinkForm(linkId) {
 function saveLinkForm(linkId) {
   const titleElement = document.getElementById("formLinkTitle");
   const urlElement = document.getElementById("formLinkUrl");
-  const descriptionElement = document.getElementById("formLinkDescription");
+  const descriptionElement =
+    document.getElementById("formLinkDescription");
 
   if (
     !titleElement ||
@@ -2036,6 +2008,13 @@ function saveLinkForm(linkId) {
     return;
   }
 
+  if (!isValidExternalUrl(url)) {
+    alert(
+      "الرابط غير صحيح. يجب أن يبدأ بـ http:// أو https://"
+    );
+    return;
+  }
+
   if (linkId !== null && linkId !== undefined) {
     const index = links.findIndex(function(item) {
       return Number(item.id) === Number(linkId);
@@ -2050,17 +2029,8 @@ function saveLinkForm(linkId) {
       };
     }
   } else {
-    const newId = links.length
-      ? Math.max.apply(
-          null,
-          links.map(function(item) {
-            return Number(item.id) || 0;
-          })
-        ) + 1
-      : 1;
-
     links.push({
-      id: newId,
+      id: createId(links),
       title: title,
       url: url,
       description: description
@@ -2116,14 +2086,18 @@ function setupSearch() {
   const productSearch = document.getElementById("productSearch");
   const articleSearch = document.getElementById("articleSearch");
 
-  if (productSearch) {
+  if (productSearch && !productSearch.dataset.ready) {
+    productSearch.dataset.ready = "true";
+
     productSearch.addEventListener("input", function() {
       currentProductPage = 1;
       renderProducts();
     });
   }
 
-  if (articleSearch) {
+  if (articleSearch && !articleSearch.dataset.ready) {
+    articleSearch.dataset.ready = "true";
+
     articleSearch.addEventListener("input", function() {
       renderArticles();
     });
@@ -2132,19 +2106,50 @@ function setupSearch() {
 
 
 /* =========================================
-   تشغيل التطبيق
+   تشغيل التطبيق بأمان
 ========================================= */
 
-loadData();
-renderProducts();
-renderArticles();
-renderGallery();
-renderLinks();
-setupSearch();
+function startApp() {
+  try {
+    loadData();
+  } catch (error) {
+    console.error("خطأ في تحميل البيانات:", error);
+  }
+
+  try {
+    renderProducts();
+  } catch (error) {
+    console.error("خطأ في عرض المنتجات:", error);
+  }
+
+  try {
+    renderArticles();
+  } catch (error) {
+    console.error("خطأ في عرض المقالات:", error);
+  }
+
+  try {
+    renderGallery();
+  } catch (error) {
+    console.error("خطأ في عرض الصور:", error);
+  }
+
+  try {
+    renderLinks();
+  } catch (error) {
+    console.error("خطأ في عرض الروابط:", error);
+  }
+
+  try {
+    setupSearch();
+  } catch (error) {
+    console.error("خطأ في تشغيل البحث:", error);
+  }
+}
 
 
 /* =========================================
-   جعل الدوال متاحة للأزرار
+   جعل الدوال متاحة لأزرار HTML
 ========================================= */
 
 window.showPage = showPage;
@@ -2175,3 +2180,10 @@ window.closeForm = closeForm;
 window.renderAdmin = renderAdmin;
 window.renderAdminProductPages = renderAdminProductPages;
 window.selectAdminProductPage = selectAdminProductPage;
+
+
+/* =========================================
+   بدء التطبيق
+========================================= */
+
+startApp();
