@@ -682,3 +682,16 @@
 
 </body>
 </html>
+<script>
+  // بيانات الاتصال بمشروعك
+  const SUPABASE_URL = 'https://zdrpsljimkhbzmknscgw.supabase.co';
+  
+  // ⚠️ استبدل النص أسفله بمفتاح anon Key الخاص بك من Supabase 
+  // (تجد المفتاح في Supabase تحت: Project Settings > API > anon public)
+  const SUPABASE_ANON_KEY = 'ضَع_مفتاح_ANON_KEY_هنا';
+
+  // إنشاء العميل للاتصال
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  console.log('تم الربط بـ Supabase بنجاح!');
+</script>
