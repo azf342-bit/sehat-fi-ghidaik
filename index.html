@@ -1,697 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صحتك في غذائك</title>
+    
+    <!-- 1. مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
-
-  <meta
-    name="theme-color"
-    content="#0b7a3b">
-
-  <meta
-    name="description"
-    content="صحتك في غذائك للصحة والتغذية والمكملات الغذائية">
-
-  <title>صحتك في غذائك</title>
-
-  <!-- ملف التصميم -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- ملف التطبيق PWA -->
-  <link rel="manifest" href="manifest.json">
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #27ae60;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- =========================================
-       الشريط العلوي
-  ========================================== -->
-
-  <header class="topbar">
-
-    <div class="topbar-content">
-
-      <h1>صحتك في غذائك</h1>
-
-      <p>جسدك أمانة... فاعتنِ به</p>
-
+    <div class="container">
+        <h1>🥗 صحتك في غذائك</h1>
+        <p>قائمة الأطعمة والقيم الغذائية</p>
+        
+        <div id="content">جاري تحميل البيانات...</div>
     </div>
 
-    <button
-      type="button"
-      class="icon-btn"
-      onclick="showPage('admin')"
-      aria-label="فتح الإعدادات"
-      title="الإعدادات">
-
-      ⚙️
-
-    </button>
-
-  </header>
-
-
-  <!-- =========================================
-       بداية التطبيق
-  ========================================== -->
-
-  <main id="app">
-
-
-    <!-- =========================================
-         الصفحة الرئيسية
-    ========================================== -->
-
-    <section
-      id="home"
-      class="page active">
-
-      <div class="hero">
-
-        <div class="hero-icon">
-
-          <img
-            src="file_0000000059c481f4877db29f74f57086.png"
-            alt="شعار صحتك في غذائك"
-            style="
-              width:110px;
-              height:110px;
-              object-fit:contain;
-              border-radius:20px;
-            "
-            onerror="this.style.display='none';">
-
-        </div>
-
-        <h2>مرحبًا بك 🌿</h2>
-
-        <p>
-          اكتشف معلومات مفيدة حول الصحة والتغذية
-          والمكملات الغذائية.
-        </p>
-
-      </div>
-
-
-      <!-- أزرار الصفحة الرئيسية -->
-
-      <div class="menu-grid">
-
-        <button
-          type="button"
-          onclick="showPage('health')">
-
-          <span class="menu-icon">❤️</span>
-          <span>صحتك</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('products')">
-
-          <span class="menu-icon">🌿</span>
-          <span>المكملات الغذائية</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('benefits')">
-
-          <span class="menu-icon">💚</span>
-          <span>فوائد صحية</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('articles')">
-
-          <span class="menu-icon">📚</span>
-          <span>مقالات</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('images')">
-
-          <span class="menu-icon">🖼️</span>
-          <span>صور</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('links')">
-
-          <span class="menu-icon">🔗</span>
-          <span>روابط</span>
-
-        </button>
-
-
-        <button
-          type="button"
-          onclick="showPage('info')">
-
-          <span class="menu-icon">ℹ️</span>
-          <span>معلومات أخرى</span>
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة صحتك
-    ========================================== -->
-
-    <section
-      id="health"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>❤️ صحتك</h2>
-
-      </div>
-
-
-      <div class="info-card">
-
-        <h3>نصائح صحية</h3>
-
-        <p>
-          اهتم بشرب الماء، وتناول غذاء متوازن،
-          وممارسة النشاط البدني بانتظام.
-        </p>
-
-        <p>
-          احرص على النوم الكافي، وقلل من تناول
-          الأطعمة الغنية بالسكر والدهون.
-        </p>
-
-        <p>
-          اجعل العادات الصحية جزءًا من حياتك اليومية،
-          واستشر الطبيب أو المختص عند الحاجة.
-        </p>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة المنتجات
-    ========================================== -->
-
-    <section
-      id="products"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>🌿 المكملات الغذائية</h2>
-
-      </div>
-
-
-      <div class="toolbar">
-
-        <input
-          id="productSearch"
-          class="full-input"
-          type="search"
-          placeholder="ابحث عن مكمل غذائي..."
-          autocomplete="off">
-
-      </div>
-
-
-      <div
-        id="productCategories"
-        class="categories">
-      </div>
-
-
-      <div
-        id="productsList"
-        class="products-grid">
-      </div>
-
-
-      <div
-        id="productPagination"
-        class="pagination">
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة الفوائد الصحية
-    ========================================== -->
-
-    <section
-      id="benefits"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>💚 فوائد صحية</h2>
-
-      </div>
-
-
-      <div class="info-card">
-
-        <h3>فوائد الغذاء الصحي</h3>
-
-        <p>
-          يساعد الغذاء المتوازن على دعم الجسم
-          والمحافظة على النشاط والحيوية.
-        </p>
-
-        <p>
-          تناول الخضروات والفواكه والحبوب الكاملة،
-          واشرب الماء بانتظام.
-        </p>
-
-        <p>
-          احرص على التنويع في الطعام والاعتدال
-          في تناول مختلف الأغذية.
-        </p>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة المقالات
-    ========================================== -->
-
-    <section
-      id="articles"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>📚 المقالات</h2>
-
-      </div>
-
-
-      <div class="toolbar">
-
-        <input
-          id="articleSearch"
-          class="full-input"
-          type="search"
-          placeholder="ابحث في المقالات..."
-          autocomplete="off">
-
-      </div>
-
-
-      <div id="articlesList"></div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة الصور
-    ========================================== -->
-
-    <section
-      id="images"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>🖼️ الصور</h2>
-
-      </div>
-
-
-      <div
-        id="galleryList"
-        class="gallery">
-
-        <div class="empty">
-          لا توجد صور مضافة بعد.
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة الروابط
-    ========================================== -->
-
-    <section
-      id="links"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>🔗 روابط مفيدة</h2>
-
-      </div>
-
-
-      <div id="linksList"></div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة المعلومات الأخرى
-    ========================================== -->
-
-    <section
-      id="info"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>ℹ️ معلومات أخرى</h2>
-
-      </div>
-
-
-      <div class="info-card">
-
-        <h3>تنبيه مهم</h3>
-
-        <p>
-          المعلومات الموجودة في هذا التطبيق هي معلومات
-          عامة وتثقيفية حول الصحة والتغذية والمنتجات.
-        </p>
-
-        <p>
-          لا يُعتبر هذا التطبيق بديلًا عن استشارة الطبيب
-          أو المختص الصحي.
-        </p>
-
-        <p>
-          يجب قراءة تعليمات المنتجات واستشارة المختص
-          قبل استعمال أي مكمل غذائي، خصوصًا عند تناول
-          الأدوية أو وجود حالة صحية.
-        </p>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         صفحة الإدارة والإعدادات
-    ========================================== -->
-
-    <section
-      id="admin"
-      class="page">
-
-      <div class="page-head">
-
-        <button
-          type="button"
-          class="back-button"
-          onclick="showPage('home')">
-
-          رجوع
-
-        </button>
-
-        <h2>⚙️ إدارة التطبيق</h2>
-
-      </div>
-
-
-      <div class="admin-box">
-
-        <h3>إدارة المحتوى</h3>
-
-        <p class="small-note">
-          من هنا يمكنك إضافة وتعديل وحذف المنتجات
-          والمقالات والروابط.
-        </p>
-
-
-        <!-- إدارة صفحات المنتجات -->
-
-        <div id="adminProductPages"></div>
-
-
-        <!-- إدارة المنتجات -->
-
-        <div id="adminProducts"></div>
-
-
-        <!-- إدارة المقالات -->
-
-        <div id="adminArticles"></div>
-
-
-        <!-- إدارة الروابط -->
-
-        <div id="adminLinks"></div>
-
-      </div>
-
-    </section>
-
-
-  </main>
-
-
-
-  <!-- =========================================
-       شريط التنقل السفلي
-  ========================================== -->
-
-  <nav
-    class="bottom-nav"
-    aria-label="التنقل الرئيسي">
-
-
-    <button
-      type="button"
-      onclick="showPage('home')">
-
-      <span class="nav-icon">🏠</span>
-      <span>الرئيسية</span>
-
-    </button>
-
-
-    <button
-      type="button"
-      onclick="showPage('products')">
-
-      <span class="nav-icon">🌿</span>
-      <span>المكملات</span>
-
-    </button>
-
-
-    <button
-      type="button"
-      onclick="showPage('articles')">
-
-      <span class="nav-icon">📚</span>
-      <span>المقالات</span>
-
-    </button>
-
-
-    <button
-      type="button"
-      onclick="showPage('health')">
-
-      <span class="nav-icon">❤️</span>
-      <span>الصحة</span>
-
-    </button>
-
-
-  </nav>
-
-
-
-  <!-- =========================================
-       نافذة الإضافة والتعديل
-  ========================================== -->
-
-  <div
-    id="formOverlay"
-    class="overlay">
-
-    <div
-      class="form-card"
-      role="dialog"
-      aria-modal="true">
-
-
-      <div class="form-head">
-
-        <h2 id="formTitle">
-          إضافة محتوى
-        </h2>
-
-
-        <button
-          type="button"
-          class="close-btn"
-          onclick="closeForm()"
-          aria-label="إغلاق">
-
-          ✕
-
-        </button>
-
-      </div>
-
-
-      <div id="formContent"></div>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- =========================================
-       ملف وظائف التطبيق
-  ========================================== -->
-
-  <script src="script.js"></script>
-
-  <!-- =========================================
-       تشغيل ملف وظائف التطبيق
-  ========================================== -->
-
-  <script src="script.js"></script>
-
-
-  <!-- =========================================
-       تسجيل Service Worker إن كان موجودًا
-  ========================================== -->
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("service-worker.js")
-          .then(function () {
-            console.log("تم تسجيل Service Worker بنجاح");
-          })
-          .catch(function (error) {
-            console.log("Service Worker غير متوفر حاليًا:", error);
-          });
-      });
-    }
-  </script>
-
+    <!-- 2. كود الاتصال بـ Supabase وعرض الأطعمة -->
+    <script>
+        const SUPABASE_URL = 'https://zdrpsljimkhbzmknscgw.supabase.co';
+        
+        // ⚠️ استبدل المفتاح أدناه بمفتاح sb_publishable الذي نسخته للتو
+        const SUPABASE_ANON_KEY = 'الصق_مفتاح_sb_publishable_هنا';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadFoods() {
+            const contentDiv = document.getElementById('content');
+
+            const { data, error } = await supabaseClient
+                .from('foods')
+                .select('*');
+
+            if (error) {
+                console.error('خطأ في جلب البيانات:', error);
+                contentDiv.innerHTML = '<p style="color:red;">حدث خطأ أثناء الاتصال بقاعدة البيانات!</p>';
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                contentDiv.innerHTML = '<p>لا توجد أطعمة مسجلة في قاعدة البيانات حالياً.</p>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الطعام</th>
+                            <th>السعرات</th>
+                            <th>بروتين (غ)</th>
+                            <th>كارب (غ)</th>
+                            <th>دهون (غ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(item => {
+                html += `
+                    <tr>
+                        <td><b>${item.name}</b></td>
+                        <td>${item.calories}</td>
+                        <td>${item.protein}</td>
+                        <td>${item.carbs}</td>
+                        <td>${item.fats}</td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            contentDiv.innerHTML = html;
+        }
+
+        loadFoods();
+    </script>
 </body>
 </html>
-<script>
-  // بيانات الاتصال بمشروعك
-  const SUPABASE_URL = 'https://zdrpsljimkhbzmknscgw.supabase.co';
-  
-  // ⚠️ استبدل النص أسفله بمفتاح anon Key الخاص بك من Supabase 
-  // (تجد المفتاح في Supabase تحت: Project Settings > API > anon public)
-  const SUPABASE_ANON_KEY = 'ضَع_مفتاح_ANON_KEY_هنا';
-
-  // إنشاء العميل للاتصال
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  console.log('تم الربط بـ Supabase بنجاح!');
-</script>
